@@ -51,6 +51,9 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private org.springframework.core.env.Environment environment;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -461,47 +464,49 @@ public class DataInitializer implements CommandLineRunner {
                 1, "Cosine similarity measures the directional alignment between vector embeddings independent of magnitude, standard for semantic search."));
 
         // ==========================================
-        // 6. SEED DEMO USERS
+        // 6. SEED DEMO USERS (DEV PROFILE ONLY)
         // ==========================================
-        // User 1: Alex Chen (Backend Java Developer)
-        User user1 = userRepository.save(new User("demo_java", "alex.chen@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
-        LearnerProfile prof1 = profileRepository.save(new LearnerProfile(
-                user1, "Alex Chen", "Backend Java Developer", "Prepare for Backend Software Engineering Internships and Master Spring Boot"
-        ));
-        prof1.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
-        prof1.setWeeklyHours(10);
-        prof1.setPreferredStyle(LearningStyle.PRACTICAL);
-        prof1.setStreakDays(7);
-        prof1.setTotalHoursSpent(28.5);
-        profileRepository.save(prof1);
+        if (environment.acceptsProfiles(org.springframework.core.env.Profiles.of("dev")) && userRepository.count() == 0) {
+            // User 1: Alex Chen (Backend Java Developer)
+            User user1 = userRepository.save(new User("demo_java", "alex.chen@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
+            LearnerProfile prof1 = profileRepository.save(new LearnerProfile(
+                    user1, "Alex Chen", "Backend Java Developer", "Prepare for Backend Software Engineering Internships and Master Spring Boot"
+            ));
+            prof1.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
+            prof1.setWeeklyHours(10);
+            prof1.setPreferredStyle(LearningStyle.PRACTICAL);
+            prof1.setStreakDays(7);
+            prof1.setTotalHoursSpent(28.5);
+            profileRepository.save(prof1);
 
-        userSkillRepository.save(new UserSkill(prof1, java, 80, true));
-        userSkillRepository.save(new UserSkill(prof1, sql, 60, false));
-        userSkillRepository.save(new UserSkill(prof1, dsa, 65, false));
-        userSkillRepository.save(new UserSkill(prof1, oop, 85, true));
-        userSkillRepository.save(new UserSkill(prof1, springBoot, 20, false));
-        userSkillRepository.save(new UserSkill(prof1, restApis, 30, false));
-        userSkillRepository.save(new UserSkill(prof1, docker, 0, false));
+            userSkillRepository.save(new UserSkill(prof1, java, 80, true));
+            userSkillRepository.save(new UserSkill(prof1, sql, 60, false));
+            userSkillRepository.save(new UserSkill(prof1, dsa, 65, false));
+            userSkillRepository.save(new UserSkill(prof1, oop, 85, true));
+            userSkillRepository.save(new UserSkill(prof1, springBoot, 20, false));
+            userSkillRepository.save(new UserSkill(prof1, restApis, 30, false));
+            userSkillRepository.save(new UserSkill(prof1, docker, 0, false));
 
-        // User 2: Sarah Taylor (Full Stack)
-        User user2 = userRepository.save(new User("demo_fullstack", "sarah.taylor@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
-        LearnerProfile prof2 = profileRepository.save(new LearnerProfile(
-                user2, "Sarah Taylor", "Full Stack Developer", "Build end-to-end cloud platforms with React and Node.js"
-        ));
-        prof2.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
-        prof2.setWeeklyHours(12);
-        prof2.setPreferredStyle(LearningStyle.VISUAL);
-        prof2.setStreakDays(5);
-        prof2.setTotalHoursSpent(18.0);
-        profileRepository.save(prof2);
+            // User 2: Sarah Taylor (Full Stack)
+            User user2 = userRepository.save(new User("demo_fullstack", "sarah.taylor@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
+            LearnerProfile prof2 = profileRepository.save(new LearnerProfile(
+                    user2, "Sarah Taylor", "Full Stack Developer", "Build end-to-end cloud platforms with React and Node.js"
+            ));
+            prof2.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
+            prof2.setWeeklyHours(12);
+            prof2.setPreferredStyle(LearningStyle.VISUAL);
+            prof2.setStreakDays(5);
+            prof2.setTotalHoursSpent(18.0);
+            profileRepository.save(prof2);
 
-        userSkillRepository.save(new UserSkill(prof2, js, 85, true));
-        userSkillRepository.save(new UserSkill(prof2, react, 75, true));
-        userSkillRepository.save(new UserSkill(prof2, node, 40, false));
-        userSkillRepository.save(new UserSkill(prof2, sql, 50, false));
-        userSkillRepository.save(new UserSkill(prof2, git, 80, true));
+            userSkillRepository.save(new UserSkill(prof2, js, 85, true));
+            userSkillRepository.save(new UserSkill(prof2, react, 75, true));
+            userSkillRepository.save(new UserSkill(prof2, node, 40, false));
+            userSkillRepository.save(new UserSkill(prof2, sql, 50, false));
+            userSkillRepository.save(new UserSkill(prof2, git, 80, true));
 
-        // Generate roadmap for Alex Chen
-        roadmapService.generatePersonalizedRoadmap(user1);
+            // Generate roadmap for Alex Chen
+            roadmapService.generatePersonalizedRoadmap(user1);
+        }
     }
 }

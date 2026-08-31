@@ -1,4 +1,5 @@
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\config\DataInitializer.java
+D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\config\DataSourceConfig.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\config\JwtAuthenticationFilter.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\config\JwtService.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\config\SecurityConfig.java
@@ -7,6 +8,7 @@ D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\AuthController.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\ChatController.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\DashboardController.java
+D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\HealthController.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\LearnerProfileController.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\ProjectController.java
 D:\learning-path-recommender(1)\learning-path-recommender\backend\src\main\java\com\learningpath\controller\RecommendationController.java

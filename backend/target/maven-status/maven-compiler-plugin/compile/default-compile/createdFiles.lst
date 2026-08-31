@@ -62,6 +62,7 @@ com\learningpath\entity\LearningPhase.class
 com\learningpath\service\ProjectService.class
 com\learningpath\exception\GlobalExceptionHandler.class
 com\learningpath\dto\DashboardSummaryDto.class
+com\learningpath\controller\HealthController.class
 com\learningpath\dto\LoginRequest.class
 com\learningpath\dto\UpdateItemStatusRequest.class
 com\learningpath\entity\Role.class
@@ -71,6 +72,7 @@ com\learningpath\repository\AssessmentRepository.class
 com\learningpath\entity\ItemType.class
 com\learningpath\dto\RecommendationFeedbackRequest.class
 com\learningpath\entity\LearnerProfile.class
+com\learningpath\config\DataSourceConfig.class
 com\learningpath\dto\AuthResponse.class
 com\learningpath\entity\AssessmentSubmission.class
 com\learningpath\service\LearnerProfileService.class
