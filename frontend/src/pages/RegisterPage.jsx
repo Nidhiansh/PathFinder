@@ -77,7 +77,7 @@ export const RegisterPage = () => {
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Alex Chen"
+              placeholder="e.g. Jane Doe"
               icon={User}
               required
             />
@@ -88,7 +88,7 @@ export const RegisterPage = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="e.g. alex_chen"
+              placeholder="e.g. username"
               icon={User}
               required
             />
@@ -99,7 +99,7 @@ export const RegisterPage = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="alex@example.com"
+              placeholder="jane@example.com"
               icon={Mail}
               required
             />

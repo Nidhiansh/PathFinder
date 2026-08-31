@@ -87,14 +87,9 @@ npm run dev
 
 ---
 
-## 1-Click Interactive Demo Personas
+## Authentication & User Onboarding
 
-| Username | Password | Persona | Target Role | Starting Strengths |
-| :--- | :--- | :--- | :--- | :--- |
-| `demo_java` | `password123` | **Alex Chen** | Backend Java Developer | Java (80%), OOP (85%), SQL (60%), DSA (65%) |
-| `demo_fullstack` | `password123` | **Sarah Taylor** | Full Stack Developer | JavaScript (85%), React (80%), CSS (75%) |
-
----
+Create a new learner account via the `/register` page and define any custom learning goal during onboarding to generate a personalized prerequisite roadmap.
 
 ## REST API Overview
 

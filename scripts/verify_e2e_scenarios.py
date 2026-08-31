@@ -367,8 +367,8 @@ def run_e2e_suite():
         assert found, f"Alias '{raw}' did not resolve to '{expected}'"
     print(f"[PASS] 19. Canonical Alias Normalization Verified across all tested variants")
 
-    # 20. Verify Login Page Code Cleanliness (PART B)
-    print("\n--- Verifying Login Page Demo Account Removal (PART B) ---")
+    # 20. Verify Login and Landing Page Code Cleanliness (PART B)
+    print("\n--- Verifying Login & Landing Page Demo Account Removal (PART B) ---")
     login_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "pages", "LoginPage.jsx")
     with open(login_path, "r", encoding="utf-8") as f:
         login_content = f.read()
@@ -376,7 +376,15 @@ def run_e2e_suite():
     assert "demo_java" not in login_content, "Found 'demo_java' in LoginPage.jsx"
     assert "Alex Chen" not in login_content, "Found 'Alex Chen' in LoginPage.jsx"
     assert "Sarah Taylor" not in login_content, "Found 'Sarah Taylor' in LoginPage.jsx"
-    print(f"[PASS] 20. LoginPage.jsx Cleanliness: '1-CLICK DEMO LOGINS' and demo persona cards successfully removed")
+
+    landing_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "pages", "LandingPage.jsx")
+    with open(landing_path, "r", encoding="utf-8") as f:
+        landing_content = f.read()
+    assert "Demo Personas" not in landing_content, "Found 'Demo Personas' in LandingPage.jsx"
+    assert "demo_java" not in landing_content, "Found 'demo_java' in LandingPage.jsx"
+    assert "Alex Chen" not in landing_content, "Found 'Alex Chen' in LandingPage.jsx"
+    assert "Sarah Taylor" not in landing_content, "Found 'Sarah Taylor' in LandingPage.jsx"
+    print(f"[PASS] 20. LoginPage.jsx & LandingPage.jsx Cleanliness: all demo logins and persona cards successfully removed")
 
     # ==========================================================
     # PROJECTS HUB COMPREHENSIVE E2E VERIFICATION

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   Sparkles, Compass, Route, CheckCircle2, ArrowRight, Brain, Zap,
@@ -10,17 +10,7 @@ import { Badge } from '../components/ui/Badge';
 import { Card } from '../components/ui/Card';
 
 export const LandingPage = () => {
-  const { login, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  const handleDemoLogin = async (username, password) => {
-    try {
-      await login(username, password);
-      navigate('/app/dashboard');
-    } catch (err) {
-      console.error("Demo login error", err);
-    }
-  };
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white">
@@ -80,7 +70,7 @@ export const LandingPage = () => {
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-14 w-full justify-center">
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full justify-center">
           <Link to="/register" className="w-full sm:w-auto">
             <Button variant="primary" size="lg" icon={ArrowRight} className="w-full sm:w-auto shadow-xl shadow-blue-500/25">
               Start Free Assessment
@@ -88,69 +78,16 @@ export const LandingPage = () => {
           </Link>
           <Link to="/login" className="w-full sm:w-auto">
             <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Explore Demo Personas
+              Sign In to Account
             </Button>
           </Link>
-        </div>
-
-        {/* Quick-Launch 1-Click Demo Personas */}
-        <div className="w-full max-w-3xl glass-panel rounded-2xl p-6 border-slate-800 shadow-2xl mb-16 text-left">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-400" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                1-Click Interactive Demo Personas
-              </h3>
-            </div>
-            <span className="text-[11px] text-slate-500">No setup required</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div
-              onClick={() => handleDemoLogin('demo_java', 'password123')}
-              className="glass-card-interactive p-4 rounded-xl cursor-pointer group border border-slate-700/60"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-white group-hover:text-sky-400 transition">
-                  Alex Chen
-                </span>
-                <Badge variant="brand" size="sm">Backend Java</Badge>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed mb-3">
-                Knows Java (80%) and SQL (60%). Exploring Spring Boot & REST APIs roadmap with real gap analysis.
-              </p>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-sky-400">
-                <span>Launch Persona</span>
-                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
-              </div>
-            </div>
-
-            <div
-              onClick={() => handleDemoLogin('demo_fullstack', 'password123')}
-              className="glass-card-interactive p-4 rounded-xl cursor-pointer group border border-slate-700/60"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-white group-hover:text-sky-400 transition">
-                  Sarah Taylor
-                </span>
-                <Badge variant="purple" size="sm">Full Stack</Badge>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed mb-3">
-                Mastered JavaScript & React (85%). Bridging gaps into Node.js, Express, and PostgreSQL backends.
-              </p>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-sky-400">
-                <span>Launch Persona</span>
-                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Core Architecture Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-left">
           <Card className="border-slate-800">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
-              <Brain className="w-5 h-5" />
+              <Route className="w-5 h-5" />
             </div>
             <h4 className="text-base font-semibold text-white mb-2">Prerequisite DAG Graph</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -160,7 +97,7 @@ export const LandingPage = () => {
 
           <Card className="border-slate-800">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/20">
-              <Layers className="w-5 h-5" />
+              <Brain className="w-5 h-5" />
             </div>
             <h4 className="text-base font-semibold text-white mb-2">Multi-Factor Scoring</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -170,11 +107,11 @@ export const LandingPage = () => {
 
           <Card className="border-slate-800">
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
-              <Sparkles className="w-5 h-5" />
+              <Zap className="w-5 h-5" />
             </div>
             <h4 className="text-base font-semibold text-white mb-2">Adaptive Feedback Loop</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Scoring &gt;90% on checkpoint assessments fast-tracks downstream modules, while weekly hour adjustments automatically scale target dates.
+              Scoring &ge;90% on checkpoint assessments fast-tracks downstream modules, while weekly hour adjustments automatically scale target dates.
             </p>
           </Card>
         </div>
