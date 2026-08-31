@@ -1,9 +1,14 @@
 package com.learningpath.config;
 
 import com.learningpath.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,6 +29,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,12 +37,17 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+
     @Autowired
-    @org.springframework.context.annotation.Lazy
+    @Lazy
     private JwtAuthenticationFilter jwtAuthFilter;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Value("${cors.allowed-origins:*}")
+    private String corsAllowedOrigins;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -67,24 +78,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @org.springframework.beans.factory.annotation.Value("${cors.allowed-origins:*}")
-    private String corsAllowedOrigins;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Stateless REST architecture: Disable CSRF since auth relies on Bearer JWT in headers, not ambient session cookies
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // For H2 console
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
+                        // Always permit preflight CORS OPTIONS requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Public authentication & health endpoints
                         .requestMatchers(
                                 "/api/auth/**",
+                                "/auth/**",
                                 "/health",
                                 "/api/health",
                                 "/actuator/**",
                                 "/h2-console/**",
                                 "/error"
                         ).permitAll()
+                        // All other API endpoints require authenticated JWT
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -97,11 +111,25 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        List<String> origins = List.of(corsAllowedOrigins.split(","));
-        configuration.setAllowedOriginPatterns(origins.stream().map(String::trim).toList());
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(List.of("*"));
+
+        if (corsAllowedOrigins != null && !corsAllowedOrigins.trim().isEmpty() && !corsAllowedOrigins.trim().equals("*")) {
+            List<String> origins = Arrays.stream(corsAllowedOrigins.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
+            log.info("Configuring CORS with explicit allowed origin patterns: {}", origins);
+            configuration.setAllowedOriginPatterns(origins);
+        } else {
+            log.info("Configuring CORS with wildcard allowed origin pattern '*'");
+            configuration.setAllowedOriginPatterns(List.of("*"));
+        }
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
