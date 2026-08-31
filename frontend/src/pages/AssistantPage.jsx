@@ -88,37 +88,38 @@ export const AssistantPage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-16">
+    <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 animate-fade-in pb-16 min-w-0 max-w-full">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-          Conversational AI Copilot <Bot className="w-7 h-7 text-sky-400" />
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5 flex-wrap">
+          <span>Conversational AI Copilot</span>
+          <Bot className="w-6 h-6 sm:w-7 sm:h-7 text-sky-400 shrink-0" />
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
           Chat directly with your learning assistant to inquire about recommendations, prerequisite rationale, or roadmap adaptation.
         </p>
       </div>
 
-      <Card className="glass-panel border-slate-800 h-[640px] flex flex-col p-0 overflow-hidden shadow-2xl">
+      <Card className="glass-panel border-slate-800 h-[calc(100vh-14rem)] min-h-[440px] max-h-[700px] flex flex-col p-0 overflow-hidden shadow-2xl">
         {/* Chat History */}
-        <div className="flex-1 p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
+        <div className="flex-1 p-3.5 sm:p-6 overflow-y-auto space-y-3.5 sm:space-y-4 text-xs sm:text-sm">
           {messages.map((m) => (
             <div
               key={m.id}
-              className={`flex gap-3 ${m.sender === 'USER' ? 'justify-end' : 'justify-start'}`}
+              className={`flex gap-2.5 sm:gap-3 ${m.sender === 'USER' ? 'justify-end' : 'justify-start'}`}
             >
               {m.sender === 'ASSISTANT' && (
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white shrink-0 shadow-md">
-                  <Bot className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white shrink-0 shadow-md mt-0.5">
+                  <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
               )}
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3.5 leading-relaxed space-y-2.5 ${
+                className={`max-w-[90%] sm:max-w-[85%] rounded-2xl px-3.5 sm:px-4 py-2.5 sm:py-3.5 leading-relaxed space-y-2.5 ${
                   m.sender === 'USER'
                     ? 'bg-blue-600 text-white rounded-br-none shadow-md'
                     : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none shadow-sm'
                 }`}
               >
-                <div className="whitespace-pre-wrap">{m.message}</div>
+                <div className="whitespace-pre-wrap break-words">{m.message}</div>
 
                 {/* Structured Action Card in Chat Bubble */}
                 {m.actionPayload && m.actionPayload.url && (
@@ -137,7 +138,7 @@ export const AssistantPage = () => {
 
                 {m.actionType === 'PACE_ADAPTED' && (
                   <div className="pt-2 border-t border-slate-800/80 flex items-center gap-2 text-emerald-400 text-xs font-semibold">
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
                     <span>Roadmap pacing updated automatically in backend!</span>
                   </div>
                 )}
@@ -146,12 +147,12 @@ export const AssistantPage = () => {
           ))}
 
           {loading && (
-            <div className="flex gap-3 justify-start">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white shrink-0">
-                <Bot className="w-4 h-4" />
+            <div className="flex gap-2.5 sm:gap-3 justify-start">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white shrink-0">
+                <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-bl-none px-4 py-3 text-xs text-slate-400 flex items-center gap-2">
-                <RefreshCw className="w-4 h-4 animate-spin text-sky-400" />
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-bl-none px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs text-slate-400 flex items-center gap-2">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin text-sky-400 shrink-0" />
                 <span>Analyzing your profile & DAG prerequisites...</span>
               </div>
             </div>
@@ -160,12 +161,12 @@ export const AssistantPage = () => {
         </div>
 
         {/* Quick Suggestions Chips */}
-        <div className="px-6 py-2.5 bg-slate-950/80 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <div className="px-3 sm:px-6 py-2 sm:py-2.5 bg-slate-950/80 border-t border-slate-800/80 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar max-w-full">
           {quickReplies.map((q, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(q)}
-              className="text-xs px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition whitespace-nowrap"
+              className="text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-sky-300 border border-slate-800 transition whitespace-nowrap shrink-0"
             >
               {q}
             </button>
@@ -178,14 +179,14 @@ export const AssistantPage = () => {
             e.preventDefault();
             handleSend();
           }}
-          className="p-4 bg-slate-950 border-t border-slate-800 flex items-center gap-3"
+          className="p-3 sm:p-4 bg-slate-950 border-t border-slate-800 flex items-center gap-2 sm:gap-3"
         >
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about your learning path, why a course was recommended, or adjust your pace..."
-            className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Ask about your roadmap, recommendations, or pace..."
+            className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 min-w-0"
           />
           <Button
             type="submit"
@@ -193,11 +194,13 @@ export const AssistantPage = () => {
             size="md"
             icon={Send}
             disabled={!input.trim() || loading}
+            className="shrink-0"
           >
             Send
           </Button>
         </form>
       </Card>
     </div>
+
   );
 };

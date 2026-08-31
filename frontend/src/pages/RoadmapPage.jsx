@@ -102,24 +102,24 @@ export const RoadmapPage = () => {
     <div className="space-y-8 animate-fade-in pb-16">
       {/* Toast Alert for Adaptive Updates */}
       {adaptiveToast && (
-        <div className="fixed top-20 right-6 z-50 p-4 bg-blue-600/90 border border-blue-400 text-white rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in text-xs font-semibold">
-          <Sparkles className="w-4 h-4 text-sky-200" />
+        <div className="fixed top-20 right-4 left-4 sm:left-auto sm:right-6 z-50 p-4 bg-blue-600/90 border border-blue-400 text-white rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in text-xs font-semibold max-w-sm">
+          <Sparkles className="w-4 h-4 text-sky-200 shrink-0" />
           <span>{adaptiveToast}</span>
         </div>
       )}
 
       {/* Header & Dynamic Pace Controller */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 glass-panel p-6 sm:p-8 rounded-3xl border-slate-800 shadow-2xl">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6 glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl border-slate-800 shadow-2xl">
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <Badge variant="brand" size="sm" icon={Map}>
               Topological Prerequisite DAG
             </Badge>
             <span className="text-xs text-slate-400 font-mono">
-              Total Curriculum: {roadmap?.totalEstimatedHours || 0} Hours
+              Total: {roadmap?.totalEstimatedHours || 0} Hours
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
             {roadmap?.title || 'Learning Roadmap'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
@@ -156,7 +156,7 @@ export const RoadmapPage = () => {
       </div>
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <Card className="p-4 border-slate-800">
           <span className="text-xs text-slate-400">Path Completion</span>
           <div className="text-2xl font-bold text-white my-1">{roadmap?.overallProgressPercentage || 0}%</div>
@@ -168,7 +168,7 @@ export const RoadmapPage = () => {
           <div className="text-2xl font-bold text-sky-400 my-1 font-mono">
             {roadmap?.estimatedWeeks || 12} <span className="text-xs text-slate-400 font-normal">Weeks (~{Math.ceil((roadmap?.estimatedWeeks || 12) / 4.3)} Mos)</span>
           </div>
-          <span className="text-[10px] text-slate-500">Recalculates dynamically with hours/week</span>
+          <span className="text-[10px] text-slate-500">Recalculates dynamically with study pace</span>
         </Card>
 
         <Card className="p-4 border-slate-800">
@@ -181,19 +181,19 @@ export const RoadmapPage = () => {
       </div>
 
       {/* Phase Status Filters */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex space-x-1 p-1 bg-slate-900/80 border border-slate-800 rounded-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex space-x-1 p-1 bg-slate-900/80 border border-slate-800 rounded-xl overflow-x-auto no-scrollbar max-w-full">
           {[
             { id: 'ALL', label: 'All Phases' },
             { id: 'AVAILABLE', label: 'In Progress & Ready' },
-            { id: 'LOCKED', label: 'Prerequisite Locked' },
+            { id: 'LOCKED', label: 'Locked' },
             { id: 'COMPLETED', label: 'Completed' },
           ].map(f => (
             <button
               key={f.id}
               onClick={() => setStatusFilter(f.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                statusFilter === f.id ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition shrink-0 ${
+                statusFilter === f.id ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
               }`}
             >
               {f.label}
@@ -201,13 +201,13 @@ export const RoadmapPage = () => {
           ))}
         </div>
 
-        <Button variant="secondary" size="sm" icon={RefreshCw} loading={generating} onClick={handleRegenerate}>
+        <Button variant="secondary" size="sm" icon={RefreshCw} loading={generating} onClick={handleRegenerate} className="w-full sm:w-auto">
           Regenerate Roadmap
         </Button>
       </div>
 
       {/* Phases Visual Timeline */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {filteredPhases.map((phase, pIdx) => {
           const isLocked = phase.status === 'LOCKED';
           const isCompleted = phase.status === 'COMPLETED';
@@ -215,7 +215,7 @@ export const RoadmapPage = () => {
           return (
             <Card
               key={phase.id || pIdx}
-              className={`p-6 sm:p-8 border transition-all ${
+              className={`p-4 sm:p-6 lg:p-8 border transition-all ${
                 isLocked
                   ? 'border-slate-800/60 bg-slate-950/40 opacity-70'
                   : isCompleted
@@ -224,10 +224,10 @@ export const RoadmapPage = () => {
               }`}
             >
               {/* Phase Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800/80 mb-6">
-                <div className="flex items-center gap-3.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-slate-800/80 mb-4 sm:mb-6">
+                <div className="flex items-center gap-3">
                   <div
-                    className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm ${
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl flex items-center justify-center font-bold text-sm shrink-0 ${
                       isCompleted
                         ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                         : isLocked
@@ -235,11 +235,11 @@ export const RoadmapPage = () => {
                         : 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 ring-2 ring-blue-400/30'
                     }`}
                   >
-                    {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : isLocked ? <Lock className="w-5 h-5" /> : phase.phaseNumber}
+                    {isCompleted ? <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : isLocked ? <Lock className="w-4 h-4 sm:w-5 sm:h-5" /> : phase.phaseNumber}
                   </div>
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                      {phase.title}
+                    <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 flex-wrap">
+                      <span>{phase.title}</span>
                       <Badge
                         variant={isCompleted ? 'success' : isLocked ? 'default' : 'brand'}
                         size="sm"
@@ -253,16 +253,16 @@ export const RoadmapPage = () => {
                   </div>
                 </div>
 
-                <div className="text-right sm:shrink-0 text-xs text-slate-400">
+                <div className="text-left sm:text-right sm:shrink-0 text-xs text-slate-400 flex sm:flex-col items-center sm:items-end justify-between gap-2">
                   <span className="font-semibold text-slate-200 font-mono">{phase.estimatedHours} hrs</span>
-                  <div className="w-32 mt-1.5">
+                  <div className="w-28 sm:w-32">
                     <ProgressBar value={phase.progressPercentage || 0} variant={isCompleted ? 'success' : 'brand'} size="sm" />
                   </div>
                 </div>
               </div>
 
               {/* Phase Items */}
-              <div className="space-y-3.5">
+              <div className="space-y-3">
                 {phase.items?.map((item) => {
                   const itemLocked = item.status === 'LOCKED';
                   const itemDone = item.status === 'COMPLETED';
@@ -270,7 +270,7 @@ export const RoadmapPage = () => {
                   return (
                     <div
                       key={item.id}
-                      className={`p-4 sm:p-5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition ${
+                      className={`p-3.5 sm:p-5 rounded-2xl border flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 transition ${
                         itemDone
                           ? 'bg-slate-900/40 border-slate-800/80 text-slate-400'
                           : itemLocked
@@ -278,11 +278,11 @@ export const RoadmapPage = () => {
                           : 'bg-slate-900/90 border-slate-700/90 hover:border-blue-500/40 text-slate-200 shadow-md'
                       }`}
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-3 min-w-0">
                         <button
                           disabled={itemLocked || completingId === item.id}
                           onClick={() => handleStatusChange(item.id, item.status, item.title)}
-                          className={`mt-0.5 w-6 h-6 rounded-xl flex items-center justify-center border transition ${
+                          className={`mt-0.5 w-6 h-6 rounded-xl flex items-center justify-center border shrink-0 transition ${
                             itemDone
                               ? 'bg-emerald-500 border-emerald-500 text-white'
                               : itemLocked
@@ -294,8 +294,8 @@ export const RoadmapPage = () => {
                           <CheckCircle2 className="w-4 h-4" />
                         </button>
 
-                        <div>
-                          <div className="flex items-center gap-2 mb-1.5">
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-1.5 mb-1">
                             <Badge
                               variant={
                                 item.itemType === 'PROJECT'
@@ -325,34 +325,36 @@ export const RoadmapPage = () => {
 
                           {itemLocked && item.requiredPrerequisites?.length > 0 && (
                             <div className="flex items-center gap-1.5 text-[11px] text-amber-400 mt-2 font-medium">
-                              <Lock className="w-3.5 h-3.5" />
-                              <span>Required Prerequisites: {item.requiredPrerequisites.join(', ')}</span>
+                              <Lock className="w-3.5 h-3.5 shrink-0" />
+                              <span>Prerequisites: {item.requiredPrerequisites.join(', ')}</span>
                             </div>
                           )}
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-3 sm:pt-0 border-t sm:border-0 border-slate-800">
+                      <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2.5 pt-2.5 sm:pt-0 border-t sm:border-0 border-slate-800 shrink-0 w-full sm:w-auto">
                         <span className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
                           <Clock className="w-3.5 h-3.5 text-slate-500" />
                           {item.estimatedHours} hrs
                         </span>
 
-                        {item.url && !itemLocked && (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer">
-                            <Button variant="outline" size="sm" icon={ExternalLink}>
-                              Open Material
-                            </Button>
-                          </a>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {item.url && !itemLocked && (
+                            <a href={item.url} target="_blank" rel="noopener noreferrer">
+                              <Button variant="outline" size="sm" icon={ExternalLink}>
+                                Open
+                              </Button>
+                            </a>
+                          )}
 
-                        {item.itemType === 'ASSESSMENT' && !itemLocked && (
-                          <a href="/app/progress">
-                            <Button variant="primary" size="sm" icon={ChevronRight}>
-                              Take Quiz
-                            </Button>
-                          </a>
-                        )}
+                          {item.itemType === 'ASSESSMENT' && !itemLocked && (
+                            <a href="/app/progress">
+                              <Button variant="primary" size="sm" icon={ChevronRight}>
+                                Take Quiz
+                              </Button>
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -362,6 +364,7 @@ export const RoadmapPage = () => {
           );
         })}
       </div>
+
     </div>
   );
 };

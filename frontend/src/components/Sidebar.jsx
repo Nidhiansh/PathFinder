@@ -37,18 +37,28 @@ export const Sidebar = ({ isOpen, onClose }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Brand Logo */}
-        <div className="h-16 px-6 flex items-center gap-3 border-b border-slate-800/80">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-            <LogoIcon className="w-5 h-5 text-white" />
+        {/* Brand Logo & Mobile Dismiss */}
+        <div className="h-16 px-5 sm:px-6 flex items-center justify-between border-b border-slate-800/80">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+              <LogoIcon className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
+                PathFinder <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">AI</span>
+              </h1>
+              <p className="text-[10px] text-slate-500">Personalized Learning</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
-              PathFinder <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">AI</span>
-            </h1>
-            <p className="text-[10px] text-slate-500">Personalized Learning</p>
-          </div>
+          <button
+            onClick={onClose}
+            className="p-1.5 text-slate-400 hover:text-white rounded-xl hover:bg-slate-900 border border-slate-800 lg:hidden"
+            aria-label="Close navigation"
+          >
+            <span className="text-sm font-bold">✕</span>
+          </button>
         </div>
+
 
         {/* Main Navigation */}
         <div className="flex-1 py-5 px-3 space-y-1 overflow-y-auto">

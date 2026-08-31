@@ -164,19 +164,19 @@ export const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-16">
+    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-in pb-16 min-w-0 max-w-full">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
             Learner Profile & Competencies
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
             Manage your career aspirations, verified skills, and recommendation parameters.
           </p>
         </div>
 
-        <Button variant="primary" size="md" icon={Save} loading={saving} onClick={handleSave}>
+        <Button variant="primary" size="md" icon={Save} loading={saving} onClick={handleSave} className="w-full sm:w-auto">
           Save Changes
         </Button>
       </div>
@@ -198,7 +198,7 @@ export const ProfilePage = () => {
       {/* Main Profile Form */}
       <form onSubmit={handleSave} className="space-y-6">
         {/* Personal & Career Goal Card */}
-        <Card className="glass-card p-6 sm:p-8">
+        <Card className="glass-card p-4 sm:p-6 lg:p-8">
           <CardHeader>
             <CardTitle>Core Career Target</CardTitle>
           </CardHeader>
@@ -223,33 +223,38 @@ export const ProfilePage = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-medium text-slate-300">
-                  Career Goal Description
-                </label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Natural-Language Career Goal & Intent
+              </label>
+              <textarea
+                value={careerGoal}
+                onChange={(e) => setCareerGoal(e.target.value)}
+                rows={3}
+                placeholder="e.g. I want to build production full-stack apps with Spring Boot and React, master distributed caching and Docker..."
+                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mt-2">
+                <span className="text-[11px] text-slate-500">
+                  AI extracts target roles and skill competencies directly from your goal statement.
+                </span>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
+                  icon={Sparkles}
                   loading={extracting}
                   onClick={handleAiExtract}
-                  className="text-[11px] py-1 px-2.5"
+                  className="w-full sm:w-auto"
                 >
-                  ⚡ AI Re-Extract Skills from Goal
+                  Analyze Goal with AI
                 </Button>
+
               </div>
-              <textarea
-                rows={3}
-                value={careerGoal}
-                onChange={(e) => setCareerGoal(e.target.value)}
-                className="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl p-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
-                placeholder="e.g. I want to learn RAG but I know AI means artificial intelligence only..."
-              />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-800/80">
               <Select
-                label="Experience Level"
+                label="Current Experience"
                 value={experienceLevel}
                 onChange={(e) => setExperienceLevel(e.target.value)}
                 options={[
@@ -260,13 +265,13 @@ export const ProfilePage = () => {
               />
 
               <Select
-                label="Study Commitment"
-                value={weeklyHours}
+                label="Weekly Commitment"
+                value={weeklyHours.toString()}
                 onChange={(e) => setWeeklyHours(e.target.value)}
                 options={[
                   { value: '5', label: '5 Hours / Week (Casual)' },
                   { value: '10', label: '10 Hours / Week (Standard)' },
-                  { value: '15', label: '15 Hours / Week (Intensive)' },
+                  { value: '15', label: '15 Hours / Week (Accelerated)' },
                   { value: '20', label: '20 Hours / Week (Immersive)' },
                 ]}
               />
@@ -286,49 +291,49 @@ export const ProfilePage = () => {
         </Card>
 
         {/* Skills Proficiency Sliders Card */}
-        <Card className="glass-card p-6 sm:p-8">
+        <Card className="glass-card p-4 sm:p-6 lg:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
               <CardTitle>Skill Matrix & Proficiencies</CardTitle>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                 Verified proficiencies dynamically calculate missing prerequisite locks on your roadmap.
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
               <input
                 type="text"
                 placeholder="Add new skill..."
                 value={newSkillName}
                 onChange={(e) => setNewSkillName(e.target.value)}
-                className="bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500 w-full sm:w-44"
               />
-              <Button variant="secondary" size="sm" icon={Plus} onClick={handleAddSkill}>
+              <Button variant="secondary" size="sm" icon={Plus} onClick={handleAddSkill} className="w-full sm:w-auto">
                 Add
               </Button>
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {skills.map((skill, index) => (
-              <div key={index} className="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
-                <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-slate-200">{skill.skillName}</span>
+              <div key={index} className="p-3.5 sm:p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                <div className="flex flex-wrap items-center justify-between text-xs font-semibold mb-2 gap-1.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-slate-200 break-words">{skill.skillName}</span>
                     {skill.isVerified && (
                       <Badge variant="success" size="sm" icon={Award}>
-                        Verified Checkpoint
+                        Verified
                       </Badge>
                     )}
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     <span className="text-sky-400 font-mono font-bold">
                       {skill.proficiencyLevel}%
                     </span>
                     <button
                       type="button"
                       onClick={() => handleRemoveSkill(index)}
-                      className="text-slate-500 hover:text-rose-400 transition"
+                      className="text-slate-500 hover:text-rose-400 transition p-1"
                       title="Remove skill"
                     >
                       <Trash2 className="w-3.5 h-3.5" />

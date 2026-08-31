@@ -130,21 +130,21 @@ export const OnboardingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-4 sm:p-8 selection:bg-blue-500 selection:text-white">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-3.5 sm:p-8 selection:bg-blue-500 selection:text-white min-w-0 max-w-full overflow-hidden">
+      {/* Background glow - bounded */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-[500px] h-64 sm:h-[400px] bg-blue-500/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="w-full max-w-3xl relative z-10 animate-fade-in">
         {/* Stepper Indicator */}
-        <div className="flex items-center justify-between mb-8 px-4">
+        <div className="flex items-center justify-between mb-6 sm:mb-8 px-1 sm:px-4">
           {[
-            { num: 1, label: 'Goal Extraction' },
-            { num: 2, label: 'Skills & Proficiencies' },
+            { num: 1, label: 'Goal' },
+            { num: 2, label: 'Skills' },
             { num: 3, label: 'Pace & Style' },
           ].map((s) => (
-            <div key={s.num} className="flex items-center gap-3">
+            <div key={s.num} className="flex items-center gap-2 sm:gap-3">
               <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs transition-all ${
+                className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center font-bold text-xs transition-all shrink-0 ${
                   step === s.num
                     ? 'bg-gradient-to-r from-blue-600 to-sky-500 text-white shadow-lg shadow-blue-500/25 ring-2 ring-blue-400/40'
                     : step > s.num
@@ -170,14 +170,14 @@ export const OnboardingPage = () => {
 
         {/* Step 1: Natural Language Goal Extraction */}
         {step === 1 && (
-          <Card className="glass-panel border-slate-800 p-8 shadow-2xl">
+          <Card className="glass-panel border-slate-800 p-4 sm:p-8 shadow-2xl">
             <div className="flex items-center gap-2.5 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20 shrink-0">
                 <Brain className="w-4 h-4" />
               </div>
-              <h2 className="text-xl font-bold text-white">What is your learning goal?</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-white">What is your learning goal?</h2>
             </div>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
               Type your goal in plain English. Our AI will automatically extract your target career, timeline, existing proficiencies, and missing prerequisites.
             </p>
 
@@ -191,17 +191,18 @@ export const OnboardingPage = () => {
                   value={goalPrompt}
                   onChange={(e) => setGoalPrompt(e.target.value)}
                   placeholder="e.g. I want to become a backend Java developer in 6 months..."
-                  className="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
+                  className="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
                 />
               </div>
 
-              <div className="flex justify-between items-center pt-2">
+              <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-2">
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => handleExtractGoal(goalPrompt)}
                   loading={extracting}
                   icon={Sparkles}
+                  className="w-full sm:w-auto"
                 >
                   Analyze with AI
                 </Button>
@@ -214,6 +215,7 @@ export const OnboardingPage = () => {
                     await handleExtractGoal(goalPrompt);
                     setStep(2);
                   }}
+                  className="w-full sm:w-auto"
                 >
                   Continue
                 </Button>
@@ -222,22 +224,23 @@ export const OnboardingPage = () => {
 
             {/* Extracted Data Card */}
             {extractedData && (
-              <div className="mt-6 p-5 bg-slate-900/90 border border-blue-500/30 rounded-2xl animate-fade-in">
+              <div className="mt-6 p-4 sm:p-5 bg-slate-900/90 border border-blue-500/30 rounded-2xl animate-fade-in">
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-4 h-4 text-sky-400" />
                   <h4 className="text-xs font-bold uppercase tracking-wider text-sky-300">
                     AI Goal Understanding
                   </h4>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-xs mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs mb-4">
                   <div>
-                    <span className="text-slate-400 block mb-1">Target Role:</span>
-                    <span className="font-semibold text-white">{extractedData.targetRole}</span>
+                    <span className="text-slate-400 block mb-0.5">Target Role:</span>
+                    <span className="font-semibold text-white break-words">{extractedData.targetRole}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block mb-1">Estimated Timeline:</span>
-                    <span className="font-semibold text-white">{extractedData.estimatedMonths} Months</span>
+                    <span className="text-slate-400 block mb-0.5">Estimated Timeline:</span>
+                    <span className="font-semibold text-white font-mono">{extractedData.estimatedMonths} Months</span>
                   </div>
+
                 </div>
 
                 <div className="space-y-2 text-xs">
@@ -270,23 +273,23 @@ export const OnboardingPage = () => {
 
         {/* Step 2: Skill Proficiencies */}
         {step === 2 && (
-          <Card className="glass-panel border-slate-800 p-8 shadow-2xl">
+          <Card className="glass-panel border-slate-800 p-4 sm:p-8 shadow-2xl">
             <div className="flex items-center gap-2.5 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20 shrink-0">
                 <Sliders className="w-4 h-4" />
               </div>
-              <h2 className="text-xl font-bold text-white">Fine-Tune Your Current Skills</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-white">Fine-Tune Your Current Skills</h2>
             </div>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
               Adjust your self-assessed proficiency. The recommendation engine will sequence prerequisites and fast-track topics you already know.
             </p>
 
-            <div className="space-y-4 max-h-[380px] overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1 sm:pr-2">
               {skills.map((skill, index) => (
                 <div key={index} className="p-3.5 bg-slate-900/80 border border-slate-800 rounded-xl">
                   <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                    <span className="text-slate-200">{skill.skillName}</span>
-                    <span className="text-sky-400">{skill.proficiencyLevel}%</span>
+                    <span className="text-slate-200 break-words">{skill.skillName}</span>
+                    <span className="text-sky-400 font-mono font-bold">{skill.proficiencyLevel}%</span>
                   </div>
                   <input
                     type="range"
@@ -318,11 +321,11 @@ export const OnboardingPage = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center mt-6 pt-4 border-t border-slate-800">
-              <Button variant="ghost" size="md" icon={ArrowLeft} onClick={() => setStep(1)}>
+            <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-6 pt-4 border-t border-slate-800">
+              <Button variant="ghost" size="md" icon={ArrowLeft} onClick={() => setStep(1)} className="w-full sm:w-auto">
                 Back
               </Button>
-              <Button variant="primary" size="md" icon={ArrowRight} onClick={() => setStep(3)}>
+              <Button variant="primary" size="md" icon={ArrowRight} onClick={() => setStep(3)} className="w-full sm:w-auto">
                 Next: Preferences
               </Button>
             </div>
@@ -331,14 +334,14 @@ export const OnboardingPage = () => {
 
         {/* Step 3: Pace & Learning Preferences */}
         {step === 3 && (
-          <Card className="glass-panel border-slate-800 p-8 shadow-2xl">
+          <Card className="glass-panel border-slate-800 p-4 sm:p-8 shadow-2xl">
             <div className="flex items-center gap-2.5 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-sky-400 flex items-center justify-center border border-blue-500/20 shrink-0">
                 <Clock className="w-4 h-4" />
               </div>
-              <h2 className="text-xl font-bold text-white">Learning Availability & Style</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-white">Learning Availability & Style</h2>
             </div>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
               Configure your study schedule and resource format preferences to personalize recommendation weights.
             </p>
 
@@ -369,9 +372,9 @@ export const OnboardingPage = () => {
               {/* Weekly Availability */}
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-2">
-                  Weekly Available Study Time: <span className="text-sky-400 font-bold">{weeklyHours} Hours / Week</span>
+                  Weekly Available Study Time: <span className="text-sky-400 font-bold font-mono">{weeklyHours} Hours / Week</span>
                 </label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {[5, 10, 15, 20].map((h) => (
                     <button
                       key={h}
@@ -397,7 +400,7 @@ export const OnboardingPage = () => {
                 <label className="block text-xs font-medium text-slate-300 mb-2">
                   Preferred Learning Modality:
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                   {[
                     { id: 'PRACTICAL', label: 'Practical Projects', desc: 'Code-first & hands-on builds' },
                     { id: 'VIDEO', label: 'Video Tutorials', desc: 'Visual walkthroughs & screencasts' },
@@ -414,15 +417,15 @@ export const OnboardingPage = () => {
                       }`}
                     >
                       <div className="text-xs font-bold text-white mb-1">{style.label}</div>
-                      <div className="text-[10px] text-slate-500">{style.desc}</div>
+                      <div className="text-[10px] text-slate-500 leading-snug">{style.desc}</div>
                     </button>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-between items-center mt-8 pt-4 border-t border-slate-800">
-              <Button variant="ghost" size="md" icon={ArrowLeft} onClick={() => setStep(2)}>
+            <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8 pt-4 border-t border-slate-800">
+              <Button variant="ghost" size="md" icon={ArrowLeft} onClick={() => setStep(2)} className="w-full sm:w-auto">
                 Back
               </Button>
               <Button
@@ -431,6 +434,7 @@ export const OnboardingPage = () => {
                 loading={submitting}
                 icon={Sparkles}
                 onClick={handleFinishOnboarding}
+                className="w-full sm:w-auto"
               >
                 Generate My Roadmap
               </Button>
@@ -441,3 +445,4 @@ export const OnboardingPage = () => {
     </div>
   );
 };
+

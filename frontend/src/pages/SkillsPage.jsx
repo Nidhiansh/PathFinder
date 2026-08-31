@@ -76,13 +76,14 @@ export const SkillsPage = () => {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in pb-16">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in pb-16 min-w-0 max-w-full">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-          Knowledge Graph & Competency Matrix <Compass className="w-7 h-7 text-sky-400" />
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2 flex-wrap">
+          <span>Knowledge Graph & Competency Matrix</span>
+          <Compass className="w-6 h-6 sm:w-7 sm:h-7 text-sky-400 shrink-0" />
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
           Knowledge-grounded prerequisite DAG. Skills are categorized into Direct Core objectives and verified Foundational Prerequisites.
         </p>
       </div>
@@ -91,8 +92,8 @@ export const SkillsPage = () => {
       <SkillGraphVisualizer skills={gaps} />
 
       {/* 2. Diagnostic Skill Gap Analysis & Controls */}
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <Tabs
             tabs={[
               { id: 'ALL', label: 'All Required Skills', count: gaps.length },
@@ -114,14 +115,14 @@ export const SkillsPage = () => {
         </div>
 
         {/* Skill Gap Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filtered.map((gap, idx) => {
             const isPrereq = gap.skillRole === 'REQUIRED_PREREQUISITE';
             return (
-              <Card key={idx} className="glass-card-interactive p-6 flex flex-col justify-between">
+              <Card key={idx} className="glass-card-interactive p-4 sm:p-6 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-2 gap-1.5 flex-wrap">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <Badge
                         variant={
                           gap.status === 'MASTERED'
@@ -145,12 +146,12 @@ export const SkillsPage = () => {
                     <span className="text-[10px] font-mono text-slate-400">{gap.source || 'ESCO'}</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-1.5">{gap.skillName}</h3>
+                  <h3 className="text-sm sm:text-base font-bold text-white mb-1.5 break-words">{gap.skillName}</h3>
 
                   {gap.reason && (
-                    <div className="flex items-start gap-1.5 mb-3 text-[11px] text-slate-400 bg-slate-800/40 p-2 rounded-lg border border-slate-700/50">
+                    <div className="flex items-start gap-1.5 mb-3 text-[11px] text-slate-400 bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
                       <Info className="w-3.5 h-3.5 text-sky-400 flex-shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{gap.reason}</span>
+                      <span className="leading-relaxed break-words">{gap.reason}</span>
                     </div>
                   )}
 
@@ -181,17 +182,17 @@ export const SkillsPage = () => {
                   {gap.unsatisfiedPrerequisites?.length > 0 && (
                     <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-300">
                       <div className="font-semibold flex items-center gap-1 mb-1">
-                        <AlertTriangle className="w-3.5 h-3.5" />
+                        <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                         <span>Unsatisfied Prerequisites:</span>
                       </div>
-                      <p className="text-[11px] text-amber-300/80">
+                      <p className="text-[11px] text-amber-300/80 break-words">
                         {gap.unsatisfiedPrerequisites.join(', ')}
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="pt-3.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
                   <span>Gap: <strong className="text-rose-400 font-mono">-{gap.gap}%</strong></span>
                   {updatingSkill === gap.skillName ? (
                     <span className="text-sky-400 animate-pulse">Syncing...</span>
@@ -205,5 +206,6 @@ export const SkillsPage = () => {
         </div>
       </div>
     </div>
+
   );
 };

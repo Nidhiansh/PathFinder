@@ -92,9 +92,10 @@ export const FloatingAssistant = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 max-w-[calc(100vw-3rem)] h-[560px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden animate-fade-in">
+    <div className="fixed inset-x-0 bottom-0 top-14 sm:top-auto sm:inset-x-auto sm:bottom-6 sm:right-6 w-full sm:w-96 sm:max-w-[calc(100vw-3rem)] h-[calc(100vh-3.5rem)] sm:h-[560px] bg-slate-900 border-t sm:border border-slate-800 rounded-t-2xl sm:rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden animate-fade-in">
       {/* Header */}
       <div className="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white shadow-md">
             <Bot className="w-4 h-4" />

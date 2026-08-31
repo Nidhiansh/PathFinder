@@ -146,18 +146,19 @@ export const RecommendationDetailModal = ({ isOpen, onClose, recommendation, onF
             {feedbackSent && <span className="text-emerald-400 text-[11px]">Saved!</span>}
           </div>
 
-          <div className="flex items-center gap-3">
-            <Button variant="outline" size="md" onClick={onClose}>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <Button variant="outline" size="md" onClick={onClose} className="w-full sm:w-auto">
               Close
             </Button>
             {recommendation.url && (
-              <a href={recommendation.url} target="_blank" rel="noopener noreferrer">
-                <Button variant="primary" size="md" icon={ExternalLink}>
+              <a href={recommendation.url} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                <Button variant="primary" size="md" icon={ExternalLink} className="w-full sm:w-auto">
                   Start Learning Material
                 </Button>
               </a>
             )}
           </div>
+
         </div>
       </div>
     </Modal>

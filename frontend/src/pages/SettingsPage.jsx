@@ -20,12 +20,13 @@ export const SettingsPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 animate-fade-in pb-16">
+    <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8 animate-fade-in pb-16 min-w-0 max-w-full">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-          Settings & Recommendation Weights <Settings className="w-6 h-6 text-slate-400" />
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5 flex-wrap">
+          <span>Settings & Recommendation Weights</span>
+          <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 shrink-0" />
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
           Customize the mathematical scoring algorithm parameters and platform preferences.
         </p>
       </div>
@@ -37,17 +38,17 @@ export const SettingsPage = () => {
         </div>
       )}
 
-      <Card className="glass-card p-6 sm:p-8">
+      <Card className="glass-card p-4 sm:p-6 lg:p-8">
         <CardHeader>
           <CardTitle>Recommendation Scoring Weights (%)</CardTitle>
         </CardHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {Object.entries(weights).map(([key, val]) => (
             <div key={key} className="p-3.5 bg-slate-900/80 border border-slate-800 rounded-xl">
               <div className="flex items-center justify-between text-xs font-semibold mb-2">
                 <span className="text-slate-200 capitalize">{key.replace(/([A-Z])/g, ' $1')} Weight</span>
-                <span className="text-sky-400">{val}%</span>
+                <span className="text-sky-400 font-mono font-bold">{val}%</span>
               </div>
               <input
                 type="range"
@@ -62,8 +63,8 @@ export const SettingsPage = () => {
           ))}
         </div>
 
-        <div className="pt-6 mt-6 border-t border-slate-800 flex justify-end">
-          <Button variant="primary" size="md" onClick={handleSave}>
+        <div className="pt-4 sm:pt-6 mt-6 border-t border-slate-800 flex justify-end">
+          <Button variant="primary" size="md" onClick={handleSave} className="w-full sm:w-auto">
             Save Algorithm Weights
           </Button>
         </div>
@@ -71,3 +72,4 @@ export const SettingsPage = () => {
     </div>
   );
 };
+

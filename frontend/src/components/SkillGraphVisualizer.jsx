@@ -132,21 +132,21 @@ export const SkillGraphVisualizer = ({ skills = [], onSelectSkill }) => {
   };
 
   return (
-    <div className="relative glass-panel rounded-3xl border border-slate-800 p-6 overflow-hidden">
+    <div className="relative glass-panel rounded-3xl border border-slate-800 p-4 sm:p-6 overflow-hidden max-w-full">
       {/* Visualizer Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6 pb-4 border-b border-slate-800">
         <div>
           <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <Compass className="w-5 h-5 text-sky-400" />
-            Topological Skill Competency DAG
+            <Compass className="w-5 h-5 text-sky-400 shrink-0" />
+            <span>Topological Skill Competency DAG</span>
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Directed Acyclic Graph with prerequisite dependency paths and proficiency states. Click any skill node to inspect.
+          <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
+            Directed Acyclic Graph with prerequisite dependency paths and proficiency states. Tap any skill node to inspect.
           </p>
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-3 text-[11px]">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px]">
           <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm" /> Mastered (&ge;70%)
           </span>
@@ -159,8 +159,18 @@ export const SkillGraphVisualizer = ({ skills = [], onSelectSkill }) => {
         </div>
       </div>
 
+      {/* Mobile Swipe Hint */}
+      <div className="flex sm:hidden items-center justify-between gap-1.5 text-[11px] text-sky-300 font-medium mb-2.5 bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-xl">
+        <span className="flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+          <span>Swipe horizontally to explore DAG tiers</span>
+        </span>
+        <span className="font-mono text-[10px] text-slate-400">7 Tiers</span>
+      </div>
+
       {/* SVG Canvas with Horizontal Scroll */}
-      <div className="overflow-x-auto pb-4 no-scrollbar">
+      <div className="overflow-x-auto pb-4 no-scrollbar max-w-full">
+
         <div className="min-w-[1350px] h-[480px] relative bg-slate-950/70 rounded-2xl border border-slate-900 overflow-hidden select-none">
           {/* Grid Background Lines */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
@@ -259,9 +269,9 @@ export const SkillGraphVisualizer = ({ skills = [], onSelectSkill }) => {
 
       {/* Selected Skill Drawer Modal */}
       {selectedSkill && (
-        <div className="mt-4 p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in">
+        <div className="mt-4 p-4 sm:p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h4 className="text-sm font-bold text-white">{selectedSkill.name}</h4>
               <Badge
                 variant={
@@ -277,16 +287,17 @@ export const SkillGraphVisualizer = ({ skills = [], onSelectSkill }) => {
               </Badge>
             </div>
             <p className="text-xs text-slate-400">
-              Proficiency: <strong className="text-sky-400">{selectedSkill.currentProficiency || 0}%</strong> / Required: {selectedSkill.requiredProficiency || 75}%
+              Proficiency: <strong className="text-sky-400 font-mono">{selectedSkill.currentProficiency || 0}%</strong> / Required: <span className="font-mono">{selectedSkill.requiredProficiency || 75}%</span>
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <Button
               variant="outline"
               size="sm"
               icon={X}
               onClick={() => setSelectedSkill(null)}
+              className="w-full sm:w-auto"
             >
               Close
             </Button>
@@ -297,12 +308,14 @@ export const SkillGraphVisualizer = ({ skills = [], onSelectSkill }) => {
               onClick={() => {
                 window.location.href = `/app/recommendations`;
               }}
+              className="w-full sm:w-auto"
             >
               Find Practice Modules
             </Button>
           </div>
         </div>
       )}
+
     </div>
   );
 };

@@ -177,12 +177,12 @@ export const ProjectsPage = () => {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 max-w-full">
         {['ALL', 'BEGINNER', 'INTERMEDIATE', 'ADVANCED'].map((diff) => (
           <button
             key={diff}
             onClick={() => setFilterDifficulty(diff)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
               filterDifficulty === diff
                 ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
                 : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
@@ -195,36 +195,37 @@ export const ProjectsPage = () => {
 
       {/* Project Cards Grid / Empty State */}
       {filteredProjects.length === 0 ? (
-        <Card className="p-12 text-center border border-slate-800 bg-slate-900/40 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-4 text-purple-400">
-            <Compass className="w-8 h-8" />
+        <Card className="p-8 sm:p-12 text-center border border-slate-800 bg-slate-900/40 rounded-3xl">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-4 text-purple-400">
+            <Compass className="w-7 h-7 sm:w-8 sm:h-8" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-2">No Projects Matched for this Filter</h3>
-          <p className="text-xs text-slate-400 max-w-md mx-auto mb-6">
+          <h3 className="text-base sm:text-lg font-bold text-white mb-2">No Projects Matched for this Filter</h3>
+          <p className="text-xs text-slate-400 max-w-md mx-auto mb-6 leading-relaxed">
             We haven't found a pre-seeded project for this difficulty stage yet. You can dynamically synthesize an adaptive project tailored to your active goal.
           </p>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button
               variant="primary"
               size="md"
               icon={Sparkles}
               onClick={() => setIsGenerateModalOpen(true)}
+              className="w-full sm:w-auto"
             >
               Generate Milestone Project
             </Button>
-            <Link to="/app/profile">
-              <Button variant="outline" size="md" icon={ArrowRight}>
+            <Link to="/app/profile" className="w-full sm:w-auto">
+              <Button variant="outline" size="md" icon={ArrowRight} className="w-full sm:w-auto">
                 Update Career Goal
               </Button>
             </Link>
           </div>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {filteredProjects.map((p) => (
             <Card
               key={p.id}
-              className={`glass-card-interactive p-6 flex flex-col justify-between border ${
+              className={`glass-card-interactive p-4 sm:p-6 flex flex-col justify-between border ${
                 p.completed ? 'border-emerald-500/30 bg-slate-900/60' : 'border-slate-800'
               }`}
             >
@@ -264,7 +265,7 @@ export const ProjectsPage = () => {
                   </div>
                 )}
 
-                <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">
+                <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug break-words">
                   {p.title}
                 </h3>
                 <p className="text-xs text-slate-400 leading-relaxed mb-4">
@@ -275,7 +276,7 @@ export const ProjectsPage = () => {
                 {p.deliverables && (
                   <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800/80 mb-4 text-[11px] text-slate-300">
                     <span className="font-semibold text-slate-200">Deliverables: </span>
-                    {p.deliverables}
+                    <span className="break-words">{p.deliverables}</span>
                   </div>
                 )}
 
@@ -292,13 +293,13 @@ export const ProjectsPage = () => {
               </div>
 
               {/* Card Footer */}
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <div className="pt-3.5 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <span className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
                   <Clock className="w-3.5 h-3.5 text-slate-500" />
                   {p.estimatedHours} Hours
                 </span>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-end gap-2 w-full sm:w-auto">
                   <a href={p.githubTemplateUrl || "https://github.com"} target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" size="sm" icon={ExternalLink}>
                       Starter Guide
@@ -318,6 +319,7 @@ export const ProjectsPage = () => {
             </Card>
           ))}
         </div>
+
       )}
 
       {/* On-Demand Generate Modal */}

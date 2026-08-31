@@ -79,35 +79,35 @@ export const DashboardPage = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in pb-16">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in pb-16 min-w-0 max-w-full">
       {/* 1. Welcome & High-Level Positioning Banner */}
-      <div className="relative overflow-hidden glass-panel border-blue-500/20 rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-blue-950/40 via-slate-900/60 to-slate-900/80 shadow-2xl">
+      <div className="relative overflow-hidden glass-panel border-blue-500/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 bg-gradient-to-r from-blue-950/40 via-slate-900/60 to-slate-900/80 shadow-2xl">
         <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <Badge variant="brand" size="sm" icon={Sparkles}>
                 Career Target Active
               </Badge>
-              <span className="text-xs text-slate-400 font-mono">Pace: {data?.weeklyHoursTarget || 10} hrs/week</span>
+              <span className="text-xs text-slate-400 font-mono">Pace: {data?.weeklyHoursTarget || 10} hrs/wk</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
               Welcome back, {data?.fullName || user?.username} 👋
             </h1>
-            <p className="text-sm text-slate-300 mt-1.5 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-2xl leading-relaxed">
               You are currently advancing toward becoming a <strong className="text-sky-400 font-semibold">{data?.targetRole || 'Software Engineer'}</strong>.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link to="/app/skills">
-              <Button variant="outline" size="md" icon={Compass}>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+            <Link to="/app/skills" className="w-full sm:w-auto">
+              <Button variant="outline" size="md" icon={Compass} className="w-full sm:w-auto">
                 Explore Skill DAG
               </Button>
             </Link>
-            <Link to="/app/roadmap">
-              <Button variant="primary" size="md" icon={ArrowRight}>
+            <Link to="/app/roadmap" className="w-full sm:w-auto">
+              <Button variant="primary" size="md" icon={ArrowRight} className="w-full sm:w-auto">
                 View Full Roadmap
               </Button>
             </Link>
@@ -116,8 +116,8 @@ export const DashboardPage = () => {
       </div>
 
       {/* 2. Key Metrics Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <Card className="p-5 border-slate-800/90">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+        <Card className="p-4 sm:p-5 border-slate-800/90">
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Roadmap Completion</span>
             <Trophy className="w-4 h-4 text-amber-400" />
@@ -128,7 +128,7 @@ export const DashboardPage = () => {
           <ProgressBar value={data?.overallRoadmapProgress || 0} variant="brand" size="sm" />
         </Card>
 
-        <Card className="p-5 border-slate-800/90">
+        <Card className="p-4 sm:p-5 border-slate-800/90">
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Study Streak</span>
             <Flame className="w-4 h-4 text-orange-400 fill-orange-400/20" />
@@ -139,7 +139,7 @@ export const DashboardPage = () => {
           <span className="text-[11px] text-emerald-400 font-medium">Consistent daily momentum!</span>
         </Card>
 
-        <Card className="p-5 border-slate-800/90">
+        <Card className="p-4 sm:p-5 border-slate-800/90">
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Hours Learned</span>
             <Clock className="w-4 h-4 text-sky-400" />
@@ -150,7 +150,7 @@ export const DashboardPage = () => {
           <span className="text-[11px] text-slate-400">Target: {data?.weeklyHoursTarget || 10}h / wk</span>
         </Card>
 
-        <Card className="p-5 border-slate-800/90">
+        <Card className="p-4 sm:p-5 border-slate-800/90">
           <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
             <span>Competencies</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
@@ -165,7 +165,7 @@ export const DashboardPage = () => {
       {/* 3. Core "What to Learn Next" & "Currently Learning" Focus Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Next Action (Prominent 2 Columns) */}
-        <Card className="lg:col-span-2 glass-panel border-blue-500/30 p-6 sm:p-7 relative overflow-hidden">
+        <Card className="lg:col-span-2 glass-panel border-blue-500/30 p-4 sm:p-7 relative overflow-hidden">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
@@ -182,7 +182,7 @@ export const DashboardPage = () => {
 
           {data?.nextRecommendedAction ? (
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+              <h3 className="text-base sm:text-xl font-bold text-white mb-2">
                 {data.nextRecommendedAction.title}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
@@ -190,7 +190,7 @@ export const DashboardPage = () => {
               </p>
 
               {/* Explainable AI Reasoning Box */}
-              <div className="p-4 bg-slate-900/90 border border-slate-800 rounded-xl mb-6 text-xs text-slate-300 space-y-1.5">
+              <div className="p-3.5 sm:p-4 bg-slate-900/90 border border-slate-800 rounded-xl mb-6 text-xs text-slate-300 space-y-1.5">
                 <div className="flex items-center gap-1.5 text-sky-400 font-semibold">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Why this was recommended:</span>
@@ -201,8 +201,8 @@ export const DashboardPage = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-slate-800">
-                <div className="flex items-center gap-4 text-xs text-slate-400">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-slate-800">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-slate-400">
                   <span className="flex items-center gap-1.5 font-mono">
                     <Clock className="w-3.5 h-3.5 text-slate-500" />
                     Est. {data.nextRecommendedAction.estimatedHours || 3} Hours
@@ -213,14 +213,15 @@ export const DashboardPage = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
                   {data.nextRecommendedAction.url && (
                     <a
                       href={data.nextRecommendedAction.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="w-full sm:w-auto"
                     >
-                      <Button variant="primary" size="md" icon={ExternalLink}>
+                      <Button variant="primary" size="md" icon={ExternalLink} className="w-full sm:w-auto">
                         Open Material
                       </Button>
                     </a>
@@ -232,6 +233,7 @@ export const DashboardPage = () => {
                     loading={completingId === data.nextRecommendedAction.id}
                     onClick={() => handleMarkItemComplete(data.nextRecommendedAction.id)}
                     icon={CheckCircle2}
+                    className="w-full sm:w-auto"
                   >
                     Mark Completed
                   </Button>
@@ -253,6 +255,7 @@ export const DashboardPage = () => {
             </div>
           )}
         </Card>
+
 
         {/* Current Learning Phase Status & 7-Day Activity */}
         <div className="space-y-6">
@@ -389,7 +392,7 @@ export const DashboardPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {data?.topRecommendations?.slice(0, 3).map((rec, idx) => (
-            <Card key={idx} className="glass-card-interactive flex flex-col justify-between p-6">
+            <Card key={idx} className="glass-card-interactive flex flex-col justify-between p-4 sm:p-6">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <Badge variant={rec.type === 'PROJECT' ? 'purple' : 'brand'} size="sm">
@@ -407,13 +410,13 @@ export const DashboardPage = () => {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="pt-3.5 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <span className="text-xs text-slate-500 flex items-center gap-1 font-mono">
-                  <Clock className="w-3 h-3" />
+                  <Clock className="w-3 h-3 text-slate-500" />
                   {rec.estimatedHours} hrs
                 </span>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -422,14 +425,17 @@ export const DashboardPage = () => {
                     Why this?
                   </Button>
 
-                  <a href={rec.url} target="_blank" rel="noopener noreferrer">
-                    <Button variant="primary" size="sm" icon={ExternalLink}>
-                      View
-                    </Button>
-                  </a>
+                  {rec.url && (
+                    <a href={rec.url} target="_blank" rel="noopener noreferrer">
+                      <Button variant="primary" size="sm" icon={ExternalLink}>
+                        View
+                      </Button>
+                    </a>
+                  )}
                 </div>
               </div>
             </Card>
+
           ))}
         </div>
       </div>

@@ -25,9 +25,10 @@ export const AppLayout = () => {
         />
 
         {/* Dynamic Nested Route Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-fade-in">
+        <main className="flex-1 p-3 sm:p-5 lg:p-8 max-w-7xl w-full mx-auto min-w-0 overflow-x-hidden animate-fade-in">
           <Outlet />
         </main>
+
       </div>
 
       {/* Floating AI Assistant Drawer */}

@@ -106,23 +106,23 @@ export const RecommendationsPage = () => {
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="p-4 glass-panel rounded-2xl border-slate-800 flex flex-col sm:flex-row items-center gap-4">
-        <div className="flex-1 w-full">
+      <div className="p-3.5 sm:p-4 glass-panel rounded-2xl border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+        <div className="flex-1 w-full min-w-0">
           <Input
-            placeholder="Search by topic, keyword, framework (e.g. Spring, Docker)..."
+            placeholder="Search by topic, keyword, framework..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             icon={Search}
           />
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="w-40">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex items-center gap-2 sm:gap-3 w-full sm:w-auto shrink-0">
+          <div className="w-full sm:w-36">
             <Select
               value={difficultyFilter}
               onChange={(e) => setDifficultyFilter(e.target.value)}
               options={[
-                { value: 'ALL', label: 'All Difficulties' },
+                { value: 'ALL', label: 'All Levels' },
                 { value: 'BEGINNER', label: 'Beginner' },
                 { value: 'INTERMEDIATE', label: 'Intermediate' },
                 { value: 'ADVANCED', label: 'Advanced' },
@@ -130,7 +130,7 @@ export const RecommendationsPage = () => {
             />
           </div>
 
-          <div className="w-44">
+          <div className="w-full sm:w-44">
             <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -145,25 +145,25 @@ export const RecommendationsPage = () => {
       </div>
 
       {/* Grid of Ranked Items */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {filtered.map((rec) => (
-          <Card key={rec.id} className="glass-card-interactive p-6 flex flex-col justify-between">
+          <Card key={rec.id} className="glass-card-interactive p-4 sm:p-6 flex flex-col justify-between">
             <div>
               {/* Header Badge & Match Score */}
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
                 <Badge variant={rec.type === 'PROJECT' ? 'purple' : 'brand'} size="sm">
                   {rec.type}
                 </Badge>
 
                 <div className="flex items-center gap-2">
-                  <div className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-sky-300 font-mono flex items-center gap-1.5">
+                  <div className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-sky-300 font-mono flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-sky-400" />
                     {rec.score}% Match
                   </div>
                 </div>
               </div>
 
-              <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">
+              <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug break-words">
                 {rec.title}
               </h3>
 
@@ -174,10 +174,10 @@ export const RecommendationsPage = () => {
               {/* Explainable AI Reasoning Box */}
               <div className="p-3.5 bg-slate-900/90 border border-slate-800 rounded-xl mb-4 text-xs space-y-1.5">
                 <div className="flex items-center gap-1.5 text-sky-400 font-semibold">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
                   <span>Why Recommended:</span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">
+                <p className="text-slate-300 leading-relaxed break-words">
                   {rec.explanation}
                 </p>
               </div>
@@ -185,9 +185,9 @@ export const RecommendationsPage = () => {
 
             {/* Card Footer: Metadata, Detailed Modal trigger, Feedback */}
             <div>
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="pt-3.5 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3 text-xs text-slate-400">
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 font-mono">
                     <Clock className="w-3.5 h-3.5 text-slate-500" />
                     {rec.estimatedHours} hrs
                   </span>
@@ -195,7 +195,7 @@ export const RecommendationsPage = () => {
                   <span>{rec.difficulty || 'Intermediate'}</span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -205,20 +205,22 @@ export const RecommendationsPage = () => {
                     Why this?
                   </Button>
 
-                  <button
-                    onClick={() => handleFeedback(rec.id, 5)}
-                    className="p-1.5 text-slate-500 hover:text-emerald-400 rounded-lg hover:bg-slate-800 transition"
-                    title="Helpful"
-                  >
-                    <ThumbsUp className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => handleFeedback(rec.id, 1)}
-                    className="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-slate-800 transition"
-                    title="Not relevant"
-                  >
-                    <ThumbsDown className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleFeedback(rec.id, 5)}
+                      className="p-1.5 text-slate-500 hover:text-emerald-400 rounded-lg hover:bg-slate-800 transition"
+                      title="Helpful"
+                    >
+                      <ThumbsUp className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleFeedback(rec.id, 1)}
+                      className="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-slate-800 transition"
+                      title="Not relevant"
+                    >
+                      <ThumbsDown className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
 
                   {rec.url && (
                     <a href={rec.url} target="_blank" rel="noopener noreferrer">
@@ -239,6 +241,7 @@ export const RecommendationsPage = () => {
           </Card>
         ))}
       </div>
+
 
       {/* Explainable AI Detail Modal */}
       <RecommendationDetailModal
