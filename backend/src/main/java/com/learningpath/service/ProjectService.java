@@ -57,9 +57,18 @@ public class ProjectService {
                 : (profile.getCareerGoal() != null && !profile.getCareerGoal().trim().isEmpty() ? profile.getCareerGoal() : "Engineering Specialist");
 
         Map<String, Integer> targetRequirements = skillService.getRoleSkillRequirements(targetRole);
-        Set<String> allRequiredSkillNames = new HashSet<>(activeSkillNames);
-        for (String req : targetRequirements.keySet()) {
-            allRequiredSkillNames.add(req.toLowerCase());
+        Set<String> allRequiredSkillNames = new LinkedHashSet<>();
+        if (!targetRequirements.isEmpty()) {
+            allRequiredSkillNames.addAll(targetRequirements.keySet());
+        } else {
+            for (UserSkill us : activeSkills) {
+                if (us.getIsActive() != null && us.getIsActive()) {
+                    allRequiredSkillNames.add(us.getSkill().getName());
+                }
+            }
+        }
+        if (allRequiredSkillNames.isEmpty()) {
+            allRequiredSkillNames.add(targetRole);
         }
 
         List<SkillGapDto> skillGaps = skillService.calculateSkillGaps();

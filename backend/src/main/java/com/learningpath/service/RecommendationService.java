@@ -71,7 +71,14 @@ public class RecommendationService {
         String targetRole = profile.getTargetRole() != null && !profile.getTargetRole().trim().isEmpty() 
                 ? profile.getTargetRole() : (profile.getCareerGoal() != null && !profile.getCareerGoal().trim().isEmpty() ? profile.getCareerGoal() : "Engineering Specialist");
 
-        Map<String, Integer> targetRequirements = skillService.getRoleSkillRequirements(targetRole);
+        Map<String, Integer> targetRequirements = new LinkedHashMap<>(skillService.getRoleSkillRequirements(targetRole));
+        if (targetRequirements.isEmpty()) {
+            for (UserSkill us : userSkills) {
+                if (us.getIsActive() != null && us.getIsActive()) {
+                    targetRequirements.put(us.getSkill().getName(), 75);
+                }
+            }
+        }
 
         List<RecommendationDto> recommendations = new ArrayList<>();
 
@@ -90,11 +97,11 @@ public class RecommendationService {
                 if (recommendations.size() >= 4) break;
                 RecommendationDto synth = new RecommendationDto();
                 synth.setId((long) synthId++);
-                synth.setTitle(reqSkill + " Complete Architecture & Mastery Guide");
-                synth.setDescription("In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in " + reqSkill + ".");
+                synth.setTitle("Comprehensive Study Specification: " + reqSkill);
+                synth.setDescription("Structured conceptual learning curriculum, core reference material, and hands-on practice guidelines for " + reqSkill + ".");
                 synth.setType("COURSE");
-                synth.setUrl("https://learning.pathfinder.ai/topics/" + reqSkill.toLowerCase().replaceAll("[^a-z0-9]", "-"));
-                synth.setPlatform("Curated Academy");
+                synth.setUrl("https://openlibrary.org/search?q=" + java.net.URLEncoder.encode(reqSkill, java.nio.charset.StandardCharsets.UTF_8));
+                synth.setPlatform("Curated Study Specification (AI_INFERRED)");
                 synth.setDifficulty("INTERMEDIATE");
                 synth.setEstimatedHours(16.0);
                 synth.setScore(95.0);

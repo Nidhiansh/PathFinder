@@ -11,6 +11,23 @@ class BaseLLMService(ABC):
     def explain_recommendation(self, resource_title: str, user_profile: Dict[str, Any], score_breakdown: Dict[str, float]) -> str:
         pass
 
+    @abstractmethod
+    def generate_domain_projects(
+        self,
+        target_role: str,
+        career_goal: str,
+        experience_level: str,
+        skills: List[str],
+        skill_gaps: List[str],
+        roadmap_phases: List[str],
+        custom_topic: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        pass
+
+    @abstractmethod
+    def generate_assessment_blueprint(self, target_role: str, skills: List[str]) -> Dict[str, Any]:
+        pass
+
 class LocalDeterministicLLM(BaseLLMService):
     """
     Production-grade deterministic local intelligence engine.
@@ -131,8 +148,155 @@ class LocalDeterministicLLM(BaseLLMService):
         role = user_profile.get("target_role", "Engineering Specialist")
         return f"'{resource_title}' was recommended with high confidence because it directly targets essential competencies for {role}."
 
+    def generate_domain_projects(
+        self,
+        target_role: str,
+        career_goal: str,
+        experience_level: str,
+        skills: List[str],
+        skill_gaps: List[str],
+        roadmap_phases: List[str],
+        custom_topic: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        active_skills = skills if skills else [target_role]
+        primary = active_skills[0]
+        context_text = f"{target_role} {career_goal} {primary}".lower()
+
+        # Domain Archetype Identification
+        is_arts = any(w in context_text for w in ["paint", "watercolor", "sketch", "draw", "origami", "ceramic", "sculpt", "art", "craft", "photo", "music", "audio"])
+        is_analytics = any(w in context_text for w in ["forecast", "supply chain", "logistics", "inventory", "econometric", "finance", "valuation", "actuarial"])
+        is_bio = any(w in context_text for w in ["biology", "genetic", "crispr", "molecular", "cell", "biochem", "medicine"])
+        is_physical = any(w in context_text for w in ["aerodynamic", "flight", "physics", "thermo", "fluid", "mechanics"])
+        is_software = any(w in context_text for w in ["java", "python", "spring", "react", "docker", "kubernetes", "flutter", "sql", "api", "algorithms", "dynamic programming", "rag"])
+
+        if is_arts:
+            p1_title = f"Foundational {primary} Study & Execution Portfolio"
+            p1_desc = f"A structured hands-on project validating essential medium dynamics, composition, and technique execution for {primary}."
+            p1_deliv = "Curated study portfolio containing 3 progressive technique artifacts, material notes, and reflective process log."
+            p1_rubric = "Technical execution and medium control (40%), compositional balance (30%), reflective analysis (30%)."
+
+            p2_title = f"{target_role} Advanced Synthesis & Exhibition Capstone"
+            p2_desc = f"An advanced capstone creating a cohesive, professional-grade portfolio piece synthesizing all core techniques in {primary}."
+            p2_deliv = "Exhibition-grade final portfolio piece, high-resolution documentation, and detailed technical artist statement."
+            p2_rubric = "Mastery of advanced technique (35%), conceptual cohesion and aesthetic depth (35%), portfolio presentation (30%)."
+
+        elif is_analytics:
+            p1_title = f"Baseline {primary} Empirical Modeling & Volatility Study"
+            p1_desc = f"A practical analytical modeling project applying foundational quantitative techniques, error measurement, and parameter sensitivity."
+            p1_deliv = "Validated forecasting/analytical model specification, data validation workbook, and parameter sensitivity briefing."
+            p1_rubric = "Mathematical and quantitative rigor (40%), error metric validation (30%), executive interpretation (30%)."
+
+            p2_title = f"Enterprise {target_role} End-to-End Decision Framework Capstone"
+            p2_desc = f"A comprehensive enterprise-grade decision and optimization capstone applying end-to-end multi-variable modeling for {primary}."
+            p2_deliv = "Full production-ready modeling suite, scenario simulation report, and strategic recommendation briefing."
+            p2_rubric = "Model robustness & scenario optimization (35%), data-driven decision quality (35%), executive documentation (30%)."
+
+        elif is_bio:
+            p1_title = f"Foundational {primary} Pathway & Protocol Analysis"
+            p1_desc = f"A structured scientific research project analyzing cellular mechanisms, target selection, and experimental protocols."
+            p1_deliv = "Experimental assay protocol specification, pathway diagram documentation, and literature review synthesis."
+            p1_rubric = "Scientific accuracy and mechanism depth (40%), experimental protocol rigor (30%), literature citation (30%)."
+
+            p2_title = f"{target_role} Applied Experimental Design & Genomic Synthesis Capstone"
+            p2_desc = f"An advanced scientific capstone designing a full experimental pipeline, data verification protocol, and phenotypic assay."
+            p2_deliv = "Comprehensive research dossier, simulation/assay dataset analysis, and publication-ready study manuscript."
+            p2_rubric = "Experimental design validity (35%), analytical depth (35%), scientific reproducibility (30%)."
+
+        elif is_physical:
+            p1_title = f"Foundational {primary} Governing Dynamics & Flow Simulation"
+            p1_desc = f"An engineering analysis project calculating theoretical parameters, boundary conditions, and flow/stability profiles."
+            p1_deliv = "Parametric calculation workbook, simulation stability plots, and engineering verification summary."
+            p1_rubric = "Governing equation accuracy (40%), parametric boundary handling (30%), simulation documentation (30%)."
+
+            p2_title = f"{target_role} Multi-Parameter Simulation & Design Optimization Capstone"
+            p2_desc = f"An advanced engineering capstone optimizing physical aerodynamic or mechanical performance across real-world operational envelopes."
+            p2_deliv = "Complete parametric engineering model, optimization convergence report, and technical design verification dossier."
+            p2_rubric = "Design optimization rigor (35%), physical simulation fidelity (35%), engineering report (30%)."
+
+        elif is_software:
+            p1_title = f"{primary} Core Mechanics & Algorithmic Framework"
+            p1_desc = f"A hands-on implementation project validating fundamental architecture, core mechanics, and clean execution for {primary}."
+            p1_deliv = "Modular implementation repository, automated unit test suite, and technical documentation."
+            p1_rubric = "Core conceptual correctness (40%), code modularity (30%), test coverage (30%)."
+
+            p2_title = f"{target_role} Production-Grade Capstone Architecture"
+            p2_desc = f"An advanced end-to-end production milestone synthesizing {', '.join(active_skills[:4])} with performance benchmarking and optimization."
+            p2_deliv = "Production-grade repository, benchmark suite, configuration manifests, and architecture documentation."
+            p2_rubric = "Architectural robustness (35%), performance optimization (35%), production readiness (30%)."
+
+        else:
+            p1_title = f"Applied {primary} Practical Milestone Study"
+            p1_desc = f"A structured practical project validating essential methodologies, workflow execution, and core principles in {primary}."
+            p1_deliv = "Practical milestone portfolio, methodology documentation, and reviewable artifact."
+            p1_rubric = "Domain rigor (40%), execution quality (30%), documentation (30%)."
+
+            p2_title = f"{target_role} Comprehensive Field Capstone Portfolio"
+            p2_desc = f"An advanced capstone demonstrating end-to-end mastery and practical problem solving in {primary}."
+            p2_deliv = "Comprehensive capstone portfolio, full case evaluation, and professional artifact package."
+            p2_rubric = "Synthesis of domain competencies (35%), practical impact (35%), presentation rigor (30%)."
+
+        return [
+            {
+                "id": 20001,
+                "title": p1_title,
+                "description": p1_desc,
+                "difficulty": "INTERMEDIATE",
+                "estimated_hours": 15.0,
+                "deliverables": p1_deliv,
+                "rubric": p1_rubric,
+                "primary_skill": primary,
+                "github_template_url": f"https://learning.pathfinder.ai/projects/{primary.lower().replace(' ', '-')}",
+                "skills": active_skills[:2],
+                "roadmap_phase": "Phase 1: Foundation & Core Architecture",
+                "score": 95.0,
+                "explanation": f"Directly validates foundational competency in {primary} as defined in your personalized learning path."
+            },
+            {
+                "id": 20002,
+                "title": p2_title,
+                "description": p2_desc,
+                "difficulty": "ADVANCED",
+                "estimated_hours": 25.0,
+                "deliverables": p2_deliv,
+                "rubric": p2_rubric,
+                "primary_skill": primary,
+                "github_template_url": f"https://learning.pathfinder.ai/projects/{target_role.lower().replace(' ', '-')}",
+                "skills": active_skills,
+                "roadmap_phase": "Phase 2: Advanced Synthesis & Capstone",
+                "score": 92.0,
+                "explanation": f"Comprehensive capstone synthesizing all required competencies for {target_role}."
+            }
+        ]
+
+    def generate_assessment_blueprint(self, target_role: str, skills: List[str]) -> Dict[str, Any]:
+        return {
+            "target_role": target_role,
+            "skills_evaluated": skills,
+            "assessment_type": "DIAGNOSTIC_AND_PRACTICAL",
+            "format": "Conceptual Evaluation & Milestone Artifact Review",
+            "passing_threshold_percentage": 75.0,
+            "sections": [
+                {
+                    "section_name": "Foundational Principles & Mechanics",
+                    "weight_percentage": 35.0,
+                    "focus": f"Evaluates core understanding of {skills[0] if skills else target_role}"
+                },
+                {
+                    "section_name": "Applied Domain Technique & Problem Solving",
+                    "weight_percentage": 40.0,
+                    "focus": "Practical execution and parameter/medium handling"
+                },
+                {
+                    "section_name": "Advanced Synthesis & Edge Cases",
+                    "weight_percentage": 25.0,
+                    "focus": "Complex scenarios, optimization, and synthesis"
+                }
+            ]
+        }
+
 _local_llm_instance = LocalDeterministicLLM()
 
 def get_llm_service() -> BaseLLMService:
     return _local_llm_instance
+
 

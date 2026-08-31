@@ -314,17 +314,31 @@ public class RoadmapService {
                     phaseHours += pHours;
                 } else if (gap > 20) {
                     double pHours = 14.0;
+                    String sLow = skill.getName().toLowerCase();
+                    String projTitle;
+                    if (sLow.matches(".*(paint|watercolor|origami|sketch|draw|art|sculpt|music|audio|photo).*")) {
+                        projTitle = "Practical Study: " + skill.getName() + " Technique Artifact";
+                    } else if (sLow.matches(".*(forecast|supply chain|logistics|inventory|finance|econometric).*")) {
+                        projTitle = "Applied Analysis: " + skill.getName() + " Modeling Study";
+                    } else if (sLow.matches(".*(biology|genetic|crispr|physics|aerodynamic|molecular).*")) {
+                        projTitle = "Research & Protocol: " + skill.getName() + " Investigation";
+                    } else if (sLow.matches(".*(java|python|react|docker|kubernetes|flutter|sql|api|algorithms).*")) {
+                        projTitle = "Hands-On Build: " + skill.getName() + " Implementation Project";
+                    } else {
+                        projTitle = "Practical Milestone: " + skill.getName() + " Execution Study";
+                    }
+
                     LearningPathItem projItem = new LearningPathItem(
                             phase,
                             ItemType.PROJECT,
-                            "Hands-On Build: " + skill.getName() + " Implementation Project",
-                            "https://github.com",
+                            projTitle,
+                            "https://learning.pathfinder.ai/projects/" + skill.getName().toLowerCase().replaceAll("[^a-z0-9]", "-"),
                             pHours,
                             itemOrder++,
                             ItemStatus.LOCKED
                     );
                     projItem.setRecommendationScore(94.0);
-                    projItem.setRecommendationReason("Practical portfolio milestone build verifying " + skill.getName() + " skills");
+                    projItem.setRecommendationReason("Practical portfolio milestone build verifying " + skill.getName() + " competencies");
                     itemRepository.save(projItem);
                     phaseHours += pHours;
                 }
@@ -444,6 +458,16 @@ public class RoadmapService {
         if (s.contains("python")) return "https://docs.python.org/3/";
         if (s.contains("react")) return "https://react.dev";
         if (s.contains("docker")) return "https://docs.docker.com/";
+        
+        // Arts, Humanities, and Crafts
+        if (s.matches(".*(paint|watercolor|origami|sketch|draw|art|sculpt|music|audio|photo).*")) {
+            return "https://openlibrary.org/search?q=" + java.net.URLEncoder.encode(skillName, java.nio.charset.StandardCharsets.UTF_8);
+        }
+        // Science, Mathematics, Operations, and Analytics
+        if (s.matches(".*(forecast|supply chain|biology|genetic|crispr|physics|aerodynamic|math|calculus|finance).*")) {
+            return "https://scholar.google.com/scholar?q=" + java.net.URLEncoder.encode(skillName, java.nio.charset.StandardCharsets.UTF_8);
+        }
+
         return "https://devdocs.io";
     }
 

@@ -15,6 +15,7 @@ from app.core.scorer import RecommendationScorer
 from app.core.roadmap_generator import RoadmapGenerator
 from app.core.adaptive_engine import AdaptiveEngine
 from app.services.nlp_parser import NLPGoalParser
+from app.services.semantic_knowledge_service import get_semantic_service
 from app.services.llm_service import get_llm_service, BaseLLMService
 
 router = APIRouter(prefix="/ai", tags=["AI Engine"])
@@ -25,6 +26,7 @@ scorer = RecommendationScorer(skill_graph)
 roadmap_gen = RoadmapGenerator(skill_graph, scorer)
 adaptive_engine = AdaptiveEngine()
 nlp_parser = NLPGoalParser()
+semantic_service = get_semantic_service()
 
 @router.post("/analyze-goal", response_model=GoalAnalysisResponse)
 async def analyze_goal(request: GoalAnalysisRequest):
@@ -34,7 +36,7 @@ async def analyze_goal(request: GoalAnalysisRequest):
     """
     if not request.prompt or not request.prompt.strip():
         raise HTTPException(status_code=400, detail="Goal prompt cannot be empty")
-    return nlp_parser.parse_goal(request.prompt)
+    return semantic_service.analyze_intent(request.prompt)
 
 @router.post("/analyze-skill-gap", response_model=SkillGapResponse)
 async def analyze_skill_gap(request: SkillGapRequest):

@@ -188,7 +188,7 @@ public class AiServiceClient {
                 }
             }
         } else {
-            // Unanticipated / novel concept: dynamic extraction
+            // Unanticipated / novel concept: dynamic archetype decomposition
             String cleanConcept = prompt.replaceAll("(?i)^(i want to learn|i want to become|how to learn|learn|teach me|i need to master|i would like to study)\\s+", "").trim();
             cleanConcept = cleanConcept.replaceAll("[?.!]", "").trim();
             if (cleanConcept.isEmpty()) cleanConcept = "Core Competency";
@@ -207,8 +207,35 @@ public class AiServiceClient {
             resp.setNormalizedGoal("Mastery of " + cleanConcept);
 
             coreSkills.add(cleanConcept);
-            coreSkills.add(cleanConcept + " Core Principles");
-            prerequisiteSkills.add("Foundations for " + cleanConcept);
+            String cLow = cleanConcept.toLowerCase();
+
+            // Archetype decomposition
+            if (cLow.contains("watercolor") || cLow.contains("paint")) {
+                coreSkills.add("Wet-on-Wet & Glazing Layering Techniques");
+                coreSkills.add("Pigment Transparency & Paper Moisture Control");
+                prerequisiteSkills.add("Tonal Value Studies & Compositional Drawing");
+            } else if (cLow.contains("origami") || cLow.contains("fold")) {
+                coreSkills.add("Crease Pattern Geometry & Fold Mechanics");
+                coreSkills.add("Curved Creasing & Wet-Folding Sculpting");
+                prerequisiteSkills.add("Geometric Symmetry & Proportion Foundations");
+            } else if (cLow.contains("forecast") || cLow.contains("supply chain") || cLow.contains("logistics")) {
+                coreSkills.add("Time-Series Demand Modeling & Trend Decomposition");
+                coreSkills.add("Safety Stock & Inventory Replenishment Strategies");
+                prerequisiteSkills.add("Applied Statistics, Probability & Baseline Data Analysis");
+            } else if (cLow.contains("biology") || cLow.contains("cell") || cLow.contains("genetic") || cLow.contains("crispr")) {
+                coreSkills.add("Molecular Mechanisms & Cellular Signaling Pathways");
+                coreSkills.add("Gene Editing Protocols & Targeted Assay Design");
+                prerequisiteSkills.add("Foundations of Organic Chemistry & Cell Biology");
+            } else if (cLow.contains("aerodynamic") || cLow.contains("flight") || cLow.contains("physics")) {
+                coreSkills.add("Boundary Layer Dynamics & Navier-Stokes Governing Equations");
+                coreSkills.add("Lift, Drag & Aerodynamic Profiling Simulation");
+                prerequisiteSkills.add("Multivariable Calculus & Classical Mechanics");
+            } else {
+                coreSkills.add("Core Methodologies & Structural Patterns in " + cleanConcept);
+                coreSkills.add("Applied Execution & Empirical Validation in " + cleanConcept);
+                prerequisiteSkills.add("Foundational Analytical Principles for " + cleanConcept);
+            }
+
             excludedSkills.addAll(List.of("Git & Version Control", "Java", "Docker & Containers", "SQL & Relational Databases"));
         }
 
@@ -337,37 +364,109 @@ public class AiServiceClient {
         List<ProjectDto> list = new ArrayList<>();
         String primarySkill = (skills != null && !skills.isEmpty()) ? skills.get(0) : targetRole;
         String secondarySkill = (skills != null && skills.size() > 1) ? skills.get(1) : primarySkill;
+        String contextText = (targetRole + " " + (careerGoal != null ? careerGoal : "") + " " + primarySkill).toLowerCase();
+
+        boolean isArts = contextText.matches(".*(paint|watercolor|sketch|draw|origami|ceramic|sculpt|art|craft|photo|music|audio).*");
+        boolean isAnalytics = contextText.matches(".*(forecast|supply chain|logistics|inventory|econometric|finance|valuation|actuarial).*");
+        boolean isBio = contextText.matches(".*(biology|genetic|crispr|molecular|cell|biochem|medicine).*");
+        boolean isPhysical = contextText.matches(".*(aerodynamic|flight|physics|thermo|fluid|mechanics).*");
+        boolean isSoftware = contextText.matches(".*(java|python|spring|react|docker|kubernetes|flutter|sql|api|algorithms|dynamic programming|rag).*");
+
+        String p1Title, p1Desc, p1Deliv, p1Rubric;
+        String p2Title, p2Desc, p2Deliv, p2Rubric;
+
+        if (isArts) {
+            p1Title = "Foundational " + primarySkill + " Study & Execution Portfolio";
+            p1Desc = "A structured hands-on project validating essential medium dynamics, composition, and technique execution for " + primarySkill + ".";
+            p1Deliv = "Curated study portfolio containing 3 progressive technique artifacts, material notes, and reflective process log.";
+            p1Rubric = "Technical execution and medium control (40%), compositional balance (30%), reflective analysis (30%).";
+
+            p2Title = targetRole + " Advanced Synthesis & Exhibition Capstone";
+            p2Desc = "An advanced capstone creating a cohesive, professional-grade portfolio piece synthesizing all core techniques in " + primarySkill + ".";
+            p2Deliv = "Exhibition-grade final portfolio piece, high-resolution documentation, and detailed technical artist statement.";
+            p2Rubric = "Mastery of advanced technique (35%), conceptual cohesion and aesthetic depth (35%), portfolio presentation (30%).";
+        } else if (isAnalytics) {
+            p1Title = "Baseline " + primarySkill + " Empirical Modeling & Volatility Study";
+            p1Desc = "A practical analytical modeling project applying foundational quantitative techniques, error measurement, and parameter sensitivity.";
+            p1Deliv = "Validated forecasting/analytical model specification, data validation workbook, and parameter sensitivity briefing.";
+            p1Rubric = "Mathematical and quantitative rigor (40%), error metric validation (30%), executive interpretation (30%).";
+
+            p2Title = "Enterprise " + targetRole + " End-to-End Decision Framework Capstone";
+            p2Desc = "A comprehensive enterprise-grade decision and optimization capstone applying end-to-end multi-variable modeling for " + primarySkill + ".";
+            p2Deliv = "Full production-ready modeling suite, scenario simulation report, and strategic recommendation briefing.";
+            p2Rubric = "Model robustness & scenario optimization (35%), data-driven decision quality (35%), executive documentation (30%).";
+        } else if (isBio) {
+            p1Title = "Foundational " + primarySkill + " Pathway & Protocol Analysis";
+            p1Desc = "A structured scientific research project analyzing cellular mechanisms, target selection, and experimental protocols.";
+            p1Deliv = "Experimental assay protocol specification, pathway diagram documentation, and literature review synthesis.";
+            p1Rubric = "Scientific accuracy and mechanism depth (40%), experimental protocol rigor (30%), literature citation (30%).";
+
+            p2Title = targetRole + " Applied Experimental Design & Genomic Synthesis Capstone";
+            p2Desc = "An advanced scientific capstone designing a full experimental pipeline, data verification protocol, and phenotypic assay.";
+            p2Deliv = "Comprehensive research dossier, simulation/assay dataset analysis, and publication-ready study manuscript.";
+            p2Rubric = "Experimental design validity (35%), analytical depth (35%), scientific reproducibility (30%).";
+        } else if (isPhysical) {
+            p1Title = "Foundational " + primarySkill + " Governing Dynamics & Flow Simulation";
+            p1Desc = "An engineering analysis project calculating theoretical parameters, boundary conditions, and flow/stability profiles.";
+            p1Deliv = "Parametric calculation workbook, simulation stability plots, and engineering verification summary.";
+            p1Rubric = "Governing equation accuracy (40%), parametric boundary handling (30%), simulation documentation (30%).";
+
+            p2Title = targetRole + " Multi-Parameter Simulation & Design Optimization Capstone";
+            p2Desc = "An advanced engineering capstone optimizing physical aerodynamic or mechanical performance across real-world operational envelopes.";
+            p2Deliv = "Complete parametric engineering model, optimization convergence report, and technical design verification dossier.";
+            p2Rubric = "Design optimization rigor (35%), physical simulation fidelity (35%), engineering report (30%).";
+        } else if (isSoftware) {
+            p1Title = primarySkill + " Core Mechanics & Algorithmic Framework";
+            p1Desc = "A hands-on implementation project validating fundamental architecture, core mechanics, and clean execution for " + primarySkill + ".";
+            p1Deliv = "Modular implementation repository, automated unit test suite, and technical documentation.";
+            p1Rubric = "Core conceptual correctness (40%), code modularity (30%), test coverage (30%).";
+
+            p2Title = targetRole + " Production-Grade Capstone Architecture";
+            p2Desc = "An advanced end-to-end production milestone synthesizing " + (skills != null ? String.join(", ", skills) : primarySkill) + " with performance benchmarking and optimization.";
+            p2Deliv = "Production-grade repository, benchmark suite, configuration manifests, and architecture documentation.";
+            p2Rubric = "Architectural robustness (35%), performance optimization (35%), production readiness (30%).";
+        } else {
+            p1Title = "Applied " + primarySkill + " Practical Milestone Study";
+            p1Desc = "A structured practical project validating essential methodologies, workflow execution, and core principles in " + primarySkill + ".";
+            p1Deliv = "Practical milestone portfolio, methodology documentation, and reviewable artifact.";
+            p1Rubric = "Domain rigor (40%), execution quality (30%), documentation (30%).";
+
+            p2Title = targetRole + " Comprehensive Field Capstone Portfolio";
+            p2Desc = "An advanced capstone demonstrating end-to-end mastery and practical problem solving in " + primarySkill + ".";
+            p2Deliv = "Comprehensive capstone portfolio, full case evaluation, and professional artifact package.";
+            p2Rubric = "Synthesis of domain competencies (35%), practical impact (35%), presentation rigor (30%).";
+        }
 
         // Project 1: Foundational Core Implementation
         ProjectDto p1 = new ProjectDto();
         p1.setId(20001L);
-        p1.setTitle(primarySkill + " Core Mechanics & Implementation Framework");
-        p1.setDescription("A hands-on practical project validating fundamental principles and core architecture for " + primarySkill + ". Focuses on clean execution, error handling, and foundational workflows.");
+        p1.setTitle(p1Title);
+        p1.setDescription(p1Desc);
         p1.setDifficulty("INTERMEDIATE");
         p1.setEstimatedHours(15.0);
-        p1.setDeliverables("Working modular codebase, unit tests validating core mechanisms, and technical documentation.");
-        p1.setRubric("Core conceptual correctness (40%), modular implementation quality (30%), test coverage and documentation (30%).");
+        p1.setDeliverables(p1Deliv);
+        p1.setRubric(p1Rubric);
         p1.setPrimarySkillName(primarySkill);
         p1.setSkills(List.of(primarySkill, secondarySkill));
-        p1.setGithubTemplateUrl("https://github.com/topics/" + primarySkill.toLowerCase().replaceAll("[^a-z0-9]", "-"));
+        p1.setGithubTemplateUrl("https://learning.pathfinder.ai/projects/" + primarySkill.toLowerCase().replaceAll("[^a-z0-9]", "-"));
         p1.setRoadmapPhase("Phase 1: Foundation & Core Architecture");
         p1.setIsAiGenerated(true);
         p1.setScore(95.0);
-        p1.setExplanation("Directly validates core competency in " + primarySkill + " as defined in your personalized learning path.");
+        p1.setExplanation("Directly validates foundational competency in " + primarySkill + " as defined in your personalized learning path.");
         list.add(p1);
 
         // Project 2: Advanced Capstone & Optimization
         ProjectDto p2 = new ProjectDto();
         p2.setId(20002L);
-        p2.setTitle(targetRole + " End-to-End Capstone Portfolio Project");
-        p2.setDescription("An advanced end-to-end production milestone applying " + (skills != null ? String.join(", ", skills) : primarySkill) + " to solve a complex, real-world domain challenge with performance benchmarking and optimization.");
+        p2.setTitle(p2Title);
+        p2.setDescription(p2Desc);
         p2.setDifficulty("ADVANCED");
         p2.setEstimatedHours(25.0);
-        p2.setDeliverables("Production-grade repository, benchmark report, integration configs, and comprehensive validation suite.");
-        p2.setRubric("Architectural robustness (35%), performance and optimization (35%), real-world domain rigor (30%).");
+        p2.setDeliverables(p2Deliv);
+        p2.setRubric(p2Rubric);
         p2.setPrimarySkillName(primarySkill);
         p2.setSkills(skills != null && !skills.isEmpty() ? skills : List.of(primarySkill));
-        p2.setGithubTemplateUrl("https://github.com/topics/" + targetRole.toLowerCase().replaceAll("[^a-z0-9]", "-"));
+        p2.setGithubTemplateUrl("https://learning.pathfinder.ai/projects/" + targetRole.toLowerCase().replaceAll("[^a-z0-9]", "-"));
         p2.setRoadmapPhase("Phase 2: Advanced Synthesis & Capstone");
         p2.setIsAiGenerated(true);
         p2.setScore(92.0);

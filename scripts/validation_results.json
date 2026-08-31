@@ -1,0 +1,2024 @@
+{
+  "dp_extract": {
+    "targetRole": "Dynamic Programming Specialist",
+    "careerGoal": "I want to learn Dynamic Programming.",
+    "rawGoal": "I want to learn Dynamic Programming.",
+    "normalizedGoal": "Mastery of Dynamic Programming and Core Foundations",
+    "goalType": "TOPIC_LEARNING",
+    "experienceLevel": "INTERMEDIATE",
+    "estimatedMonths": 6,
+    "extractedSkills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation"
+    ],
+    "missingSkills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation",
+      "Recursion & Backtracking",
+      "Time & Space Complexity (Big-O)"
+    ],
+    "coreSkills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation"
+    ],
+    "prerequisiteSkills": [
+      "Recursion & Backtracking",
+      "Time & Space Complexity (Big-O)"
+    ],
+    "optionalSkills": [],
+    "excludedSkills": [
+      "Git & Version Control",
+      "Docker & Containers",
+      "SQL & Relational Databases",
+      "Java",
+      "Spring Boot"
+    ],
+    "confidence": 0.92,
+    "learningPace": "10 hours/week (Hands-On)",
+    "aiSummary": "Curriculum grounded in validated prerequisite ontology with 2 prerequisites and 2 core skills."
+  },
+  "dp_gaps": [
+    {
+      "skillName": "Dynamic Programming",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [
+        "Recursion & Backtracking (0%)",
+        "Time & Space Complexity (Big-O) (0%)"
+      ],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Dynamic Programming Specialist.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Memoization & Tabulation",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [
+        "Recursion & Backtracking (0%)"
+      ],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Dynamic Programming Specialist.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Arrays & Data Structures",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Dynamic Programming Specialist.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Recursion & Backtracking",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "REQUIRED_PREREQUISITE",
+      "reason": "Validated foundational prerequisite for Dynamic Programming in prerequisite DAG.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Time & Space Complexity (Big-O)",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "REQUIRED_PREREQUISITE",
+      "reason": "Validated foundational prerequisite for Dynamic Programming in prerequisite DAG.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    }
+  ],
+  "dp_recs": [
+    {
+      "id": 30001,
+      "title": "Dynamic Programming Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Dynamic Programming.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/dynamic-programming",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Dynamic Programming, fulfilling high-priority competency gap for Dynamic Programming Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Dynamic Programming"
+      ],
+      "prerequisites": [
+        "Foundations of Dynamic Programming"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "Memoization & Tabulation Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Memoization & Tabulation.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/memoization---tabulation",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Memoization & Tabulation, fulfilling high-priority competency gap for Dynamic Programming Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Memoization & Tabulation"
+      ],
+      "prerequisites": [
+        "Foundations of Memoization & Tabulation"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30003,
+      "title": "Arrays & Data Structures Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Arrays & Data Structures.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/arrays---data-structures",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Arrays & Data Structures, fulfilling high-priority competency gap for Dynamic Programming Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Arrays & Data Structures"
+      ],
+      "prerequisites": [
+        "Foundations of Arrays & Data Structures"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30001,
+      "title": "recursion & backtracking Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for recursion & backtracking. Focuses on clean execution, error handling, and foundational workflows.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/recursion---backtracking",
+      "platform": "Portfolio Project",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "score": 95.0,
+      "explanation": "Directly validates core competency in recursion & backtracking as defined in your personalized learning path.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "recursion & backtracking",
+        "time & space complexity (big-o)"
+      ],
+      "prerequisites": [
+        "recursion & backtracking Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "Dynamic Programming Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying recursion & backtracking, time & space complexity (big-o), arrays & data structures, dynamic programming, memoization & tabulation to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/dynamic-programming-specialist",
+      "platform": "Portfolio Project",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Dynamic Programming Specialist.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "recursion & backtracking",
+        "time & space complexity (big-o)",
+        "arrays & data structures",
+        "dynamic programming",
+        "memoization & tabulation"
+      ],
+      "prerequisites": [
+        "recursion & backtracking Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 1,
+      "title": "Dynamic Programming Masterclass: From Recursion to Memoization",
+      "description": "Deep dive into 1D and 2D dynamic programming, optimal substructure, state transitions, and tabular caching patterns.",
+      "type": "COURSE",
+      "url": "https://algorithms.org/dp",
+      "platform": "Algorithms Academy",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 18.0,
+      "score": 79.0,
+      "explanation": "Strong goal alignment: directly targets Dynamic Programming, Memoization & Tabulation which is a high-priority competency requirement. Note: foundational prerequisites should be completed first.",
+      "matchFactors": {
+        "skillGapMatch": 0.8,
+        "goalRelevance": 0.95,
+        "prerequisiteCompatibility": 0.4,
+        "difficultyMatch": 0.6,
+        "learningStyleMatch": 0.95,
+        "qualityScore": 0.98
+      },
+      "skillsTaught": [
+        "Dynamic Programming",
+        "Memoization & Tabulation"
+      ],
+      "prerequisites": [
+        "Recursion & Backtracking",
+        "Time & Space Complexity (Big-O)"
+      ],
+      "isPrerequisitesMet": false
+    }
+  ],
+  "dp_projects": [
+    {
+      "id": 20001,
+      "title": "recursion & backtracking Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for recursion & backtracking. Focuses on clean execution, error handling, and foundational workflows.",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "deliverables": "Working modular codebase, unit tests validating core mechanisms, and technical documentation.",
+      "rubric": "Core conceptual correctness (40%), modular implementation quality (30%), test coverage and documentation (30%).",
+      "primarySkillName": "recursion & backtracking",
+      "githubTemplateUrl": "https://github.com/topics/recursion---backtracking",
+      "skills": [
+        "recursion & backtracking",
+        "time & space complexity (big-o)"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 1: Foundation & Core Architecture",
+      "score": 95.0,
+      "explanation": "Directly validates core competency in recursion & backtracking as defined in your personalized learning path.",
+      "completed": false
+    },
+    {
+      "id": 20002,
+      "title": "Dynamic Programming Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying recursion & backtracking, time & space complexity (big-o), arrays & data structures, dynamic programming, memoization & tabulation to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "deliverables": "Production-grade repository, benchmark report, integration configs, and comprehensive validation suite.",
+      "rubric": "Architectural robustness (35%), performance and optimization (35%), real-world domain rigor (30%).",
+      "primarySkillName": "recursion & backtracking",
+      "githubTemplateUrl": "https://github.com/topics/dynamic-programming-specialist",
+      "skills": [
+        "recursion & backtracking",
+        "time & space complexity (big-o)",
+        "arrays & data structures",
+        "dynamic programming",
+        "memoization & tabulation"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 2: Advanced Synthesis & Capstone",
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Dynamic Programming Specialist.",
+      "completed": false
+    }
+  ],
+  "dp_roadmap": {
+    "id": 25,
+    "title": "Dynamic Programming Specialist Mastery Roadmap",
+    "targetRole": "Dynamic Programming Specialist",
+    "status": "ACTIVE",
+    "totalEstimatedHours": 127.0,
+    "estimatedWeeks": 13,
+    "overallProgressPercentage": 0.0,
+    "totalItems": 8,
+    "completedItems": 0,
+    "phases": [
+      {
+        "id": 44,
+        "phaseNumber": 1,
+        "title": "Phase 1: Recursion & Backtracking & Time & Space Complexity (Big-O) - Foundations & Core Principles",
+        "description": "Mastery and verification of Recursion & Backtracking, Time & Space Complexity (Big-O).",
+        "status": "AVAILABLE",
+        "estimatedHours": 52.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 109,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Recursion & Backtracking",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "AVAILABLE",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Recursion & Backtracking",
+            "requiredPrerequisites": null,
+            "isLocked": false
+          },
+          {
+            "id": 110,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Recursion & Backtracking Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Recursion & Backtracking skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 111,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Time & Space Complexity (Big-O)",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Time & Space Complexity (Big-O)",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 112,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Time & Space Complexity (Big-O) Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Time & Space Complexity (Big-O) skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 45,
+        "phaseNumber": 2,
+        "title": "Phase 2: Memoization & Tabulation & Dynamic Programming - Advanced Architecture & Production Capstone",
+        "description": "Mastery and verification of Memoization & Tabulation, Dynamic Programming.",
+        "status": "LOCKED",
+        "estimatedHours": 75.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 113,
+            "itemType": "RESOURCE",
+            "referenceId": 1,
+            "title": "Dynamic Programming Masterclass: From Recursion to Memoization",
+            "description": "Deep dive into 1D and 2D dynamic programming, optimal substructure, state transitions, and tabular caching patterns.",
+            "url": "https://algorithms.org/dp",
+            "platform": "Algorithms Academy",
+            "difficulty": "ADVANCED",
+            "estimatedHours": 18.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 98.0,
+            "recommendationReason": "Curriculum module covering Memoization & Tabulation for Dynamic Programming Specialist",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 114,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Memoization & Tabulation Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Memoization & Tabulation skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 115,
+            "itemType": "RESOURCE",
+            "referenceId": 1,
+            "title": "Dynamic Programming Masterclass: From Recursion to Memoization",
+            "description": "Deep dive into 1D and 2D dynamic programming, optimal substructure, state transitions, and tabular caching patterns.",
+            "url": "https://algorithms.org/dp",
+            "platform": "Algorithms Academy",
+            "difficulty": "ADVANCED",
+            "estimatedHours": 18.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 98.0,
+            "recommendationReason": "Curriculum module covering Dynamic Programming for Dynamic Programming Specialist",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 116,
+            "itemType": "PROJECT",
+            "referenceId": 1,
+            "title": "Project: Dynamic Programming Algorithmic Solver & Memoization Engine",
+            "description": "Implement high-performance DP solvers for Classic Knapsack, Longest Common Subsequence, and Matrix Chain Multiplication with state profiling.",
+            "url": "https://github.com/algorithms/dp-solver-suite",
+            "platform": null,
+            "difficulty": "ADVANCED",
+            "estimatedHours": 25.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 95.0,
+            "recommendationReason": "Milestone capstone project to demonstrate mastery of Dynamic Programming",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      }
+    ]
+  },
+  "wc_extract": {
+    "targetRole": "Watercolor Painting Specialist",
+    "careerGoal": "I want to learn watercolor painting.",
+    "rawGoal": "I want to learn watercolor painting.",
+    "normalizedGoal": "Mastery of Watercolor Painting",
+    "goalType": "TOPIC_LEARNING",
+    "experienceLevel": "INTERMEDIATE",
+    "estimatedMonths": 6,
+    "extractedSkills": [
+      "Watercolor Painting",
+      "Watercolor Painting Core Principles"
+    ],
+    "missingSkills": [
+      "Watercolor Painting",
+      "Watercolor Painting Core Principles",
+      "Foundations for Watercolor Painting"
+    ],
+    "coreSkills": [
+      "Watercolor Painting",
+      "Watercolor Painting Core Principles"
+    ],
+    "prerequisiteSkills": [
+      "Foundations for Watercolor Painting"
+    ],
+    "optionalSkills": [],
+    "excludedSkills": [
+      "Git & Version Control",
+      "Java",
+      "Docker & Containers",
+      "SQL & Relational Databases"
+    ],
+    "confidence": 0.92,
+    "learningPace": "10 hours/week (Hands-On)",
+    "aiSummary": "Curriculum grounded in validated prerequisite ontology with 1 prerequisites and 2 core skills."
+  },
+  "wc_gaps": [
+    {
+      "skillName": "Watercolor Painting",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "A Full Stack Developer With React, Node, And Typescript",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "A Full Stack Developer With React, Node, And Typescript Core Principles",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Foundations for A Full Stack Developer With React, Node, And Typescript",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Quantum Superposition And Quantum Circuit Computing",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Quantum Superposition And Quantum Circuit Computing Core Principles",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Foundations for Quantum Superposition And Quantum Circuit Computing",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Watercolor Painting Core Principles",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 75,
+      "gap": 75,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Active goal competency for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED",
+      "confidence": 0.9
+    },
+    {
+      "skillName": "Foundations for Watercolor Painting",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 75,
+      "gap": 75,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Active goal competency for Watercolor Painting Specialist.",
+      "source": "DYNAMIC_INFERRED",
+      "confidence": 0.9
+    }
+  ],
+  "wc_projects": [
+    {
+      "id": 20001,
+      "title": "watercolor painting Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for watercolor painting. Focuses on clean execution, error handling, and foundational workflows.",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "deliverables": "Working modular codebase, unit tests validating core mechanisms, and technical documentation.",
+      "rubric": "Core conceptual correctness (40%), modular implementation quality (30%), test coverage and documentation (30%).",
+      "primarySkillName": "watercolor painting",
+      "githubTemplateUrl": "https://github.com/topics/watercolor-painting",
+      "skills": [
+        "watercolor painting",
+        "quantum superposition and quantum circuit computing"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 1: Foundation & Core Architecture",
+      "score": 95.0,
+      "explanation": "Directly validates core competency in watercolor painting as defined in your personalized learning path.",
+      "completed": false
+    },
+    {
+      "id": 20002,
+      "title": "Watercolor Painting Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying watercolor painting, quantum superposition and quantum circuit computing, foundations for quantum superposition and quantum circuit computing, a full stack developer with react, node, and typescript, quantum superposition and quantum circuit computing core principles, a full stack developer with react, node, and typescript core principles, foundations for a full stack developer with react, node, and typescript, foundations for watercolor painting, watercolor painting core principles to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "deliverables": "Production-grade repository, benchmark report, integration configs, and comprehensive validation suite.",
+      "rubric": "Architectural robustness (35%), performance and optimization (35%), real-world domain rigor (30%).",
+      "primarySkillName": "watercolor painting",
+      "githubTemplateUrl": "https://github.com/topics/watercolor-painting-specialist",
+      "skills": [
+        "watercolor painting",
+        "quantum superposition and quantum circuit computing",
+        "foundations for quantum superposition and quantum circuit computing",
+        "a full stack developer with react, node, and typescript",
+        "quantum superposition and quantum circuit computing core principles",
+        "a full stack developer with react, node, and typescript core principles",
+        "foundations for a full stack developer with react, node, and typescript",
+        "foundations for watercolor painting",
+        "watercolor painting core principles"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 2: Advanced Synthesis & Capstone",
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Watercolor Painting Specialist.",
+      "completed": false
+    }
+  ],
+  "wc_roadmap": {
+    "id": 26,
+    "title": "Watercolor Painting Specialist Mastery Roadmap",
+    "targetRole": "Watercolor Painting Specialist",
+    "status": "ACTIVE",
+    "totalEstimatedHours": 78.0,
+    "estimatedWeeks": 8,
+    "overallProgressPercentage": 0.0,
+    "totalItems": 6,
+    "completedItems": 0,
+    "phases": [
+      {
+        "id": 46,
+        "phaseNumber": 1,
+        "title": "Phase 1: Watercolor Painting & Watercolor Painting Core Principles - Foundations & Core Principles",
+        "description": "Mastery and verification of Watercolor Painting, Watercolor Painting Core Principles.",
+        "status": "AVAILABLE",
+        "estimatedHours": 52.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 117,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Watercolor Painting",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "AVAILABLE",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Watercolor Painting",
+            "requiredPrerequisites": null,
+            "isLocked": false
+          },
+          {
+            "id": 118,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Watercolor Painting Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Watercolor Painting skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 119,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Watercolor Painting Core Principles",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Watercolor Painting Core Principles",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 120,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Watercolor Painting Core Principles Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Watercolor Painting Core Principles skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 47,
+        "phaseNumber": 2,
+        "title": "Phase 2: Foundations for Watercolor Painting - Advanced Architecture & Production Capstone",
+        "description": "Mastery and verification of Foundations for Watercolor Painting.",
+        "status": "LOCKED",
+        "estimatedHours": 26.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 121,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Foundations for Watercolor Painting",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Foundations for Watercolor Painting",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 122,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Foundations for Watercolor Painting Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Foundations for Watercolor Painting skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      }
+    ]
+  },
+  "wc_recs": [
+    {
+      "id": 30001,
+      "title": "Watercolor Painting Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Watercolor Painting.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/watercolor-painting",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Watercolor Painting, fulfilling high-priority competency gap for Watercolor Painting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Watercolor Painting"
+      ],
+      "prerequisites": [
+        "Foundations of Watercolor Painting"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "A Full Stack Developer With React, Node, And Typescript Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in A Full Stack Developer With React, Node, And Typescript.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/a-full-stack-developer-with-react--node--and-typescript",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets A Full Stack Developer With React, Node, And Typescript, fulfilling high-priority competency gap for Watercolor Painting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "prerequisites": [
+        "Foundations of A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30003,
+      "title": "A Full Stack Developer With React, Node, And Typescript Core Principles Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in A Full Stack Developer With React, Node, And Typescript Core Principles.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/a-full-stack-developer-with-react--node--and-typescript-core-principles",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets A Full Stack Developer With React, Node, And Typescript Core Principles, fulfilling high-priority competency gap for Watercolor Painting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "A Full Stack Developer With React, Node, And Typescript Core Principles"
+      ],
+      "prerequisites": [
+        "Foundations of A Full Stack Developer With React, Node, And Typescript Core Principles"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30004,
+      "title": "Foundations for A Full Stack Developer With React, Node, And Typescript Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Foundations for A Full Stack Developer With React, Node, And Typescript.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/foundations-for-a-full-stack-developer-with-react--node--and-typescript",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Foundations for A Full Stack Developer With React, Node, And Typescript, fulfilling high-priority competency gap for Watercolor Painting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Foundations for A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "prerequisites": [
+        "Foundations of Foundations for A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30001,
+      "title": "watercolor painting Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for watercolor painting. Focuses on clean execution, error handling, and foundational workflows.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/watercolor-painting",
+      "platform": "Portfolio Project",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "score": 95.0,
+      "explanation": "Directly validates core competency in watercolor painting as defined in your personalized learning path.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "watercolor painting",
+        "quantum superposition and quantum circuit computing"
+      ],
+      "prerequisites": [
+        "watercolor painting Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "Watercolor Painting Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying watercolor painting, quantum superposition and quantum circuit computing, foundations for quantum superposition and quantum circuit computing, a full stack developer with react, node, and typescript, quantum superposition and quantum circuit computing core principles, a full stack developer with react, node, and typescript core principles, foundations for a full stack developer with react, node, and typescript, foundations for watercolor painting, watercolor painting core principles to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/watercolor-painting-specialist",
+      "platform": "Portfolio Project",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Watercolor Painting Specialist.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "watercolor painting",
+        "quantum superposition and quantum circuit computing",
+        "foundations for quantum superposition and quantum circuit computing",
+        "a full stack developer with react, node, and typescript",
+        "quantum superposition and quantum circuit computing core principles",
+        "a full stack developer with react, node, and typescript core principles",
+        "foundations for a full stack developer with react, node, and typescript",
+        "foundations for watercolor painting",
+        "watercolor painting core principles"
+      ],
+      "prerequisites": [
+        "watercolor painting Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    }
+  ],
+  "sc_extract": {
+    "targetRole": "Supply Chain Forecasting Specialist",
+    "careerGoal": "I want to learn supply chain forecasting.",
+    "rawGoal": "I want to learn supply chain forecasting.",
+    "normalizedGoal": "Mastery of Supply Chain Forecasting",
+    "goalType": "TOPIC_LEARNING",
+    "experienceLevel": "INTERMEDIATE",
+    "estimatedMonths": 6,
+    "extractedSkills": [
+      "Supply Chain Forecasting",
+      "Supply Chain Forecasting Core Principles"
+    ],
+    "missingSkills": [
+      "Supply Chain Forecasting",
+      "Supply Chain Forecasting Core Principles",
+      "Foundations for Supply Chain Forecasting"
+    ],
+    "coreSkills": [
+      "Supply Chain Forecasting",
+      "Supply Chain Forecasting Core Principles"
+    ],
+    "prerequisiteSkills": [
+      "Foundations for Supply Chain Forecasting"
+    ],
+    "optionalSkills": [],
+    "excludedSkills": [
+      "Git & Version Control",
+      "Java",
+      "Docker & Containers",
+      "SQL & Relational Databases"
+    ],
+    "confidence": 0.92,
+    "learningPace": "10 hours/week (Hands-On)",
+    "aiSummary": "Curriculum grounded in validated prerequisite ontology with 1 prerequisites and 2 core skills."
+  },
+  "sc_gaps": [
+    {
+      "skillName": "Supply Chain Forecasting",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "A Full Stack Developer With React, Node, And Typescript",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "A Full Stack Developer With React, Node, And Typescript Core Principles",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Foundations for A Full Stack Developer With React, Node, And Typescript",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Quantum Superposition And Quantum Circuit Computing",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Quantum Superposition And Quantum Circuit Computing Core Principles",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Foundations for Quantum Superposition And Quantum Circuit Computing",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Supply Chain Forecasting Core Principles",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 75,
+      "gap": 75,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Active goal competency for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED",
+      "confidence": 0.9
+    },
+    {
+      "skillName": "Foundations for Supply Chain Forecasting",
+      "category": "DATA_AI",
+      "currentProficiency": 0,
+      "requiredProficiency": 75,
+      "gap": 75,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Active goal competency for Supply Chain Forecasting Specialist.",
+      "source": "DYNAMIC_INFERRED",
+      "confidence": 0.9
+    }
+  ],
+  "sc_projects": [
+    {
+      "id": 20001,
+      "title": "supply chain forecasting Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for supply chain forecasting. Focuses on clean execution, error handling, and foundational workflows.",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "deliverables": "Working modular codebase, unit tests validating core mechanisms, and technical documentation.",
+      "rubric": "Core conceptual correctness (40%), modular implementation quality (30%), test coverage and documentation (30%).",
+      "primarySkillName": "supply chain forecasting",
+      "githubTemplateUrl": "https://github.com/topics/supply-chain-forecasting",
+      "skills": [
+        "supply chain forecasting",
+        "quantum superposition and quantum circuit computing"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 1: Foundation & Core Architecture",
+      "score": 95.0,
+      "explanation": "Directly validates core competency in supply chain forecasting as defined in your personalized learning path.",
+      "completed": false
+    },
+    {
+      "id": 20002,
+      "title": "Supply Chain Forecasting Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying supply chain forecasting, quantum superposition and quantum circuit computing, supply chain forecasting core principles, foundations for quantum superposition and quantum circuit computing, a full stack developer with react, node, and typescript, quantum superposition and quantum circuit computing core principles, a full stack developer with react, node, and typescript core principles, foundations for a full stack developer with react, node, and typescript, foundations for supply chain forecasting to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "deliverables": "Production-grade repository, benchmark report, integration configs, and comprehensive validation suite.",
+      "rubric": "Architectural robustness (35%), performance and optimization (35%), real-world domain rigor (30%).",
+      "primarySkillName": "supply chain forecasting",
+      "githubTemplateUrl": "https://github.com/topics/supply-chain-forecasting-specialist",
+      "skills": [
+        "supply chain forecasting",
+        "quantum superposition and quantum circuit computing",
+        "supply chain forecasting core principles",
+        "foundations for quantum superposition and quantum circuit computing",
+        "a full stack developer with react, node, and typescript",
+        "quantum superposition and quantum circuit computing core principles",
+        "a full stack developer with react, node, and typescript core principles",
+        "foundations for a full stack developer with react, node, and typescript",
+        "foundations for supply chain forecasting"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 2: Advanced Synthesis & Capstone",
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Supply Chain Forecasting Specialist.",
+      "completed": false
+    }
+  ],
+  "sc_roadmap": {
+    "id": 27,
+    "title": "Supply Chain Forecasting Specialist Mastery Roadmap",
+    "targetRole": "Supply Chain Forecasting Specialist",
+    "status": "ACTIVE",
+    "totalEstimatedHours": 78.0,
+    "estimatedWeeks": 8,
+    "overallProgressPercentage": 0.0,
+    "totalItems": 6,
+    "completedItems": 0,
+    "phases": [
+      {
+        "id": 48,
+        "phaseNumber": 1,
+        "title": "Phase 1: Supply Chain Forecasting & Supply Chain Forecasting Core Principles - Foundations & Core Principles",
+        "description": "Mastery and verification of Supply Chain Forecasting, Supply Chain Forecasting Core Principles.",
+        "status": "AVAILABLE",
+        "estimatedHours": 52.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 123,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Supply Chain Forecasting",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "AVAILABLE",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Supply Chain Forecasting",
+            "requiredPrerequisites": null,
+            "isLocked": false
+          },
+          {
+            "id": 124,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Supply Chain Forecasting Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Supply Chain Forecasting skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 125,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Supply Chain Forecasting Core Principles",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Supply Chain Forecasting Core Principles",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 126,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Supply Chain Forecasting Core Principles Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Supply Chain Forecasting Core Principles skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 49,
+        "phaseNumber": 2,
+        "title": "Phase 2: Foundations for Supply Chain Forecasting - Advanced Architecture & Production Capstone",
+        "description": "Mastery and verification of Foundations for Supply Chain Forecasting.",
+        "status": "LOCKED",
+        "estimatedHours": 26.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 127,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Foundations for Supply Chain Forecasting",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Foundations for Supply Chain Forecasting",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 128,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Foundations for Supply Chain Forecasting Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Foundations for Supply Chain Forecasting skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      }
+    ]
+  },
+  "sc_recs": [
+    {
+      "id": 30001,
+      "title": "Supply Chain Forecasting Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Supply Chain Forecasting.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/supply-chain-forecasting",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Supply Chain Forecasting, fulfilling high-priority competency gap for Supply Chain Forecasting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Supply Chain Forecasting"
+      ],
+      "prerequisites": [
+        "Foundations of Supply Chain Forecasting"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "A Full Stack Developer With React, Node, And Typescript Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in A Full Stack Developer With React, Node, And Typescript.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/a-full-stack-developer-with-react--node--and-typescript",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets A Full Stack Developer With React, Node, And Typescript, fulfilling high-priority competency gap for Supply Chain Forecasting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "prerequisites": [
+        "Foundations of A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30003,
+      "title": "A Full Stack Developer With React, Node, And Typescript Core Principles Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in A Full Stack Developer With React, Node, And Typescript Core Principles.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/a-full-stack-developer-with-react--node--and-typescript-core-principles",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets A Full Stack Developer With React, Node, And Typescript Core Principles, fulfilling high-priority competency gap for Supply Chain Forecasting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "A Full Stack Developer With React, Node, And Typescript Core Principles"
+      ],
+      "prerequisites": [
+        "Foundations of A Full Stack Developer With React, Node, And Typescript Core Principles"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30004,
+      "title": "Foundations for A Full Stack Developer With React, Node, And Typescript Complete Architecture & Mastery Guide",
+      "description": "In-depth structured curriculum and interactive reference covering core concepts, patterns, and hands-on exercises in Foundations for A Full Stack Developer With React, Node, And Typescript.",
+      "type": "COURSE",
+      "url": "https://learning.pathfinder.ai/topics/foundations-for-a-full-stack-developer-with-react--node--and-typescript",
+      "platform": "Curated Academy",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 16.0,
+      "score": 95.0,
+      "explanation": "Directly targets Foundations for A Full Stack Developer With React, Node, And Typescript, fulfilling high-priority competency gap for Supply Chain Forecasting Specialist.",
+      "matchFactors": {
+        "skillGapMatch": 0.95,
+        "goalRelevance": 0.98,
+        "prerequisiteCompatibility": 1.0
+      },
+      "skillsTaught": [
+        "Foundations for A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "prerequisites": [
+        "Foundations of Foundations for A Full Stack Developer With React, Node, And Typescript"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30001,
+      "title": "supply chain forecasting Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for supply chain forecasting. Focuses on clean execution, error handling, and foundational workflows.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/supply-chain-forecasting",
+      "platform": "Portfolio Project",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "score": 95.0,
+      "explanation": "Directly validates core competency in supply chain forecasting as defined in your personalized learning path.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "supply chain forecasting",
+        "quantum superposition and quantum circuit computing"
+      ],
+      "prerequisites": [
+        "supply chain forecasting Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    },
+    {
+      "id": 30002,
+      "title": "Supply Chain Forecasting Specialist End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying supply chain forecasting, quantum superposition and quantum circuit computing, supply chain forecasting core principles, foundations for quantum superposition and quantum circuit computing, a full stack developer with react, node, and typescript, quantum superposition and quantum circuit computing core principles, a full stack developer with react, node, and typescript core principles, foundations for a full stack developer with react, node, and typescript, foundations for supply chain forecasting to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "type": "PROJECT",
+      "url": "https://github.com/topics/supply-chain-forecasting-specialist",
+      "platform": "Portfolio Project",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Supply Chain Forecasting Specialist.",
+      "matchFactors": {
+        "practicalApplication": 0.95,
+        "portfolioRelevance": 0.92
+      },
+      "skillsTaught": [
+        "supply chain forecasting",
+        "quantum superposition and quantum circuit computing",
+        "supply chain forecasting core principles",
+        "foundations for quantum superposition and quantum circuit computing",
+        "a full stack developer with react, node, and typescript",
+        "quantum superposition and quantum circuit computing core principles",
+        "a full stack developer with react, node, and typescript core principles",
+        "foundations for a full stack developer with react, node, and typescript",
+        "foundations for supply chain forecasting"
+      ],
+      "prerequisites": [
+        "supply chain forecasting Fundamentals"
+      ],
+      "isPrerequisitesMet": true
+    }
+  ],
+  "paraphrase_a": {
+    "target_role": "Dynamic Programming Specialist",
+    "career_goal": "I want to learn Dynamic Programming.",
+    "experience_level": "INTERMEDIATE",
+    "estimated_months": 6,
+    "extracted_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation"
+    ],
+    "missing_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation",
+      "State Transition Formulation",
+      "Recursion & Backtracking",
+      "Time & Space Complexity (Big-O)"
+    ],
+    "learning_pace": "10 hours/week (Hands-On)",
+    "ai_summary": "Personalized Topic Learning curriculum for Dynamic Programming. Grounded in verified prerequisite graph with 2 foundational prerequisites and 3 core competencies."
+  },
+  "paraphrase_b": {
+    "target_role": "Dynamic Programming Specialist",
+    "career_goal": "I want to understand dynamic programming algorithms from scratch.",
+    "experience_level": "BEGINNER",
+    "estimated_months": 6,
+    "extracted_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation"
+    ],
+    "missing_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation",
+      "State Transition Formulation",
+      "Recursion & Backtracking",
+      "Time & Space Complexity (Big-O)"
+    ],
+    "learning_pace": "10 hours/week (Hands-On)",
+    "ai_summary": "Personalized Topic Learning curriculum for Dynamic Programming. Grounded in verified prerequisite graph with 2 foundational prerequisites and 3 core competencies."
+  },
+  "paraphrase_c": {
+    "target_role": "Dynamic Programming Specialist",
+    "career_goal": "Teach me DP for solving algorithmic problems.",
+    "experience_level": "INTERMEDIATE",
+    "estimated_months": 6,
+    "extracted_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation"
+    ],
+    "missing_skills": [
+      "Dynamic Programming",
+      "Memoization & Tabulation",
+      "State Transition Formulation",
+      "Recursion & Backtracking",
+      "Time & Space Complexity (Big-O)"
+    ],
+    "learning_pace": "10 hours/week (Hands-On)",
+    "ai_summary": "Personalized Topic Learning curriculum for Dynamic Programming. Grounded in verified prerequisite graph with 2 foundational prerequisites and 3 core competencies."
+  },
+  "java_extract": {
+    "targetRole": "Java Engineer",
+    "careerGoal": "I want to become a backend Java developer.",
+    "rawGoal": "I want to become a backend Java developer.",
+    "normalizedGoal": "Professional Career Path for Java",
+    "goalType": "CAREER_GOAL",
+    "experienceLevel": "INTERMEDIATE",
+    "estimatedMonths": 6,
+    "extractedSkills": [
+      "Java",
+      "SQL & Relational Databases"
+    ],
+    "missingSkills": [
+      "Java",
+      "SQL & Relational Databases",
+      "Spring Boot",
+      "RESTful APIs",
+      "Spring Security & JWT",
+      "JavaScript (ES6+)",
+      "Object-Oriented Programming (OOP)"
+    ],
+    "coreSkills": [
+      "Java",
+      "SQL & Relational Databases",
+      "Spring Boot",
+      "RESTful APIs",
+      "Spring Security & JWT",
+      "JavaScript (ES6+)"
+    ],
+    "prerequisiteSkills": [
+      "Object-Oriented Programming (OOP)"
+    ],
+    "optionalSkills": [],
+    "excludedSkills": [
+      "Git & Version Control",
+      "Docker & Containers"
+    ],
+    "confidence": 0.92,
+    "learningPace": "10 hours/week (Hands-On)",
+    "aiSummary": "Curriculum grounded in validated prerequisite ontology with 1 prerequisites and 6 core skills."
+  },
+  "java_gaps": [
+    {
+      "skillName": "Java",
+      "category": "LANGUAGE",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [
+        "Object-Oriented Programming (OOP) (0%)"
+      ],
+      "skillRole": "REQUIRED_PREREQUISITE",
+      "reason": "Validated foundational prerequisite for Spring Boot in prerequisite DAG.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "SQL & Relational Databases",
+      "category": "DATABASE",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "REQUIRED_PREREQUISITE",
+      "reason": "Validated foundational prerequisite for Spring Boot in prerequisite DAG.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Spring Boot",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [
+        "Java (0%)",
+        "SQL & Relational Databases (0%)"
+      ],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Java Engineer.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "RESTful APIs",
+      "category": "ARCHITECTURE",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Java Engineer.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Spring Security & JWT",
+      "category": "FRAMEWORK",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Java Engineer.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "JavaScript (ES6+)",
+      "category": "LANGUAGE",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "DIRECT_CORE",
+      "reason": "Direct core competency required for Java Engineer.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    },
+    {
+      "skillName": "Object-Oriented Programming (OOP)",
+      "category": "CORE_CS",
+      "currentProficiency": 0,
+      "requiredProficiency": 80,
+      "gap": 80,
+      "status": "MISSING",
+      "unsatisfiedPrerequisites": [],
+      "skillRole": "REQUIRED_PREREQUISITE",
+      "reason": "Validated foundational prerequisite for Java in prerequisite DAG.",
+      "source": "ESCO Taxonomy",
+      "confidence": 0.94
+    }
+  ],
+  "java_roadmap": {
+    "id": 28,
+    "title": "Java Engineer Mastery Roadmap",
+    "targetRole": "Java Engineer",
+    "status": "ACTIVE",
+    "totalEstimatedHours": 224.0,
+    "estimatedWeeks": 23,
+    "overallProgressPercentage": 0.0,
+    "totalItems": 14,
+    "completedItems": 0,
+    "phases": [
+      {
+        "id": 50,
+        "phaseNumber": 1,
+        "title": "Phase 1: JavaScript (ES6+) & Object-Oriented Programming (OOP) - Foundations & Core Principles",
+        "description": "Mastery and verification of JavaScript (ES6+), Object-Oriented Programming (OOP).",
+        "status": "AVAILABLE",
+        "estimatedHours": 52.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 129,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: JavaScript (ES6+)",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "AVAILABLE",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for JavaScript (ES6+)",
+            "requiredPrerequisites": null,
+            "isLocked": false
+          },
+          {
+            "id": 130,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: JavaScript (ES6+) Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying JavaScript (ES6+) skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 131,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Object-Oriented Programming (OOP)",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Object-Oriented Programming (OOP)",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 132,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Object-Oriented Programming (OOP) Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Object-Oriented Programming (OOP) skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 51,
+        "phaseNumber": 2,
+        "title": "Phase 2: Java - Core Competency & Applied Engineering",
+        "description": "Mastery and verification of Java.",
+        "status": "LOCKED",
+        "estimatedHours": 39.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 133,
+            "itemType": "RESOURCE",
+            "referenceId": 10,
+            "title": "Modern Java & Spring Boot Enterprise Architecture",
+            "description": "Enterprise backend architecture with Spring Boot REST services, transactional databases, and clean architecture.",
+            "url": "https://spring.io/guides",
+            "platform": "Spring.io",
+            "difficulty": "INTERMEDIATE",
+            "estimatedHours": 25.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 98.0,
+            "recommendationReason": "Curriculum module covering Java for Java Engineer",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 134,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Java Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Java skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 52,
+        "phaseNumber": 3,
+        "title": "Phase 3: SQL & Relational Databases & Spring Security & JWT - Core Competency & Applied Engineering",
+        "description": "Mastery and verification of SQL & Relational Databases, Spring Security & JWT.",
+        "status": "LOCKED",
+        "estimatedHours": 52.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 135,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: SQL & Relational Databases",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for SQL & Relational Databases",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 136,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: SQL & Relational Databases Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying SQL & Relational Databases skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 137,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: Spring Security & JWT",
+            "description": null,
+            "url": "https://owasp.org/www-project-top-ten/",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for Spring Security & JWT",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 138,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: Spring Security & JWT Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying Spring Security & JWT skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      },
+      {
+        "id": 53,
+        "phaseNumber": 4,
+        "title": "Phase 4: Spring Boot & RESTful APIs - Advanced Architecture & Production Capstone",
+        "description": "Mastery and verification of Spring Boot, RESTful APIs.",
+        "status": "LOCKED",
+        "estimatedHours": 81.0,
+        "progressPercentage": 0.0,
+        "items": [
+          {
+            "id": 139,
+            "itemType": "RESOURCE",
+            "referenceId": 10,
+            "title": "Modern Java & Spring Boot Enterprise Architecture",
+            "description": "Enterprise backend architecture with Spring Boot REST services, transactional databases, and clean architecture.",
+            "url": "https://spring.io/guides",
+            "platform": "Spring.io",
+            "difficulty": "INTERMEDIATE",
+            "estimatedHours": 25.0,
+            "orderIndex": 1,
+            "status": "LOCKED",
+            "recommendationScore": 98.0,
+            "recommendationReason": "Curriculum module covering Spring Boot for Java Engineer",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 140,
+            "itemType": "PROJECT",
+            "referenceId": 10,
+            "title": "Project: Enterprise Spring Boot Microservices Backend with JWT Security",
+            "description": "Build a high-performance REST API backend with Spring Boot 3, Spring Data JPA, PostgreSQL, and stateless JWT authentication filters.",
+            "url": "https://github.com/backend/spring-boot-enterprise-backend",
+            "platform": null,
+            "difficulty": "ADVANCED",
+            "estimatedHours": 30.0,
+            "orderIndex": 2,
+            "status": "LOCKED",
+            "recommendationScore": 95.0,
+            "recommendationReason": "Milestone capstone project to demonstrate mastery of Spring Boot",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 141,
+            "itemType": "RESOURCE",
+            "referenceId": null,
+            "title": "Mastery Guide: RESTful APIs",
+            "description": null,
+            "url": "https://devdocs.io",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 12.0,
+            "orderIndex": 3,
+            "status": "LOCKED",
+            "recommendationScore": 92.0,
+            "recommendationReason": "Targeted technical documentation and official guide for RESTful APIs",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          },
+          {
+            "id": 142,
+            "itemType": "PROJECT",
+            "referenceId": null,
+            "title": "Hands-On Build: RESTful APIs Implementation Project",
+            "description": null,
+            "url": "https://github.com",
+            "platform": null,
+            "difficulty": null,
+            "estimatedHours": 14.0,
+            "orderIndex": 4,
+            "status": "LOCKED",
+            "recommendationScore": 94.0,
+            "recommendationReason": "Practical portfolio milestone build verifying RESTful APIs skills",
+            "requiredPrerequisites": null,
+            "isLocked": true
+          }
+        ]
+      }
+    ]
+  },
+  "java_projects": [
+    {
+      "id": 20001,
+      "title": "spring boot Core Mechanics & Implementation Framework",
+      "description": "A hands-on practical project validating fundamental principles and core architecture for spring boot. Focuses on clean execution, error handling, and foundational workflows.",
+      "difficulty": "INTERMEDIATE",
+      "estimatedHours": 15.0,
+      "deliverables": "Working modular codebase, unit tests validating core mechanisms, and technical documentation.",
+      "rubric": "Core conceptual correctness (40%), modular implementation quality (30%), test coverage and documentation (30%).",
+      "primarySkillName": "spring boot",
+      "githubTemplateUrl": "https://github.com/topics/spring-boot",
+      "skills": [
+        "spring boot",
+        "sql & relational databases"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 1: Foundation & Core Architecture",
+      "score": 95.0,
+      "explanation": "Directly validates core competency in spring boot as defined in your personalized learning path.",
+      "completed": false
+    },
+    {
+      "id": 20002,
+      "title": "Java Engineer End-to-End Capstone Portfolio Project",
+      "description": "An advanced end-to-end production milestone applying spring boot, sql & relational databases, javascript (es6+), java, restful apis, spring security & jwt, object-oriented programming (oop) to solve a complex, real-world domain challenge with performance benchmarking and optimization.",
+      "difficulty": "ADVANCED",
+      "estimatedHours": 25.0,
+      "deliverables": "Production-grade repository, benchmark report, integration configs, and comprehensive validation suite.",
+      "rubric": "Architectural robustness (35%), performance and optimization (35%), real-world domain rigor (30%).",
+      "primarySkillName": "spring boot",
+      "githubTemplateUrl": "https://github.com/topics/java-engineer",
+      "skills": [
+        "spring boot",
+        "sql & relational databases",
+        "javascript (es6+)",
+        "java",
+        "restful apis",
+        "spring security & jwt",
+        "object-oriented programming (oop)"
+      ],
+      "isAiGenerated": true,
+      "roadmapPhase": "Phase 2: Advanced Synthesis & Capstone",
+      "score": 92.0,
+      "explanation": "Comprehensive capstone synthesizing all required competencies for Java Engineer.",
+      "completed": false
+    }
+  ],
+  "origami_extract": {
+    "target_role": "Origami Design Specialist",
+    "career_goal": "I want to learn origami design.",
+    "experience_level": "INTERMEDIATE",
+    "estimated_months": 6,
+    "extracted_skills": [
+      "Origami Design",
+      "Origami Design Foundations & Mechanics"
+    ],
+    "missing_skills": [
+      "Origami Design",
+      "Origami Design Foundations & Mechanics",
+      "Origami Design Advanced Techniques & Application",
+      "Foundational Principles for Origami Design"
+    ],
+    "learning_pace": "10 hours/week (Hands-On)",
+    "ai_summary": "Personalized Topic Learning curriculum for Origami Design. Grounded in verified prerequisite graph with 1 foundational prerequisites and 3 core competencies."
+  }
+}
