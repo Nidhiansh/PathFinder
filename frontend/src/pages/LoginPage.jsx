@@ -68,6 +68,7 @@ export const LoginPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="e.g. username"
+              autoComplete="username"
               icon={User}
               required
             />
@@ -79,6 +80,7 @@ export const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
+              autoComplete="current-password"
               icon={Lock}
               required
             />

@@ -78,6 +78,7 @@ export const RegisterPage = () => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="e.g. Jane Doe"
+              autoComplete="name"
               icon={User}
               required
             />
@@ -89,6 +90,7 @@ export const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="e.g. username"
+              autoComplete="username"
               icon={User}
               required
             />
@@ -100,6 +102,7 @@ export const RegisterPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="jane@example.com"
+              autoComplete="email"
               icon={Mail}
               required
             />
@@ -111,6 +114,7 @@ export const RegisterPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
+              autoComplete="new-password"
               icon={Lock}
               required
             />
@@ -122,6 +126,7 @@ export const RegisterPage = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
+              autoComplete="new-password"
               icon={Lock}
               required
             />
