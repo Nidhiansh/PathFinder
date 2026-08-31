@@ -47,6 +47,9 @@ public class LearnerProfile {
     @Column(name = "total_hours_spent")
     private Double totalHoursSpent = 0.0;
 
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl;
+
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserSkill> userSkills = new ArrayList<>();
 
@@ -94,6 +97,9 @@ public class LearnerProfile {
 
     public Double getTotalHoursSpent() { return totalHoursSpent; }
     public void setTotalHoursSpent(Double totalHoursSpent) { this.totalHoursSpent = totalHoursSpent; }
+
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 
     public List<UserSkill> getUserSkills() { return userSkills; }
     public void setUserSkills(List<UserSkill> userSkills) { this.userSkills = userSkills; }

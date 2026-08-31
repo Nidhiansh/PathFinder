@@ -25,6 +25,12 @@ public class DataInitializer implements CommandLineRunner {
     private SkillRepository skillRepository;
 
     @Autowired
+    private SkillAliasRepository aliasRepository;
+
+    @Autowired
+    private SkillRelationRepository relationRepository;
+
+    @Autowired
     private UserSkillRepository userSkillRepository;
 
     @Autowired
@@ -63,450 +69,464 @@ public class DataInitializer implements CommandLineRunner {
             return; // Seed data already loaded
         }
 
-        // ==========================================
-        // 1. SEED SKILLS
-        // ==========================================
-        Skill java = skillRepository.save(new Skill("Java", SkillCategory.LANGUAGE, "Core Java programming including OOP, Generics, and concurrency.", Difficulty.INTERMEDIATE));
-        Skill oop = skillRepository.save(new Skill("Object-Oriented Programming (OOP)", SkillCategory.CORE_CS, "Encapsulation, Inheritance, Polymorphism, Abstraction, and SOLID principles.", Difficulty.BEGINNER));
-        Skill dsa = skillRepository.save(new Skill("Data Structures & Algorithms", SkillCategory.CORE_CS, "Arrays, Trees, Graphs, Sorting, Dynamic Programming, and Big-O notation.", Difficulty.INTERMEDIATE));
-        Skill sql = skillRepository.save(new Skill("SQL & Relational Databases", SkillCategory.DATABASE, "Relational data modeling, ACID transactions, complex joins, and indexing.", Difficulty.BEGINNER));
-        Skill springBoot = skillRepository.save(new Skill("Spring Boot", SkillCategory.FRAMEWORK, "Modern enterprise Java development with Spring Boot framework.", Difficulty.INTERMEDIATE));
-        Skill restApis = skillRepository.save(new Skill("RESTful APIs", SkillCategory.ARCHITECTURE, "Designing and building scalable HTTP RESTful web services and API contracts.", Difficulty.INTERMEDIATE));
-        Skill jpa = skillRepository.save(new Skill("Spring Data JPA & Hibernate", SkillCategory.FRAMEWORK, "Object-Relational Mapping (ORM), entity lifecycles, and automated queries.", Difficulty.INTERMEDIATE));
-        Skill springSecurity = skillRepository.save(new Skill("Spring Security & JWT", SkillCategory.FRAMEWORK, "Authentication, authorization, JWT tokens, and OAuth2 security.", Difficulty.ADVANCED));
-        Skill docker = skillRepository.save(new Skill("Docker & Containers", SkillCategory.DEVOPS, "Containerizing applications, multi-stage builds, and Docker Compose networks.", Difficulty.INTERMEDIATE));
-        Skill systemDesign = skillRepository.save(new Skill("System Design & Microservices", SkillCategory.ARCHITECTURE, "Scalable distributed architecture, caching with Redis, message queues, and load balancing.", Difficulty.ADVANCED));
+        // =========================================================================
+        // 1. CANONICAL SKILL TAXONOMY (ESCO & O*NET GROUNDED ACROSS DIVERSE DOMAINS)
+        // =========================================================================
 
-        // Frontend & Fullstack Skills
-        Skill js = skillRepository.save(new Skill("JavaScript (ES6+)", SkillCategory.LANGUAGE, "Modern JavaScript language mechanics, closures, promises, and async/await.", Difficulty.INTERMEDIATE));
-        Skill react = skillRepository.save(new Skill("React.js", SkillCategory.FRAMEWORK, "Declarative UI engineering with React hooks, components, and virtual DOM.", Difficulty.INTERMEDIATE));
-        Skill node = skillRepository.save(new Skill("Node.js & Express", SkillCategory.FRAMEWORK, "Event-driven asynchronous backend runtime with Express middleware.", Difficulty.INTERMEDIATE));
-        Skill git = skillRepository.save(new Skill("Git & Version Control", SkillCategory.CORE_CS, "Branching strategies, Git workflows, PRs, and collaborative version control.", Difficulty.BEGINNER));
+        // Domain: ALGORITHMS_CS
+        Skill dp = skillRepository.save(new Skill("Dynamic Programming", SkillCategory.CORE_CS, "Optimizing recursive solutions via subproblem caching, state transitions, and tabular recurrence relations.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/dp-001", "ALGORITHMS_CS"));
+        Skill recursion = skillRepository.save(new Skill("Recursion & Backtracking", SkillCategory.CORE_CS, "Recursive base cases, call stack mechanics, exhaustive search, and branch pruning.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/rec-002", "ALGORITHMS_CS"));
+        Skill memoization = skillRepository.save(new Skill("Memoization & Tabulation", SkillCategory.CORE_CS, "Top-down lookup tables vs bottom-up multi-dimensional state array transitions.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/memo-003", "ALGORITHMS_CS"));
+        Skill complexity = skillRepository.save(new Skill("Time & Space Complexity (Big-O)", SkillCategory.CORE_CS, "Asymptotic analysis, recursive tree expansion, and memory auxiliary bounds.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/bigo-004", "ALGORITHMS_CS"));
+        Skill arraysStrings = skillRepository.save(new Skill("Arrays & Data Structures", SkillCategory.CORE_CS, "Contiguous memory allocations, hashing structures, and pointer manipulation.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/arrays-005", "ALGORITHMS_CS"));
 
-        // AI / ML & Generative AI / RAG Skills
-        Skill python = skillRepository.save(new Skill("Python Programming", SkillCategory.LANGUAGE, "Python data structures, object orientation, and idiomatic scripting.", Difficulty.BEGINNER));
-        Skill mathMl = skillRepository.save(new Skill("Mathematics & Statistics for ML", SkillCategory.DATA_AI, "Linear algebra, multivariate calculus, probability distributions, and hypothesis testing.", Difficulty.INTERMEDIATE));
-        Skill numpyPandas = skillRepository.save(new Skill("NumPy & Pandas", SkillCategory.DATA_AI, "Vectorized numerical computation and structured tabular data wrangling.", Difficulty.INTERMEDIATE));
-        Skill scikitLearn = skillRepository.save(new Skill("Scikit-Learn", SkillCategory.DATA_AI, "Supervised & unsupervised machine learning models, cross-validation, and metrics.", Difficulty.INTERMEDIATE));
-        Skill deepLearning = skillRepository.save(new Skill("Deep Learning & PyTorch", SkillCategory.DATA_AI, "Neural networks, backpropagation, convolutional networks, and PyTorch tensors.", Difficulty.ADVANCED));
-        Skill fastapi = skillRepository.save(new Skill("Model Deployment & FastAPI", SkillCategory.DATA_AI, "Serving machine learning models as high-throughput REST APIs.", Difficulty.INTERMEDIATE));
-        Skill promptEngineering = skillRepository.save(new Skill("Prompt Engineering & LLM APIs", SkillCategory.DATA_AI, "Crafting structured prompts, few-shot examples, JSON schema enforcement, and tool calling with OpenAI/Anthropic APIs.", Difficulty.BEGINNER));
-        Skill vectorEmbeddings = skillRepository.save(new Skill("Vector Databases & Embeddings", SkillCategory.DATA_AI, "Generating semantic text embeddings, cosine similarity metrics, and index structures (HNSW/IVF).", Difficulty.INTERMEDIATE));
-        Skill ragArchitecture = skillRepository.save(new Skill("RAG Architecture & LangChain", SkillCategory.DATA_AI, "Retrieval-Augmented Generation architectures, chunking strategies, vector stores, and LangChain/LlamaIndex orchestrations.", Difficulty.INTERMEDIATE));
-        Skill retrievalOpt = skillRepository.save(new Skill("Chunking, Reranking & Retrieval Optimization", SkillCategory.DATA_AI, "Hybrid search (BM25 + Dense), Cross-Encoder reranking, contextual compression, and document chunking optimization.", Difficulty.ADVANCED));
-        Skill llmEval = skillRepository.save(new Skill("LLM Evaluation & Guardrails", SkillCategory.DATA_AI, "RAG assessment metrics (Faithfulness, Answer Relevance, Context Recall with Ragas), guardrails, and latency optimization.", Difficulty.ADVANCED));
+        // Domain: MATHEMATICS
+        Skill limits = skillRepository.save(new Skill("Limits & Continuity", SkillCategory.CORE_CS, "Epsilon-delta definitions, one-sided limits, and function behavior at asymptotes.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/math-001", "MATHEMATICS"));
+        Skill calculusDiff = skillRepository.save(new Skill("Calculus & Derivatives", SkillCategory.CORE_CS, "Differential calculus, product/chain rules, tangent slopes, and optimization.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/math-002", "MATHEMATICS"));
+        Skill calculusInt = skillRepository.save(new Skill("Integral Calculus", SkillCategory.CORE_CS, "Definite/indefinite integrals, Riemann sums, substitution, and area under curves.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/math-003", "MATHEMATICS"));
+        Skill linearAlgebra = skillRepository.save(new Skill("Linear Algebra & Matrices", SkillCategory.CORE_CS, "Vector spaces, dot products, matrix transformations, eigenvalues, and SVD.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/math-004", "MATHEMATICS"));
 
-        // Cloud & Infrastructure
-        Skill cloudInfra = skillRepository.save(new Skill("Cloud Infrastructure & Kubernetes", SkillCategory.DEVOPS, "Kubernetes container orchestration, cloud primitives on AWS/GCP, and Infrastructure as Code.", Difficulty.ADVANCED));
+        // Domain: CREATIVE_3D & DESIGN
+        Skill meshModeling = skillRepository.save(new Skill("3D Modeling & Mesh Topology", SkillCategory.ARCHITECTURE, "Polygonal vertex modeling, edge loops, subdivision surfaces, and clean topology in Blender.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/3d-001", "CREATIVE_3D"));
+        Skill uvTexturing = skillRepository.save(new Skill("UV Unwrapping & PBR Texturing", SkillCategory.ARCHITECTURE, "Unwrapping 2D UV seams, PBR shader nodes, roughness, normals, and metallic maps.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/3d-002", "CREATIVE_3D"));
+        Skill lighting3D = skillRepository.save(new Skill("3D Lighting & Rendering", SkillCategory.ARCHITECTURE, "Cycles/EEVEE photorealistic rendering, three-point lighting, and HDRI world environments.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/3d-003", "CREATIVE_3D"));
 
-        // ==========================================
-        // 2. SEED PREREQUISITES (SKILL DAG)
-        // ==========================================
-        prerequisiteRepository.save(new SkillPrerequisite(java, oop, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(springBoot, java, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(restApis, springBoot, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(jpa, sql, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(jpa, springBoot, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(springSecurity, springBoot, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(systemDesign, restApis, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(systemDesign, docker, PrerequisiteStrength.RECOMMENDED));
+        // Domain: PHOTOGRAPHY
+        Skill exposureTriangle = skillRepository.save(new Skill("Exposure Triangle (Aperture, Shutter Speed, ISO)", SkillCategory.ARCHITECTURE, "Mastering optical light capture, motion blur, sensor noise, and depth of field.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/photo-001", "PHOTOGRAPHY"));
+        Skill rawEditing = skillRepository.save(new Skill("RAW Image Editing & Color Grading", SkillCategory.ARCHITECTURE, "Non-destructive RAW sensor curve adjustment, histogram balancing, and LUT color grading.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/photo-002", "PHOTOGRAPHY"));
 
-        prerequisiteRepository.save(new SkillPrerequisite(react, js, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(node, js, PrerequisiteStrength.REQUIRED));
+        // Domain: AUDIO_MUSIC
+        Skill daw = skillRepository.save(new Skill("Digital Audio Workstation (DAW)", SkillCategory.ARCHITECTURE, "Multi-track audio recording, MIDI routing, automation lanes, and session management.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/audio-001", "AUDIO_MUSIC"));
+        Skill audioMixing = skillRepository.save(new Skill("Audio Mixing & Mastering", SkillCategory.ARCHITECTURE, "Parametric EQ balancing, dynamic multi-band compression, stereo imaging, and LUFS limiting.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/audio-002", "AUDIO_MUSIC"));
 
-        prerequisiteRepository.save(new SkillPrerequisite(numpyPandas, python, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(scikitLearn, numpyPandas, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(scikitLearn, mathMl, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(deepLearning, scikitLearn, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(fastapi, python, PrerequisiteStrength.REQUIRED));
+        // Domain: FINANCE
+        Skill finStatements = skillRepository.save(new Skill("Financial Statement Analysis", SkillCategory.ARCHITECTURE, "Analyzing Income Statements, Balance Sheets, and Cash Flow Statements for corporate health.", Difficulty.BEGINNER, "ONET", "13-2051.00", "FINANCE"));
+        Skill finModeling = skillRepository.save(new Skill("Financial Modeling & Valuation (DCF)", SkillCategory.ARCHITECTURE, "Building Discounted Cash Flow models, WACC calculations, and three-statement financial projections.", Difficulty.ADVANCED, "ONET", "13-2051.00", "FINANCE"));
 
+        // Domain: DEVOPS_CLOUD
+        Skill docker = skillRepository.save(new Skill("Docker & Containers", SkillCategory.DEVOPS, "OCI container image building, multi-stage Dockerfiles, and compose networks.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/devops-001", "DEVOPS_CLOUD"));
+        Skill kubernetes = skillRepository.save(new Skill("Kubernetes Orchestration", SkillCategory.DEVOPS, "Declarative Kubernetes cluster orchestration, Pods, Deployments, Services, and Ingress controllers.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/devops-002", "DEVOPS_CLOUD"));
+        Skill linux = skillRepository.save(new Skill("Linux & Shell Scripting", SkillCategory.CORE_CS, "POSIX system commands, bash automation, filesystem permissions, and process signals.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/devops-003", "DEVOPS_CLOUD"));
+
+        // Domain: AI_ML & RAG
+        Skill python = skillRepository.save(new Skill("Python Programming", SkillCategory.LANGUAGE, "Idiomatic Python scripting, list comprehensions, and data wrangling.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/py-001", "AI_ML"));
+        Skill promptEngineering = skillRepository.save(new Skill("Prompt Engineering & LLM APIs", SkillCategory.DATA_AI, "Few-shot prompting, structured JSON schema output, and OpenAI/Anthropic API integration.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/rag-001", "AI_ML"));
+        Skill vectorEmbeddings = skillRepository.save(new Skill("Vector Databases & Embeddings", SkillCategory.DATA_AI, "Semantic embedding generation, cosine similarity, HNSW indexing, and ChromaDB/pgvector storage.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/rag-002", "AI_ML"));
+        Skill ragArchitecture = skillRepository.save(new Skill("RAG Architecture & LangChain", SkillCategory.DATA_AI, "Retrieval-Augmented Generation architectures, chunking strategies, vector stores, and LangChain/LlamaIndex orchestrations.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/rag-003", "AI_ML"));
+        Skill deepLearning = skillRepository.save(new Skill("Deep Learning & PyTorch", SkillCategory.DATA_AI, "Neural networks, backpropagation, and PyTorch tensor operations.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/ai-002", "AI_ML"));
+
+        // Domain: MOBILE
+        Skill dart = skillRepository.save(new Skill("Dart Programming", SkillCategory.LANGUAGE, "Type-safe asynchronous Dart programming with Streams and Future patterns.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/mob-001", "MOBILE"));
+        Skill flutter = skillRepository.save(new Skill("Flutter Framework & Widgets", SkillCategory.FRAMEWORK, "Reactive widget tree rendering, declarative layouts, and cross-platform app compilation.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/mob-002", "MOBILE"));
+        Skill stateManagement = skillRepository.save(new Skill("State Management (Riverpod/Bloc)", SkillCategory.ARCHITECTURE, "Reactive immutable state stores, dependency injection, and state notifier patterns.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/mob-003", "MOBILE"));
+
+        // Domain: WEB_DEVELOPMENT & JAVA
+        Skill java = skillRepository.save(new Skill("Java", SkillCategory.LANGUAGE, "Core Java programming including OOP, Generics, and Concurrency.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/java-001", "WEB_DEVELOPMENT"));
+        Skill oop = skillRepository.save(new Skill("Object-Oriented Programming (OOP)", SkillCategory.CORE_CS, "Encapsulation, Inheritance, Polymorphism, Abstraction, and SOLID principles.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/oop-001", "WEB_DEVELOPMENT"));
+        Skill sql = skillRepository.save(new Skill("SQL & Relational Databases", SkillCategory.DATABASE, "Relational data modeling, ACID transactions, complex joins, and indexing.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/sql-001", "WEB_DEVELOPMENT"));
+        Skill springBoot = skillRepository.save(new Skill("Spring Boot", SkillCategory.FRAMEWORK, "Enterprise backend architecture with Spring Boot REST services.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/spring-001", "WEB_DEVELOPMENT"));
+        Skill restApis = skillRepository.save(new Skill("RESTful APIs", SkillCategory.ARCHITECTURE, "Designing scalable HTTP RESTful web services and API contracts.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/rest-001", "WEB_DEVELOPMENT"));
+        Skill springSecurity = skillRepository.save(new Skill("Spring Security & JWT", SkillCategory.FRAMEWORK, "Stateless JWT authentication filter pipelines and authorization.", Difficulty.ADVANCED, "ESCO", "http://data.europa.eu/esco/skill/sec-001", "WEB_DEVELOPMENT"));
+        Skill js = skillRepository.save(new Skill("JavaScript (ES6+)", SkillCategory.LANGUAGE, "Modern JavaScript language mechanics, closures, and async/await.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/js-001", "WEB_DEVELOPMENT"));
+        Skill react = skillRepository.save(new Skill("React.js", SkillCategory.FRAMEWORK, "Declarative UI engineering with React hooks, components, and virtual DOM.", Difficulty.INTERMEDIATE, "ESCO", "http://data.europa.eu/esco/skill/react-001", "WEB_DEVELOPMENT"));
+        Skill git = skillRepository.save(new Skill("Git & Version Control", SkillCategory.CORE_CS, "Branching strategies, Git workflows, PRs, and collaborative version control.", Difficulty.BEGINNER, "ESCO", "http://data.europa.eu/esco/skill/git-001", "WEB_DEVELOPMENT"));
+
+        // =========================================================================
+        // 2. SEED ALIASES (SYNONYM & ACRONYM CANONICALIZATION)
+        // =========================================================================
+        aliasRepository.save(new SkillAlias("dp", dp, "ACRONYM"));
+        aliasRepository.save(new SkillAlias("dynamic programming", dp, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("recursion", recursion, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("memoization", memoization, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("tabulation", memoization, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("big-o", complexity, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("calculus", calculusDiff, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("derivatives", calculusDiff, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("differentiation", calculusDiff, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("integrals", calculusInt, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("integration", calculusInt, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("blender", meshModeling, "TOOL"));
+        aliasRepository.save(new SkillAlias("3d modeling", meshModeling, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("photography", exposureTriangle, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("photo", exposureTriangle, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("music production", daw, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("music", daw, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("audio mixing", audioMixing, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("financial modeling", finModeling, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("dcf", finModeling, "ACRONYM"));
+        aliasRepository.save(new SkillAlias("finance", finStatements, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("k8s", kubernetes, "ACRONYM"));
+        aliasRepository.save(new SkillAlias("kubernetes", kubernetes, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("rag", ragArchitecture, "ACRONYM"));
+        aliasRepository.save(new SkillAlias("retrieval augmented generation", ragArchitecture, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("vector db", vectorEmbeddings, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("vector database", vectorEmbeddings, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("vector databases", vectorEmbeddings, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("embeddings", vectorEmbeddings, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("llm", promptEngineering, "ACRONYM"));
+        aliasRepository.save(new SkillAlias("large language model", promptEngineering, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("flutter", flutter, "SYNONYM"));
+        aliasRepository.save(new SkillAlias("dart", dart, "SYNONYM"));
+
+        // =========================================================================
+        // 3. SEED DIRECTED ONTOLOGY RELATIONS & DAG PREREQUISITES
+        // =========================================================================
+
+        // Dynamic Programming Graph
+        relationRepository.save(new SkillRelation(recursion, dp, SkillRelationType.PREREQUISITE, 1.0, "Top-down memoized DP builds directly on recursive call trees."));
+        relationRepository.save(new SkillRelation(complexity, dp, SkillRelationType.PREREQUISITE, 0.9, "Essential for evaluating optimal substructure and subproblem caching trade-offs."));
+        relationRepository.save(new SkillRelation(memoization, dp, SkillRelationType.ESSENTIAL_CORE, 1.0, "Direct core technique for state caching and table transitions."));
+        prerequisiteRepository.save(new SkillPrerequisite(dp, recursion, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(dp, complexity, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(memoization, recursion, PrerequisiteStrength.REQUIRED));
+
+        // Mathematics Graph
+        relationRepository.save(new SkillRelation(limits, calculusDiff, SkillRelationType.PREREQUISITE, 1.0, "Limits provide the rigorous definition for differential slope."));
+        relationRepository.save(new SkillRelation(calculusDiff, calculusInt, SkillRelationType.PREREQUISITE, 1.0, "Integration is the inverse operation of differentiation."));
+        prerequisiteRepository.save(new SkillPrerequisite(calculusDiff, limits, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(calculusInt, calculusDiff, PrerequisiteStrength.REQUIRED));
+
+        // 3D / Creative Graph
+        relationRepository.save(new SkillRelation(meshModeling, uvTexturing, SkillRelationType.PREREQUISITE, 1.0, "Clean polygonal mesh topology is required before 2D UV seam unwrapping."));
+        relationRepository.save(new SkillRelation(uvTexturing, lighting3D, SkillRelationType.PREREQUISITE, 0.9, "PBR material properties interact with 3D lighting shader calculations."));
+        prerequisiteRepository.save(new SkillPrerequisite(uvTexturing, meshModeling, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(lighting3D, uvTexturing, PrerequisiteStrength.REQUIRED));
+
+        // Photography Graph
+        relationRepository.save(new SkillRelation(exposureTriangle, rawEditing, SkillRelationType.PREREQUISITE, 0.95, "Proper physical optical exposure is required before non-destructive RAW editing."));
+        prerequisiteRepository.save(new SkillPrerequisite(rawEditing, exposureTriangle, PrerequisiteStrength.REQUIRED));
+
+        // Audio Graph
+        relationRepository.save(new SkillRelation(daw, audioMixing, SkillRelationType.PREREQUISITE, 1.0, "Multi-track DAW routing and session structuring are required before balancing frequencies."));
+        prerequisiteRepository.save(new SkillPrerequisite(audioMixing, daw, PrerequisiteStrength.REQUIRED));
+
+        // Finance Graph
+        relationRepository.save(new SkillRelation(finStatements, finModeling, SkillRelationType.PREREQUISITE, 1.0, "Mastery of financial statements is mandatory to build forward-looking DCF forecasts."));
+        prerequisiteRepository.save(new SkillPrerequisite(finModeling, finStatements, PrerequisiteStrength.REQUIRED));
+
+        // DevOps Graph
+        relationRepository.save(new SkillRelation(linux, docker, SkillRelationType.PREREQUISITE, 0.9, "Linux namespaces and cgroups form the foundation of container runtimes."));
+        relationRepository.save(new SkillRelation(docker, kubernetes, SkillRelationType.PREREQUISITE, 1.0, "Container images are the atomic unit of deployment in Kubernetes pods."));
+        prerequisiteRepository.save(new SkillPrerequisite(docker, linux, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(kubernetes, docker, PrerequisiteStrength.REQUIRED));
+
+        // AI / RAG Graph
+        relationRepository.save(new SkillRelation(python, promptEngineering, SkillRelationType.PREREQUISITE, 0.85, "Python SDKs are the primary client for LLM API integration."));
+        relationRepository.save(new SkillRelation(python, vectorEmbeddings, SkillRelationType.PREREQUISITE, 0.9, "Vector operations and data preprocessing require Python."));
+        relationRepository.save(new SkillRelation(promptEngineering, ragArchitecture, SkillRelationType.PREREQUISITE, 1.0, "Prompt engineering is required to synthesize contextual answers from retrieved chunks."));
+        relationRepository.save(new SkillRelation(vectorEmbeddings, ragArchitecture, SkillRelationType.PREREQUISITE, 1.0, "Dense vector embeddings form the foundation of semantic retrieval in RAG."));
         prerequisiteRepository.save(new SkillPrerequisite(promptEngineering, python, PrerequisiteStrength.REQUIRED));
         prerequisiteRepository.save(new SkillPrerequisite(vectorEmbeddings, python, PrerequisiteStrength.REQUIRED));
         prerequisiteRepository.save(new SkillPrerequisite(ragArchitecture, promptEngineering, PrerequisiteStrength.REQUIRED));
         prerequisiteRepository.save(new SkillPrerequisite(ragArchitecture, vectorEmbeddings, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(retrievalOpt, ragArchitecture, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(llmEval, ragArchitecture, PrerequisiteStrength.REQUIRED));
-        prerequisiteRepository.save(new SkillPrerequisite(cloudInfra, docker, PrerequisiteStrength.REQUIRED));
 
-        // ==========================================
-        // 3. SEED LEARNING RESOURCES
-        // ==========================================
-        LearningResource resJava = resourceRepository.save(new LearningResource(
-                "Modern Java: Collections, Streams, and Concurrency",
-                "Comprehensive masterclass covering Java 21 LTS, Stream pipelines, Optional patterns, and concurrent executor pools.",
+        // Mobile Graph
+        relationRepository.save(new SkillRelation(dart, flutter, SkillRelationType.PREREQUISITE, 1.0, "Dart is the programming language powering all Flutter widgets."));
+        relationRepository.save(new SkillRelation(flutter, stateManagement, SkillRelationType.PREREQUISITE, 1.0, "Widget tree architecture is required to understand state notification flow."));
+        prerequisiteRepository.save(new SkillPrerequisite(flutter, dart, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(stateManagement, flutter, PrerequisiteStrength.REQUIRED));
+
+        // Web / Java Graph
+        relationRepository.save(new SkillRelation(oop, java, SkillRelationType.PREREQUISITE, 0.9, "OOP principles are foundational to Java classes."));
+        relationRepository.save(new SkillRelation(java, springBoot, SkillRelationType.PREREQUISITE, 1.0, "Spring Boot requires solid Java mastery."));
+        relationRepository.save(new SkillRelation(sql, springBoot, SkillRelationType.PREREQUISITE, 0.85, "Database operations in Spring Boot require relational query concepts."));
+        prerequisiteRepository.save(new SkillPrerequisite(java, oop, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(springBoot, java, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(springBoot, sql, PrerequisiteStrength.REQUIRED));
+        prerequisiteRepository.save(new SkillPrerequisite(react, js, PrerequisiteStrength.REQUIRED));
+
+        // =========================================================================
+        // 4. SEED MULTI-DOMAIN LEARNING RESOURCES
+        // =========================================================================
+
+        // DP Resource
+        LearningResource resDp = resourceRepository.save(new LearningResource(
+                "Dynamic Programming Masterclass: From Recursion to Memoization",
+                "Deep dive into 1D and 2D dynamic programming, optimal substructure, state transitions, and tabular caching patterns.",
                 ResourceType.COURSE,
-                "https://dev.java/learn/",
-                "Oracle Java Tutorials",
-                Difficulty.INTERMEDIATE,
-                16.0, 4.9, 0.96
+                "https://algorithms.org/dp",
+                "Algorithms Academy",
+                Difficulty.ADVANCED,
+                18.0, 4.9, 0.98
         ));
-        resourceSkillRepository.save(new ResourceSkill(resJava, java, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resDp, dp, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resDp, memoization, 0.9));
 
-        LearningResource resSql = resourceRepository.save(new LearningResource(
-                "PostgreSQL High Performance & Schema Architecture",
-                "Industry guide to relational data modeling, query optimization, B-Tree indexes, and transaction isolation levels.",
+        // Calculus Resource
+        LearningResource resCalc = resourceRepository.save(new LearningResource(
+                "Calculus: Derivatives, Limits, and Rates of Change",
+                "Intuitive geometric and algebraic derivations of differential calculus, slope limits, and practical optimization problems.",
+                ResourceType.COURSE,
+                "https://ocw.mit.edu/courses/mathematics/calculus",
+                "MIT OpenCourseWare",
+                Difficulty.INTERMEDIATE,
+                20.0, 4.9, 0.99
+        ));
+        resourceSkillRepository.save(new ResourceSkill(resCalc, calculusDiff, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resCalc, limits, 0.9));
+
+        // 3D Blender Resource
+        LearningResource res3d = resourceRepository.save(new LearningResource(
+                "Blender 3D Modeling & Mesh Topology Fundamentals",
+                "Step-by-step masterclass in subdivision modeling, edge flow topology, modifier stacks, and 3D asset preparation.",
                 ResourceType.TUTORIAL,
-                "https://www.postgresql.org/docs/current/tutorial.html",
-                "PostgreSQL Docs",
-                Difficulty.INTERMEDIATE,
-                12.0, 4.8, 0.94
+                "https://blender.org/learn",
+                "Blender Official",
+                Difficulty.BEGINNER,
+                16.0, 4.8, 0.95
         ));
-        resourceSkillRepository.save(new ResourceSkill(resSql, sql, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(res3d, meshModeling, 1.0));
 
-        LearningResource resSpringCore = resourceRepository.save(new LearningResource(
-                "Building RESTful Web Services with Spring Boot",
-                "Official Spring guide to creating production REST APIs with Spring MVC, Jackson serialization, and dependency injection.",
-                ResourceType.DOCUMENTATION,
-                "https://spring.io/guides/gs/rest-service/",
-                "Spring.io",
-                Difficulty.INTERMEDIATE,
-                14.0, 4.9, 0.98
+        // Photography Resource
+        LearningResource resPhoto = resourceRepository.save(new LearningResource(
+                "The Exposure Triangle: Aperture, Shutter Speed, and ISO Dynamics",
+                "Master manual camera controls, sensor noise mitigation, motion freezing, and creative shallow depth of field.",
+                ResourceType.TUTORIAL,
+                "https://photographyacademy.com/exposure",
+                "Photography Academy",
+                Difficulty.BEGINNER,
+                10.0, 4.8, 0.96
         ));
-        resourceSkillRepository.save(new ResourceSkill(resSpringCore, springBoot, 1.0));
-        resourceSkillRepository.save(new ResourceSkill(resSpringCore, restApis, 0.9));
+        resourceSkillRepository.save(new ResourceSkill(resPhoto, exposureTriangle, 1.0));
 
-        LearningResource resJpa = resourceRepository.save(new LearningResource(
-                "Mastering Spring Data JPA & Hibernate Performance",
-                "Avoid N+1 query traps, understand detached entity states, custom JPQL queries, and transactional boundary management.",
+        // Music / Audio Resource
+        LearningResource resAudio = resourceRepository.save(new LearningResource(
+                "Modern Audio Engineering: DAW Routing, EQ Balancing, and Dynamic Compression",
+                "Professional multi-track mixing in modern DAWs with frequency spectrum carving, saturation, and master bus limiting.",
                 ResourceType.COURSE,
-                "https://spring.io/guides/gs/accessing-data-jpa/",
-                "Spring.io",
+                "https://soundonrecord.com/mixing",
+                "Sound On Record",
                 Difficulty.INTERMEDIATE,
-                15.0, 4.7, 0.92
+                15.0, 4.9, 0.97
         ));
-        resourceSkillRepository.save(new ResourceSkill(resJpa, jpa, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resAudio, daw, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resAudio, audioMixing, 0.9));
 
-        LearningResource resSecurity = resourceRepository.save(new LearningResource(
-                "Spring Security 6: Stateless JWT Authentication Architecture",
-                "Implement robust JWT filter pipelines, BCrypt password hashing, role-based endpoint authorization, and CORS handling.",
+        // Finance Resource
+        LearningResource resFinance = resourceRepository.save(new LearningResource(
+                "Financial Modeling & DCF Valuation in Excel",
+                "Build dynamic Discounted Cash Flow models from SEC filings, forecast revenue drivers, and calculate Weighted Average Cost of Capital.",
                 ResourceType.COURSE,
-                "https://spring.io/guides/topicals/spring-security-architecture",
-                "Spring.io",
+                "https://corporatefinance.org/dcf",
+                "Corporate Finance Institute",
                 Difficulty.ADVANCED,
-                18.0, 4.8, 0.95
+                22.0, 4.9, 0.98
         ));
-        resourceSkillRepository.save(new ResourceSkill(resSecurity, springSecurity, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resFinance, finModeling, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resFinance, finStatements, 0.9));
 
-        LearningResource resDocker = resourceRepository.save(new LearningResource(
-                "Docker for Backend Developers: Multi-Stage Builds & Orchestration",
-                "Create lightweight alpine JVM container images, manage environment variables, and orchestrate microservices with Docker Compose.",
-                ResourceType.VIDEO,
-                "https://docs.docker.com/get-started/",
-                "Docker Docs",
-                Difficulty.INTERMEDIATE,
-                10.0, 4.7, 0.91
-        ));
-        resourceSkillRepository.save(new ResourceSkill(resDocker, docker, 1.0));
-
-        LearningResource resSysDesign = resourceRepository.save(new LearningResource(
-                "Distributed System Design: Scalability, Caching, and Message Queues",
-                "Architecting high-availability systems with Redis caching, asynchronous event queues, database partitioning, and rate limiting.",
-                ResourceType.BOOK,
-                "https://github.com/donnemartin/system-design-primer",
-                "System Design Primer",
-                Difficulty.ADVANCED,
-                24.0, 4.9, 0.99
-        ));
-        resourceSkillRepository.save(new ResourceSkill(resSysDesign, systemDesign, 1.0));
-
-        // Frontend & AI Resources
-        LearningResource resReact = resourceRepository.save(new LearningResource(
-                "React 19 Official Documentation & Interactive Guide",
-                "State management, server components, hooks lifecycle, and composable UI design patterns.",
+        // Cloud / Kubernetes Resource
+        LearningResource resK8s = resourceRepository.save(new LearningResource(
+                "Kubernetes Cluster Architecture: Pods, Services, and Ingress",
+                "Production Kubernetes orchestration covering YAML manifests, DaemonSets, StatefulSets, persistent volumes, and ingress routing.",
                 ResourceType.DOCUMENTATION,
-                "https://react.dev/learn",
-                "React Docs",
-                Difficulty.INTERMEDIATE,
-                20.0, 4.9, 0.97
+                "https://kubernetes.io/docs/home/",
+                "Kubernetes Official Docs",
+                Difficulty.ADVANCED,
+                20.0, 4.9, 0.98
         ));
-        resourceSkillRepository.save(new ResourceSkill(resReact, react, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resK8s, kubernetes, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resK8s, docker, 0.9));
 
-        LearningResource resPython = resourceRepository.save(new LearningResource(
-                "Applied Machine Learning with Scikit-Learn and PyTorch",
-                "End-to-end pipeline covering data preprocessing, model selection, hyperparameter tuning, and deep learning architectures.",
-                ResourceType.COURSE,
-                "https://scikit-learn.org/stable/tutorial/index.html",
-                "Scikit-Learn Docs",
-                Difficulty.INTERMEDIATE,
-                25.0, 4.8, 0.95
-        ));
-        resourceSkillRepository.save(new ResourceSkill(resPython, scikitLearn, 1.0));
-        resourceSkillRepository.save(new ResourceSkill(resPython, python, 0.8));
-
-        // RAG & Generative AI Resources
+        // RAG Resource
         LearningResource resRag = resourceRepository.save(new LearningResource(
                 "Production RAG Systems with LangChain & LlamaIndex",
                 "Comprehensive architecture for Retrieval-Augmented Generation: document loading, recursive chunking, dense vector retrieval, and LLM synthesis.",
                 ResourceType.COURSE,
                 "https://python.langchain.com/docs/tutorials/rag/",
-                "LangChain & LlamaIndex Official Guides",
+                "LangChain Official",
                 Difficulty.INTERMEDIATE,
                 22.0, 4.9, 0.98
         ));
         resourceSkillRepository.save(new ResourceSkill(resRag, ragArchitecture, 1.0));
         resourceSkillRepository.save(new ResourceSkill(resRag, vectorEmbeddings, 0.9));
 
-        LearningResource resEmbeddings = resourceRepository.save(new LearningResource(
-                "Semantic Search and Vector Databases with ChromaDB & pgvector",
-                "Learn vector similarity metrics (Cosine, Dot Product), approximate nearest neighbor index structures (HNSW/IVF), and PostgreSQL pgvector integration.",
-                ResourceType.TUTORIAL,
-                "https://github.com/pgvector/pgvector",
-                "pgvector & ChromaDB Docs",
-                Difficulty.INTERMEDIATE,
-                14.0, 4.8, 0.95
-        ));
-        resourceSkillRepository.save(new ResourceSkill(resEmbeddings, vectorEmbeddings, 1.0));
-        resourceSkillRepository.save(new ResourceSkill(resEmbeddings, retrievalOpt, 0.8));
-
-        LearningResource resPrompt = resourceRepository.save(new LearningResource(
-                "Advanced Prompt Engineering & Structured Tool Calling",
-                "Techniques for chain-of-thought, ReAct framework, structured JSON output extraction with Pydantic, and multi-agent workflows.",
-                ResourceType.DOCUMENTATION,
-                "https://platform.openai.com/docs/guides/prompt-engineering",
-                "OpenAI & Anthropic Guides",
-                Difficulty.BEGINNER,
-                10.0, 4.9, 0.96
-        ));
-        resourceSkillRepository.save(new ResourceSkill(resPrompt, promptEngineering, 1.0));
-
-        LearningResource resLlmEval = resourceRepository.save(new LearningResource(
-                "RAG Triad & LLM Evaluation with Ragas Framework",
-                "Evaluating RAG systems with quantitative metrics: Faithfulness, Answer Relevance, and Context Recall. Guardrail synthesis and automated benchmarking.",
+        // Flutter Resource
+        LearningResource resFlutter = resourceRepository.save(new LearningResource(
+                "Flutter & Dart: Cross-Platform Mobile Architecture",
+                "Build fast native iOS and Android apps with declarative Flutter widgets, Riverpod state management, and animations.",
                 ResourceType.COURSE,
-                "https://docs.ragas.io/",
-                "Ragas Evaluation Framework",
+                "https://flutter.dev/learn",
+                "Flutter Docs",
+                Difficulty.INTERMEDIATE,
+                20.0, 4.9, 0.97
+        ));
+        resourceSkillRepository.save(new ResourceSkill(resFlutter, flutter, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resFlutter, dart, 0.9));
+
+        // Java / Spring Boot Resource
+        LearningResource resJava = resourceRepository.save(new LearningResource(
+                "Modern Java & Spring Boot Enterprise Architecture",
+                "Enterprise backend architecture with Spring Boot REST services, transactional databases, and clean architecture.",
+                ResourceType.COURSE,
+                "https://spring.io/guides",
+                "Spring.io",
+                Difficulty.INTERMEDIATE,
+                25.0, 4.9, 0.98
+        ));
+        resourceSkillRepository.save(new ResourceSkill(resJava, springBoot, 1.0));
+        resourceSkillRepository.save(new ResourceSkill(resJava, java, 0.9));
+
+        // =========================================================================
+        // 5. SEED GOAL-ALIGNED PORTFOLIO PROJECTS
+        // =========================================================================
+
+        // DP Project
+        projectRepository.save(new Project(
+                "Dynamic Programming Algorithmic Solver & Memoization Engine",
+                "Implement high-performance DP solvers for Classic Knapsack, Longest Common Subsequence, and Matrix Chain Multiplication with state profiling.",
                 Difficulty.ADVANCED,
-                16.0, 4.8, 0.94
+                "https://github.com/algorithms/dp-solver-suite",
+                objectMapper.writeValueAsString(List.of("Dynamic Programming", "Recursion & Backtracking", "Memoization & Tabulation")),
+                25.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Formulate recursive mathematical recurrence relations for 3 classic problems",
+                        "Implement top-down memoized cache with space complexity analysis",
+                        "Convert solutions to bottom-up 1D/2D tabular array DP",
+                        "Benchmark execution time and memory footprint against raw recursion"
+                ))
         ));
-        resourceSkillRepository.save(new ResourceSkill(resLlmEval, llmEval, 1.0));
-        resourceSkillRepository.save(new ResourceSkill(resLlmEval, retrievalOpt, 0.8));
 
-        // ==========================================
-        // 4. SEED PROJECTS
-        // ==========================================
+        // Calculus Project
         projectRepository.save(new Project(
-                "Java Multithreaded Web Crawler & Indexer",
-                "Build a high-performance concurrent web crawler using Java CompletableFuture, ForkJoinPool, and custom thread-safe blocking queues.",
-                Difficulty.INTERMEDIATE, 15.0,
-                "Deliverables: Multi-threaded engine, rate-limiter, and searchable indexed file store.",
-                "Rubric: Thread safety (30%), throughput efficiency (30%), code clean architecture (40%).",
-                java, "https://github.com/spring-guides/gs-async-method"
+                "Numerical Differentiation & Gradient Optimization Engine",
+                "Implement finite difference numerical approximations, gradient descent slope optimization, and polynomial root-finding algorithms.",
+                Difficulty.INTERMEDIATE,
+                "https://github.com/math/numerical-differentiation",
+                objectMapper.writeValueAsString(List.of("Calculus & Derivatives", "Limits & Continuity")),
+                20.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Implement forward, backward, and central difference numerical derivatives",
+                        "Build gradient descent optimizer for quadratic and multivariable loss surfaces",
+                        "Verify convergence rates against analytical calculus derivatives"
+                ))
         ));
 
+        // 3D Blender Project
         projectRepository.save(new Project(
-                "E-Commerce Database Schema & Query Optimization Engine",
-                "Design a complete normalized PostgreSQL relational database for an e-commerce platform with indexing and partition strategies.",
-                Difficulty.INTERMEDIATE, 12.0,
-                "Deliverables: Normalized DDL schema, sample dataset, and 10 analytical query benchmarks.",
-                "Rubric: Normalization compliance (40%), query execution time (30%), constraint integrity (30%).",
-                sql, "https://github.com/postgresql/postgresql"
+                "Hard-Surface 3D Sci-Fi Asset Modeling & PBR Rendering",
+                "Model a production-ready 3D sci-fi vehicle asset in Blender with clean subdivision topology, UV unwrapping, and Cycles lighting render.",
+                Difficulty.ADVANCED,
+                "https://github.com/blender/scifi-hard-surface-asset",
+                objectMapper.writeValueAsString(List.of("3D Modeling & Mesh Topology", "UV Unwrapping & PBR Texturing", "3D Lighting & Rendering")),
+                30.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Block out silhouette and refine hard-surface quad topology",
+                        "Unwrap UV seams and pack islands with minimal distortion",
+                        "Configure PBR materials with normal, roughness, and metalness maps",
+                        "Set up studio three-point lighting and render in 4K resolution"
+                ))
         ));
 
+        // Photography Project
         projectRepository.save(new Project(
-                "Production-Ready E-Commerce REST API with Spring Boot & PostgreSQL",
-                "Build a modular Spring Boot REST service with DTO validation, custom exception handler, pagination, and transactional service layer.",
-                Difficulty.INTERMEDIATE, 20.0,
-                "Deliverables: REST endpoints with OpenAPI/Swagger docs, JUnit service test suite, and JPA entities.",
-                "Rubric: Clean Architecture separation (35%), error handling (25%), test coverage (40%).",
-                springBoot, "https://github.com/spring-guides/gs-rest-service"
+                "Landscape & Portrait Portfolio: Manual Exposure & Color Grading",
+                "Capture and post-process a 10-image photography series demonstrating exposure triangle control and non-destructive RAW histogram balancing.",
+                Difficulty.INTERMEDIATE,
+                "https://github.com/photography/portfolio-series",
+                objectMapper.writeValueAsString(List.of("Exposure Triangle (Aperture, Shutter Speed, ISO)", "RAW Image Editing & Color Grading")),
+                18.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Capture 5 high-dynamic-range scenes with zero blown highlights",
+                        "Capture 5 shallow depth-of-field portraits using wide aperture",
+                        "Color grade RAW captures with custom tone curves and balanced color temperature"
+                ))
         ));
 
+        // Music / Audio Project
         projectRepository.save(new Project(
-                "Enterprise JWT Authentication & RBAC Microservice",
-                "Construct a dedicated authentication service implementing refresh tokens, BCrypt hashing, and role-based route guards.",
-                Difficulty.ADVANCED, 16.0,
-                "Deliverables: Stateless authentication provider, JWT filter pipeline, and password reset workflow.",
-                "Rubric: Security robustness (50%), token revocation logic (25%), code test coverage (25%).",
-                springSecurity, "https://github.com/spring-guides/gs-securing-web"
+                "Multi-Track Music Production & Studio Mixdown",
+                "Compose, arrange, and mix a complete multi-instrument audio track with parametric EQ carving, parallel compression, and master bus limiting.",
+                Difficulty.ADVANCED,
+                "https://github.com/audio/multitrack-session",
+                objectMapper.writeValueAsString(List.of("Digital Audio Workstation (DAW)", "Audio Mixing & Mastering")),
+                24.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Arrange 8+ MIDI and audio stems within DAW session",
+                        "Carve conflicting frequencies using parametric equalizers",
+                        "Apply sidechain and parallel dynamic compression to drum and bass elements",
+                        "Master final stereo output to -14 LUFS integrated loudness"
+                ))
         ));
 
+        // Finance Project
         projectRepository.save(new Project(
-                "Multi-Container Microservices Deployment with Docker & Compose",
-                "Containerize Spring Boot backend, PostgreSQL database, and Redis cache into an orchestrated multi-service environment.",
-                Difficulty.INTERMEDIATE, 10.0,
-                "Deliverables: Multi-stage Dockerfiles, docker-compose.yml configuration, and health check probes.",
-                "Rubric: Image optimization (40%), secret isolation (30%), networking reliability (30%).",
-                docker, "https://github.com/docker/awesome-compose"
+                "Corporate Discounted Cash Flow (DCF) Financial Valuation Model",
+                "Construct an institutional-grade 5-year DCF financial model in Excel for a public company using 10-K filings, WACC estimation, and sensitivity tables.",
+                Difficulty.ADVANCED,
+                "https://github.com/finance/dcf-valuation-model",
+                objectMapper.writeValueAsString(List.of("Financial Modeling & Valuation (DCF)", "Financial Statement Analysis")),
+                28.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Normalize 3 years of historical income statements and balance sheets",
+                        "Project 5-year Free Cash Flows to Firm (FCFF) based on revenue drivers",
+                        "Calculate cost of equity via CAPM and Weighted Average Cost of Capital (WACC)",
+                        "Construct sensitivity tables for perpetual growth rate vs discount rate"
+                ))
         ));
 
+        // Kubernetes Project
         projectRepository.save(new Project(
-                "High-Throughput Distributed URL Shortener (System Design)",
-                "Architect and implement a scalable URL shortening service handling 10k requests/sec with Redis caching and Base62 encoding.",
-                Difficulty.ADVANCED, 22.0,
-                "Deliverables: System architecture diagram, Redis cache layer, and database sharding strategy.",
-                "Rubric: Throughput benchmarking (40%), cache hit ratio (30%), architecture documentation (30%).",
-                systemDesign, "https://github.com/donnemartin/system-design-primer"
+                "Production Multi-Tier Microservices Kubernetes Deployment",
+                "Deploy a resilient microservices architecture onto a Kubernetes cluster with ConfigMaps, Secrets, Ingress, and Horizontal Pod Autoscalers.",
+                Difficulty.ADVANCED,
+                "https://github.com/devops/k8s-microservices-deployment",
+                objectMapper.writeValueAsString(List.of("Kubernetes Orchestration", "Docker & Containers", "Linux & Shell Scripting")),
+                30.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Containerize services into minimal multi-stage Docker images",
+                        "Write declarative Kubernetes Deployments, Services, and ConfigMaps",
+                        "Configure Ingress NGINX with TLS termination",
+                        "Set up Horizontal Pod Autoscaling (HPA) based on CPU/Memory thresholds"
+                ))
         ));
 
-        // RAG & AI Projects
+        // RAG Project
         projectRepository.save(new Project(
                 "Enterprise Document QA RAG System with Vector Search & LangChain",
-                "Construct an end-to-end RAG application that ingests PDFs, performs semantic chunking, indexes vectors into ChromaDB, and answers queries with source citations.",
-                Difficulty.INTERMEDIATE, 18.0,
-                "Deliverables: Python LangChain pipeline, ChromaDB vector store, FastAPI querying endpoint, and Streamlit interactive UI.",
-                "Rubric: Retrieval accuracy (35%), hallucination mitigation (35%), API performance (30%).",
-                ragArchitecture, "https://github.com/langchain-ai/rag-from-scratch"
+                "Build a complete Retrieval-Augmented Generation pipeline that parses enterprise PDFs, computes embeddings in ChromaDB, and synthesizes answers with citations.",
+                Difficulty.ADVANCED,
+                "https://github.com/rag/enterprise-document-qa",
+                objectMapper.writeValueAsString(List.of("RAG Architecture & LangChain", "Vector Databases & Embeddings", "Prompt Engineering & LLM APIs")),
+                30.0,
+                objectMapper.writeValueAsString(List.of(
+                        "Build PDF document loader with semantic recursive chunking",
+                        "Generate vector embeddings and store in ChromaDB with metadata filters",
+                        "Implement hybrid search with reciprocal rank fusion",
+                        "Generate grounded citations with prompt guardrails and evaluation"
+                ))
         ));
 
+        // Flutter Project
         projectRepository.save(new Project(
-                "Multi-Source Semantic Knowledge Base with Hybrid BM25 & Vector Retrieval",
-                "Implement a two-stage hybrid retrieval system with Cohere cross-encoder reranking, contextual compression, and automated evaluation.",
-                Difficulty.ADVANCED, 20.0,
-                "Deliverables: Hybrid search index, reranking pipeline, evaluation benchmarks, and Dockerized FastAPI microservice.",
-                "Rubric: Precision@k / Recall@k metrics (40%), reranker latency (30%), code modularity (30%).",
-                retrievalOpt, "https://github.com/run-llama/llama_index"
-        ));
-
-        // ==========================================
-        // 5. SEED ASSESSMENTS
-        // ==========================================
-        Assessment assessJava = assessmentRepository.save(new Assessment(
-                "Java Advanced Concepts & OOP Checkpoint",
-                "Test your understanding of Java generics, streams, memory model, and concurrency.",
-                java, Difficulty.INTERMEDIATE, 70, 15
-        ));
-        questionRepository.save(new AssessmentQuestion(assessJava,
-                "Which interface does a parallel stream use under the hood in Java for thread management?",
-                objectMapper.writeValueAsString(List.of("ThreadPoolExecutor", "ForkJoinPool", "ScheduledExecutorService", "SingleThreadExecutor")),
-                1, "Parallel streams in Java utilize the common ForkJoinPool.commonPool() for work-stealing task execution."));
-        questionRepository.save(new AssessmentQuestion(assessJava,
-                "What is the time complexity of looking up a key in a well-balanced Java HashMap?",
-                objectMapper.writeValueAsString(List.of("O(1) amortized, O(log n) when treeified", "O(n)", "O(log n) always", "O(1) worst case")),
-                0, "Java 8+ treeifies bins with >8 collisions using Red-Black trees, giving O(1) average and O(log n) worst case."));
-        questionRepository.save(new AssessmentQuestion(assessJava,
-                "Which keyword prevents instruction reordering and ensures visibility across threads in Java?",
-                objectMapper.writeValueAsString(List.of("transient", "synchronized only", "volatile", "final")),
-                2, "The 'volatile' keyword establishes a happens-before relationship, preventing compiler/CPU reordering and ensuring memory visibility."));
-
-        Assessment assessSql = assessmentRepository.save(new Assessment(
-                "Relational SQL & Query Optimization Checkpoint",
-                "Evaluate your SQL query design, index utilization, and transaction isolation knowledge.",
-                sql, Difficulty.INTERMEDIATE, 70, 15
-        ));
-        questionRepository.save(new AssessmentQuestion(assessSql,
-                "Which index type is best suited for range queries like `WHERE age BETWEEN 20 AND 30` in PostgreSQL?",
-                objectMapper.writeValueAsString(List.of("Hash Index", "B-Tree Index", "GIN Index", "BRIN Index only")),
-                1, "B-Tree indexes maintain sorted keys and are optimal for equality and range query operators (<, <=, =, >=, >, BETWEEN)."));
-        questionRepository.save(new AssessmentQuestion(assessSql,
-                "Which transaction isolation level prevents dirty reads and non-repeatable reads, but may allow phantom reads?",
-                objectMapper.writeValueAsString(List.of("Read Uncommitted", "Read Committed", "Repeatable Read", "Serializable")),
-                2, "Repeatable Read guarantees that any data read cannot change during the transaction, preventing dirty and non-repeatable reads."));
-
-        Assessment assessSpringBoot = assessmentRepository.save(new Assessment(
-                "Spring Boot REST & Architecture Checkpoint",
-                "Verify your comprehension of Spring Boot dependency injection, bean scopes, and REST controllers.",
-                springBoot, Difficulty.INTERMEDIATE, 70, 15
-        ));
-        questionRepository.save(new AssessmentQuestion(assessSpringBoot,
-                "What is the default bean scope in Spring Framework / Spring Boot application contexts?",
-                objectMapper.writeValueAsString(List.of("Prototype", "Singleton", "Request", "Session")),
-                1, "By default, Spring beans are managed as singletons: one shared instance per Spring IoC container."));
-        questionRepository.save(new AssessmentQuestion(assessSpringBoot,
-                "Which annotation combines `@Controller` and `@ResponseBody` in Spring MVC?",
-                objectMapper.writeValueAsString(List.of("@Service", "@RestController", "@Endpoint", "@WebComponent")),
-                1, "@RestController is a convenience annotation that combines @Controller and @ResponseBody, serializing return objects directly to JSON/XML."));
-        questionRepository.save(new AssessmentQuestion(assessSpringBoot,
-                "How do you handle global controller exceptions gracefully in Spring Boot?",
-                objectMapper.writeValueAsString(List.of("Using `@RestControllerAdvice` and `@ExceptionHandler`", "Writing try-catch in every controller method", "Throwing RuntimeException directly", "Configuring web.xml")),
-                0, "@RestControllerAdvice with @ExceptionHandler provides centralized, clean global exception mapping to consistent JSON responses."));
-
-        // RAG & Python Assessments
-        Assessment assessRag = assessmentRepository.save(new Assessment(
-                "RAG Architecture & Vector Search Checkpoint",
-                "Verify your comprehension of semantic embeddings, vector indexing, retrieval reranking, and RAG evaluation.",
-                ragArchitecture, Difficulty.INTERMEDIATE, 70, 15
-        ));
-        questionRepository.save(new AssessmentQuestion(assessRag,
-                "What is the primary advantage of Hybrid Search combining BM25 keyword matching with Dense Vector Embeddings in RAG pipelines?",
+                "Cross-Platform Flutter Mobile Application with Riverpod State",
+                "Develop a responsive cross-platform mobile application in Flutter featuring async state management, persistent caching, and smooth page transitions.",
+                Difficulty.INTERMEDIATE,
+                "https://github.com/flutter/crossplatform-mobile-app",
+                objectMapper.writeValueAsString(List.of("Flutter Framework & Widgets", "Dart Programming", "State Management (Riverpod/Bloc)")),
+                25.0,
                 objectMapper.writeValueAsString(List.of(
-                        "It balances exact keyword/acronym matching with deep semantic contextual relevance.",
-                        "It reduces vector database memory requirements to zero.",
-                        "It eliminates the need for prompt templates.",
-                        "It allows searching without generating any vector embeddings."
-                )),
-                0, "Hybrid search leverages BM25 for precise term/lexical matches and dense vectors for conceptual semantic relevance, yielding optimal retrieval recall."));
-        questionRepository.save(new AssessmentQuestion(assessRag,
-                "What is the role of a Cross-Encoder Reranker in a two-stage RAG retrieval architecture?",
-                objectMapper.writeValueAsString(List.of(
-                        "It compresses PDF documents into Markdown format.",
-                        "It scores the full query-document text pair with high precision on top-K candidates to prioritize the most relevant context.",
-                        "It automatically fine-tunes the base foundation LLM.",
-                        "It generates synthetic Q&A pairs for training datasets."
-                )),
-                1, "Cross-encoders compute full cross-attention between the query and candidate chunk, reordering candidates with higher accuracy than fast bi-encoder embeddings."));
-        questionRepository.save(new AssessmentQuestion(assessRag,
-                "In the RAG Triad evaluation framework (Ragas), what does 'Faithfulness' measure?",
-                objectMapper.writeValueAsString(List.of(
-                        "The execution speed of vector database similarity queries.",
-                        "Whether all claims in the generated response can be inferred directly from the retrieved context without hallucinations.",
-                        "The total number of parameters in the embedding model.",
-                        "Whether the prompt contains system instructions."
-                )),
-                1, "Faithfulness measures factual consistency of the answer against retrieved context, identifying whether any hallucinated facts were introduced."));
-
-        Assessment assessPython = assessmentRepository.save(new Assessment(
-                "Python & AI Data Foundations Checkpoint",
-                "Evaluate core Python programming, vector math, and data processing fundamentals.",
-                python, Difficulty.BEGINNER, 70, 15
+                        "Structure responsive UI widget tree with custom theme styling",
+                        "Implement global state management and dependency injection with Riverpod",
+                        "Integrate asynchronous REST API client with local Hive cache",
+                        "Build adaptive layouts for Android and iOS devices"
+                ))
         ));
-        questionRepository.save(new AssessmentQuestion(assessPython,
-                "What is the primary benefit of using Python generators with the `yield` statement?",
+
+        // Java Backend Project
+        projectRepository.save(new Project(
+                "Enterprise Spring Boot Microservices Backend with JWT Security",
+                "Build a high-performance REST API backend with Spring Boot 3, Spring Data JPA, PostgreSQL, and stateless JWT authentication filters.",
+                Difficulty.ADVANCED,
+                "https://github.com/backend/spring-boot-enterprise-backend",
+                objectMapper.writeValueAsString(List.of("Spring Boot", "Java", "SQL & Relational Databases", "Spring Security & JWT")),
+                30.0,
                 objectMapper.writeValueAsString(List.of(
-                        "Lazy evaluation: generating items on the fly without loading large datasets into memory.",
-                        "It forces code to run on GPU threads.",
-                        "It converts Python scripts to C binaries automatically.",
-                        "It makes variables global across all modules."
-                )),
-                0, "Generators evaluate lazily on-demand, enabling efficient streaming of massive documents or vector datasets with minimal memory footprint."));
-        questionRepository.save(new AssessmentQuestion(assessPython,
-                "Which similarity metric computes the cosine of the angle between two normalized vector embeddings?",
-                objectMapper.writeValueAsString(List.of("Manhattan Distance", "Cosine Similarity", "Hamming Distance", "Jaccard Index")),
-                1, "Cosine similarity measures the directional alignment between vector embeddings independent of magnitude, standard for semantic search."));
-
-        // ==========================================
-        // 6. SEED DEMO USERS (DEV PROFILE ONLY)
-        // ==========================================
-        if (environment.acceptsProfiles(org.springframework.core.env.Profiles.of("dev")) && userRepository.count() == 0) {
-            // User 1: Alex Chen (Backend Java Developer)
-            User user1 = userRepository.save(new User("demo_java", "alex.chen@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
-            LearnerProfile prof1 = profileRepository.save(new LearnerProfile(
-                    user1, "Alex Chen", "Backend Java Developer", "Prepare for Backend Software Engineering Internships and Master Spring Boot"
-            ));
-            prof1.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
-            prof1.setWeeklyHours(10);
-            prof1.setPreferredStyle(LearningStyle.PRACTICAL);
-            prof1.setStreakDays(7);
-            prof1.setTotalHoursSpent(28.5);
-            profileRepository.save(prof1);
-
-            userSkillRepository.save(new UserSkill(prof1, java, 80, true));
-            userSkillRepository.save(new UserSkill(prof1, sql, 60, false));
-            userSkillRepository.save(new UserSkill(prof1, dsa, 65, false));
-            userSkillRepository.save(new UserSkill(prof1, oop, 85, true));
-            userSkillRepository.save(new UserSkill(prof1, springBoot, 20, false));
-            userSkillRepository.save(new UserSkill(prof1, restApis, 30, false));
-            userSkillRepository.save(new UserSkill(prof1, docker, 0, false));
-
-            // User 2: Sarah Taylor (Full Stack)
-            User user2 = userRepository.save(new User("demo_fullstack", "sarah.taylor@example.com", passwordEncoder.encode("password123"), Role.ROLE_USER));
-            LearnerProfile prof2 = profileRepository.save(new LearnerProfile(
-                    user2, "Sarah Taylor", "Full Stack Developer", "Build end-to-end cloud platforms with React and Node.js"
-            ));
-            prof2.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
-            prof2.setWeeklyHours(12);
-            prof2.setPreferredStyle(LearningStyle.VISUAL);
-            prof2.setStreakDays(5);
-            prof2.setTotalHoursSpent(18.0);
-            profileRepository.save(prof2);
-
-            userSkillRepository.save(new UserSkill(prof2, js, 85, true));
-            userSkillRepository.save(new UserSkill(prof2, react, 75, true));
-            userSkillRepository.save(new UserSkill(prof2, node, 40, false));
-            userSkillRepository.save(new UserSkill(prof2, sql, 50, false));
-            userSkillRepository.save(new UserSkill(prof2, git, 80, true));
-
-            // Generate roadmap for Alex Chen
-            roadmapService.generatePersonalizedRoadmap(user1);
-        }
+                        "Design normalized PostgreSQL relational schema and JPA entities",
+                        "Implement Spring Security filter chain with JWT Bearer authentication",
+                        "Create transactional CRUD REST endpoints with pagination and DTO mapping",
+                        "Write unit and integration tests with MockMvc and Testcontainers"
+                ))
+        ));
     }
 }

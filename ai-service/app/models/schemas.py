@@ -7,10 +7,17 @@ class GoalAnalysisRequest(BaseModel):
 class GoalAnalysisResponse(BaseModel):
     target_role: str
     career_goal: str
+    raw_goal: Optional[str] = None
+    normalized_goal: Optional[str] = None
+    goal_type: Optional[str] = "TOPIC_LEARNING"
     experience_level: str
     estimated_months: int
-    extracted_skills: List[str]
-    missing_skills: List[str]
+    extracted_skills: List[str] = []
+    missing_skills: List[str] = []
+    core_skills: List[str] = []
+    prerequisite_skills: List[str] = []
+    excluded_skills: List[str] = []
+    confidence: Optional[float] = 0.95
     learning_pace: str
     ai_summary: str
 

@@ -17,10 +17,10 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Difficulty difficulty;
+    private Difficulty difficulty = Difficulty.INTERMEDIATE;
 
     @Column(name = "estimated_hours")
-    private Double estimatedHours;
+    private Double estimatedHours = 15.0;
 
     @Column(columnDefinition = "TEXT")
     private String deliverables;
@@ -46,6 +46,16 @@ public class Project {
         this.rubric = rubric;
         this.primarySkill = primarySkill;
         this.githubTemplateUrl = githubTemplateUrl;
+    }
+
+    public Project(String title, String description, Difficulty difficulty, String githubTemplateUrl, String deliverables, Double estimatedHours, String rubric) {
+        this.title = title;
+        this.description = description;
+        this.difficulty = difficulty;
+        this.githubTemplateUrl = githubTemplateUrl;
+        this.deliverables = deliverables;
+        this.estimatedHours = estimatedHours;
+        this.rubric = rubric;
     }
 
     public Long getId() { return id; }

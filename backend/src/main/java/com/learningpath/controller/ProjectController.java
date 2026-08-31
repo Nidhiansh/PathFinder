@@ -16,7 +16,7 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @GetMapping
+    @GetMapping({"", "/recommended"})
     public ResponseEntity<List<ProjectDto>> getRecommendedProjects() {
         return ResponseEntity.ok(projectService.getRecommendedProjects());
     }

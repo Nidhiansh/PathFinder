@@ -15,7 +15,7 @@ public class RoadmapController {
     @Autowired
     private RoadmapService roadmapService;
 
-    @GetMapping
+    @GetMapping({"", "/active"})
     public ResponseEntity<LearningPathDto> getRoadmap() {
         return ResponseEntity.ok(roadmapService.getActiveRoadmap());
     }

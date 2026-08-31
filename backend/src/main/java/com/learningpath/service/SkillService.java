@@ -3,6 +3,7 @@ package com.learningpath.service;
 import com.learningpath.dto.SkillDto;
 import com.learningpath.dto.SkillGapDto;
 import com.learningpath.dto.UserSkillDto;
+import com.learningpath.dto.ExtractGoalResponse;
 import com.learningpath.entity.*;
 import com.learningpath.exception.ResourceNotFoundException;
 import com.learningpath.repository.*;
@@ -20,6 +21,12 @@ public class SkillService {
     private SkillRepository skillRepository;
 
     @Autowired
+    private SkillAliasRepository aliasRepository;
+
+    @Autowired
+    private SkillRelationRepository relationRepository;
+
+    @Autowired
     private SkillPrerequisiteRepository prerequisiteRepository;
 
     @Autowired
@@ -31,6 +38,10 @@ public class SkillService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    @org.springframework.context.annotation.Lazy
+    private AiServiceClient aiServiceClient;
+
     public List<SkillDto> getAllSkills() {
         return skillRepository.findAll().stream().map(this::mapToSkillDto).collect(Collectors.toList());
     }
@@ -41,7 +52,8 @@ public class SkillService {
                 .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
 
         String targetRole = profile.getTargetRole() != null && !profile.getTargetRole().trim().isEmpty() 
-                ? profile.getTargetRole() : "Software Engineer";
+                ? profile.getTargetRole() : (profile.getCareerGoal() != null && !profile.getCareerGoal().trim().isEmpty() ? profile.getCareerGoal() : "Engineering Specialist");
+
         Map<String, Integer> requiredSkillsForRole = getRoleSkillRequirements(targetRole);
 
         // Fetch active skills for the current goal context
@@ -67,7 +79,7 @@ public class SkillService {
             int gap = Math.max(0, requiredLevel - currentLevel);
 
             Skill skill = skillRepository.findByNameIgnoreCase(skillName).orElse(null);
-            String category = skill != null ? skill.getCategory().name() : "CORE_CS";
+            String category = skill != null && skill.getCategory() != null ? skill.getCategory().name() : "CORE_CS";
 
             SkillGapDto dto = new SkillGapDto();
             dto.setSkillName(skillName);
@@ -86,6 +98,10 @@ public class SkillService {
 
             // Check unsatisfied prerequisites
             List<String> unsatisfiedPrereqs = new ArrayList<>();
+            boolean isPrereq = false;
+            String reason = "Direct core competency required for " + targetRole + ".";
+            String source = skill != null && skill.getExternalSource() != null ? skill.getExternalSource() + " Taxonomy" : "Knowledge Base";
+
             if (skill != null) {
                 List<SkillPrerequisite> prereqs = prerequisiteRepository.findBySkillId(skill.getId());
                 for (SkillPrerequisite sp : prereqs) {
@@ -94,13 +110,31 @@ public class SkillService {
                         unsatisfiedPrereqs.add(sp.getPrerequisiteSkill().getName() + " (" + prereqLevel + "%)");
                     }
                 }
+
+                // Check if this skill is a prerequisite for another active skill
+                List<SkillPrerequisite> dependentOnThis = prerequisiteRepository.findByPrerequisiteSkillId(skill.getId());
+                if (!dependentOnThis.isEmpty()) {
+                    for (SkillPrerequisite dp : dependentOnThis) {
+                        if (requiredSkillsForRole.containsKey(dp.getSkill().getName())) {
+                            isPrereq = true;
+                            reason = "Validated foundational prerequisite for " + dp.getSkill().getName() + " in prerequisite DAG.";
+                            break;
+                        }
+                    }
+                }
             }
+
             dto.setUnsatisfiedPrerequisites(unsatisfiedPrereqs);
+            dto.setSkillRole(isPrereq ? "REQUIRED_PREREQUISITE" : "DIRECT_CORE");
+            dto.setReason(reason);
+            dto.setSource(source);
+            dto.setConfidence(0.94);
             gapList.add(dto);
         }
 
         // 2. Include any active user skills for custom/unanticipated domains
         for (UserSkill us : userSkills) {
+            if (us.getIsActive() != null && !us.getIsActive()) continue;
             String sName = us.getSkill().getName();
             if (!processedSkills.contains(sName.toLowerCase())) {
                 processedSkills.add(sName.toLowerCase());
@@ -116,6 +150,10 @@ public class SkillService {
                 dto.setGap(gap);
                 dto.setStatus(currentLevel >= requiredLevel ? "MASTERED" : (currentLevel > 0 ? "IN_PROGRESS" : "MISSING"));
                 dto.setUnsatisfiedPrerequisites(new ArrayList<>());
+                dto.setSkillRole("DIRECT_CORE");
+                dto.setReason("Active goal competency for " + targetRole + ".");
+                dto.setSource(us.getSkill().getExternalSource() != null ? us.getSkill().getExternalSource() : "Inferred");
+                dto.setConfidence(0.90);
                 gapList.add(dto);
             }
         }
@@ -145,96 +183,97 @@ public class SkillService {
         return mapToUserSkillDto(userSkill);
     }
 
+    /**
+     * Universal Knowledge-Grounded Skill Requirement Engine:
+     * Resolves role/topic requirements by querying the canonical taxonomy,
+     * alias index, and prerequisite DAG relations.
+     * Zero domain-specific hardcoded switch-cases.
+     */
     public Map<String, Integer> getRoleSkillRequirements(String role) {
         Map<String, Integer> reqs = new LinkedHashMap<>();
         if (role == null || role.trim().isEmpty()) {
             role = "General Engineering Specialist";
         }
-        String lower = role.toLowerCase();
+        String cleanRole = role.trim();
 
-        if (lower.contains("rag") || lower.contains("generative") || lower.contains("llm") || lower.contains("langchain") || lower.contains("embedding")) {
-            reqs.put("Prompt Engineering & LLM APIs", 85);
-            reqs.put("Vector Databases & Embeddings", 90);
-            reqs.put("RAG Architecture & LangChain", 90);
-            reqs.put("Python Programming", 85);
-            reqs.put("Chunking, Reranking & Retrieval Optimization", 80);
-            reqs.put("LLM Evaluation & Guardrails", 80);
-            reqs.put("Model Deployment & FastAPI", 70);
-            reqs.put("Deep Learning & PyTorch", 70);
-        } else if (lower.contains("backend") || lower.contains("java") || lower.contains("spring")) {
-            reqs.put("Java", 85);
-            reqs.put("Object-Oriented Programming (OOP)", 80);
-            reqs.put("Data Structures & Algorithms", 75);
-            reqs.put("SQL & Relational Databases", 75);
-            reqs.put("Spring Boot", 80);
-            reqs.put("RESTful APIs", 85);
-            reqs.put("Spring Data JPA & Hibernate", 75);
-            reqs.put("Spring Security & JWT", 70);
-            reqs.put("Docker & Containers", 65);
-            reqs.put("System Design & Microservices", 70);
-        } else if (lower.contains("flutter") || lower.contains("dart") || lower.contains("mobile")) {
-            reqs.put("Dart Programming", 85);
-            reqs.put("Flutter Framework & Widgets", 85);
-            reqs.put("State Management (Riverpod/Bloc)", 80);
-            reqs.put("Mobile Navigation & Routing", 75);
-            reqs.put("REST API Integration & Local Storage", 80);
-            reqs.put("Cross-Platform App Deployment", 70);
-        } else if (lower.contains("blockchain") || lower.contains("solidity") || lower.contains("web3") || lower.contains("crypto") || lower.contains("smart contract")) {
-            reqs.put("Solidity Programming", 85);
-            reqs.put("Smart Contracts & EVM", 85);
-            reqs.put("Web3.js & Ethers.js", 80);
-            reqs.put("DeFi & Token Standards", 75);
-            reqs.put("Security Auditing & Hardhat", 75);
-        } else if (lower.contains("vision") || lower.contains("opencv") || lower.contains("image processing")) {
-            reqs.put("Python Programming", 85);
-            reqs.put("OpenCV Image Processing", 85);
-            reqs.put("Convolutional Neural Networks (CNNs)", 80);
-            reqs.put("Object Detection & YOLO", 80);
-            reqs.put("PyTorch Vision Models", 75);
-        } else if (lower.contains("data engineering") || lower.contains("etl") || lower.contains("spark") || lower.contains("kafka")) {
-            reqs.put("Python Programming", 85);
-            reqs.put("SQL & Relational Databases", 85);
-            reqs.put("Apache Spark & Distributed Computing", 85);
-            reqs.put("Kafka & Event Streaming", 80);
-            reqs.put("Data Warehousing & ETL Pipelines", 80);
-            reqs.put("Airflow Orchestration", 75);
-        } else if (lower.contains("security") || lower.contains("cybersecurity") || lower.contains("ethical hacking")) {
-            reqs.put("Networking Fundamentals & TCP/IP", 85);
-            reqs.put("Linux Systems & Shell Scripting", 85);
-            reqs.put("Web Application Security (OWASP Top 10)", 85);
-            reqs.put("Cryptography Fundamentals", 80);
-            reqs.put("Penetration Testing & Network Scanning", 75);
-        } else if (lower.contains("fullstack") || lower.contains("full-stack") || lower.contains("react") || lower.contains("frontend") || lower.contains("web")) {
-            reqs.put("JavaScript (ES6+)", 85);
-            reqs.put("React.js", 80);
-            reqs.put("Node.js & Express", 75);
-            reqs.put("SQL & Relational Databases", 70);
-            reqs.put("RESTful APIs", 85);
-            reqs.put("Git & Version Control", 80);
-            reqs.put("Docker & Containers", 60);
-            reqs.put("System Design & Microservices", 65);
-        } else if (lower.contains("devops") || lower.contains("cloud") || lower.contains("kubernetes") || lower.contains("k8s")) {
-            reqs.put("Docker & Containers", 85);
-            reqs.put("Cloud Infrastructure & Kubernetes", 85);
-            reqs.put("Git & Version Control", 80);
-            reqs.put("System Design & Microservices", 75);
-        } else if (lower.contains("ai") || lower.contains("machine learning") || lower.contains("data science")) {
-            reqs.put("Python Programming", 90);
-            reqs.put("Data Structures & Algorithms", 75);
-            reqs.put("Mathematics & Statistics for ML", 80);
-            reqs.put("NumPy & Pandas", 85);
-            reqs.put("Scikit-Learn", 80);
-            reqs.put("Deep Learning & PyTorch", 75);
-            reqs.put("Model Deployment & FastAPI", 70);
-            reqs.put("SQL & Relational Databases", 65);
-            reqs.put("Docker & Containers", 65);
+        // 1. Check direct skill alias index
+        Optional<SkillAlias> aliasOpt = aliasRepository.findByAliasIgnoreCase(cleanRole.toLowerCase());
+        Skill matchedSkill = null;
+        if (aliasOpt.isPresent()) {
+            matchedSkill = aliasOpt.get().getCanonicalSkill();
         } else {
-            reqs.put("Programming Fundamentals", 80);
-            reqs.put("Data Structures & Algorithms", 75);
-            reqs.put("RESTful APIs", 75);
-            reqs.put("Git & Version Control", 75);
-            reqs.put("System Design & Architecture", 70);
+            // Check direct canonical name match
+            Optional<Skill> directSkillOpt = skillRepository.findByNameIgnoreCase(cleanRole);
+            if (directSkillOpt.isPresent()) {
+                matchedSkill = directSkillOpt.get();
+            }
         }
+
+        if (matchedSkill != null) {
+            // Add matched core skill
+            reqs.put(matchedSkill.getName(), matchedSkill.getDifficultyLevel() == Difficulty.ADVANCED ? 85 : 80);
+
+            // Traverse direct prerequisites in DAG
+            List<SkillPrerequisite> prereqs = prerequisiteRepository.findBySkillId(matchedSkill.getId());
+            for (SkillPrerequisite sp : prereqs) {
+                reqs.put(sp.getPrerequisiteSkill().getName(), 75);
+            }
+
+            // Traverse essential core relations
+            List<SkillRelation> relations = relationRepository.findByTargetSkillId(matchedSkill.getId());
+            for (SkillRelation rel : relations) {
+                if (rel.getRelationType() == SkillRelationType.PREREQUISITE || rel.getRelationType() == SkillRelationType.ESSENTIAL_CORE) {
+                    reqs.put(rel.getSourceSkill().getName(), 75);
+                }
+            }
+
+            // Add domain companions if career goal
+            if (cleanRole.toLowerCase().contains("engineer") || cleanRole.toLowerCase().contains("developer") || cleanRole.toLowerCase().contains("specialist")) {
+                String matchedDomain = matchedSkill.getDomain();
+                List<Skill> domainSkills = skillRepository.findAll().stream()
+                        .filter(s -> s.getDomain() != null && s.getDomain().equalsIgnoreCase(matchedDomain))
+                        .toList();
+                for (Skill ds : domainSkills) {
+                    if (reqs.size() < 7 && !reqs.containsKey(ds.getName())) {
+                        reqs.put(ds.getName(), ds.getDifficultyLevel() == Difficulty.ADVANCED ? 80 : 75);
+                    }
+                }
+            }
+            return reqs;
+        }
+
+        // 2. Delegate to AI Service / Knowledge Resolver for unindexed / novel requests
+        try {
+            ExtractGoalResponse analysis = aiServiceClient.analyzeGoal(cleanRole);
+            if (analysis != null) {
+                List<String> combined = new ArrayList<>();
+                if (analysis.getMissingSkills() != null) combined.addAll(analysis.getMissingSkills());
+                if (analysis.getCoreSkills() != null) {
+                    for (String cs : analysis.getCoreSkills()) {
+                        if (!combined.contains(cs)) combined.add(cs);
+                    }
+                }
+                if (analysis.getPrerequisiteSkills() != null) {
+                    for (String ps : analysis.getPrerequisiteSkills()) {
+                        if (!combined.contains(ps)) combined.add(ps);
+                    }
+                }
+
+                if (!combined.isEmpty()) {
+                    for (String s : combined) {
+                        reqs.put(s, 80);
+                    }
+                    return reqs;
+                }
+            }
+        } catch (Exception e) {
+            // Fall through to domain-agnostic default
+        }
+
+        // 3. Fallback: create dynamic requirement node for clean concept
+        reqs.put(cleanRole, 80);
+        reqs.put(cleanRole + " Foundations", 75);
+        reqs.put("Applied " + cleanRole, 80);
         return reqs;
     }
 

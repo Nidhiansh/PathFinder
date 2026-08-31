@@ -10,6 +10,10 @@ public class SkillGapDto {
     private Integer gap;
     private String status; // MASTERED, IN_PROGRESS, MISSING
     private List<String> unsatisfiedPrerequisites;
+    private String skillRole; // DIRECT_CORE, REQUIRED_PREREQUISITE, OPTIONAL
+    private String reason; // Explainability explanation
+    private String source; // ESCO / PathFinder Knowledge Base
+    private Double confidence; // 0.0 - 1.0
 
     public SkillGapDto() {}
 
@@ -33,4 +37,16 @@ public class SkillGapDto {
 
     public List<String> getUnsatisfiedPrerequisites() { return unsatisfiedPrerequisites; }
     public void setUnsatisfiedPrerequisites(List<String> unsatisfiedPrerequisites) { this.unsatisfiedPrerequisites = unsatisfiedPrerequisites; }
+
+    public String getSkillRole() { return skillRole; }
+    public void setSkillRole(String skillRole) { this.skillRole = skillRole; }
+
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
+
+    public String getSource() { return source; }
+    public void setSource(String source) { this.source = source; }
+
+    public Double getConfidence() { return confidence; }
+    public void setConfidence(Double confidence) { this.confidence = confidence; }
 }

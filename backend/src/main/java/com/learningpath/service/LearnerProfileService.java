@@ -4,8 +4,8 @@ import com.learningpath.dto.*;
 import com.learningpath.entity.*;
 import com.learningpath.exception.ResourceNotFoundException;
 import com.learningpath.repository.LearnerProfileRepository;
+import com.learningpath.repository.SkillAliasRepository;
 import com.learningpath.repository.SkillRepository;
-import com.learningpath.repository.UserRepository;
 import com.learningpath.repository.UserSkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +30,9 @@ public class LearnerProfileService {
     private SkillRepository skillRepository;
 
     @Autowired
+    private SkillAliasRepository aliasRepository;
+
+    @Autowired
     private AuthService authService;
 
     @Autowired
@@ -50,7 +53,7 @@ public class LearnerProfileService {
     public LearnerProfileDto updateProfile(UpdateProfileRequest request) {
         User user = authService.getCurrentAuthenticatedUser();
         LearnerProfile profile = profileRepository.findByUser(user)
-                .orElseGet(() -> new LearnerProfile(user, user.getUsername(), "Software Engineer", ""));
+                .orElseGet(() -> new LearnerProfile(user, user.getUsername(), "Engineering Specialist", ""));
 
         boolean roleChanged = false;
         if (request.getTargetRole() != null && !request.getTargetRole().equalsIgnoreCase(profile.getTargetRole())) {
@@ -130,8 +133,8 @@ public class LearnerProfileService {
 
     public Skill resolveOrCreateSkill(String skillName) {
         if (skillName == null || skillName.trim().isEmpty()) {
-            return skillRepository.findByNameIgnoreCase("General Engineering").orElseGet(() ->
-                    skillRepository.save(new Skill("General Engineering", SkillCategory.CORE_CS, "General software engineering competencies", Difficulty.INTERMEDIATE))
+            return skillRepository.findByNameIgnoreCase("General Competency").orElseGet(() ->
+                    skillRepository.save(new Skill("General Competency", SkillCategory.CORE_CS, "General foundational competencies", Difficulty.INTERMEDIATE))
             );
         }
 
@@ -143,133 +146,131 @@ public class LearnerProfileService {
             return exactMatch.get();
         }
 
-        // 2. Alias resolution
-        String canonicalName = resolveCanonicalAlias(cleanName);
-        if (!canonicalName.equalsIgnoreCase(cleanName)) {
-            Optional<Skill> canonicalMatch = skillRepository.findByNameIgnoreCase(canonicalName);
-            if (canonicalMatch.isPresent()) {
-                return canonicalMatch.get();
-            }
-            cleanName = canonicalName;
+        // 2. Query Alias repository
+        Optional<SkillAlias> aliasOpt = aliasRepository.findByAliasIgnoreCase(cleanName.toLowerCase());
+        if (aliasOpt.isPresent()) {
+            return aliasOpt.get().getCanonicalSkill();
         }
 
-        // 3. Dynamic creation with safe category inference
+        // 3. Dynamic creation with safe domain and category inference
         SkillCategory category = inferSkillCategory(cleanName);
-        Skill newSkill = new Skill(cleanName, category, "Competency and practical applications in " + cleanName, Difficulty.INTERMEDIATE);
+        Skill newSkill = new Skill(cleanName, category, "Competency and practical applications in " + cleanName, Difficulty.INTERMEDIATE, "DYNAMIC_INFERRED", null, "UNANTICIPATED_DOMAIN");
         return skillRepository.save(newSkill);
     }
 
     private String normalizeSkillName(String name) {
         String trimmed = name.replaceAll("(?i)^(mastery of|fundamentals of|learning|skills in|knowledge of)\\s+", "").trim();
-        // Remove trailing punctuation
         trimmed = trimmed.replaceAll("[,.;:]+$", "").trim();
         return trimmed;
     }
 
-    private String resolveCanonicalAlias(String name) {
-        String lower = name.toLowerCase();
-        if (lower.equals("vector db") || lower.equals("vector database") || lower.equals("vector databases") || lower.equals("vector dbs")) {
-            return "Vector Databases & Embeddings";
-        }
-        if (lower.equals("prompt engineering") || lower.equals("prompting") || lower.equals("llm prompting") || lower.equals("prompt design")) {
-            return "Prompt Engineering & LLM APIs";
-        }
-        if (lower.equals("rag") || lower.equals("retrieval augmented generation") || lower.equals("langchain rag") || lower.equals("rag pipelines")) {
-            return "RAG Architecture & LangChain";
-        }
-        if (lower.equals("kubernetes") || lower.equals("k8s") || lower.equals("k8s orchestration") || lower.equals("kube")) {
-            return "Cloud Infrastructure & Kubernetes";
-        }
-        if (lower.equals("docker") || lower.equals("containers") || lower.equals("containerization") || lower.equals("docker containers")) {
-            return "Docker & Containers";
-        }
-        if (lower.equals("react") || lower.equals("reactjs") || lower.equals("react js")) {
-            return "React.js";
-        }
-        if (lower.equals("javascript") || lower.equals("js") || lower.equals("es6") || lower.equals("vanilla js")) {
-            return "JavaScript (ES6+)";
-        }
-        if (lower.equals("python") || lower.equals("python3") || lower.equals("core python")) {
-            return "Python Programming";
-        }
-        if (lower.equals("java 21") || lower.equals("core java") || lower.equals("modern java")) {
-            return "Java";
-        }
-        if (lower.equals("spring") || lower.equals("spring framework") || lower.equals("springboot")) {
-            return "Spring Boot";
-        }
-        if (lower.equals("sql") || lower.equals("postgres") || lower.equals("postgresql") || lower.equals("relational db") || lower.equals("relational databases")) {
-            return "SQL & Relational Databases";
-        }
-        if (lower.equals("git") || lower.equals("github") || lower.equals("version control")) {
-            return "Git & Version Control";
-        }
-        if (lower.equals("flutter") || lower.equals("flutter framework")) {
-            return "Flutter Framework & Widgets";
-        }
-        if (lower.equals("dart") || lower.equals("dart language")) {
-            return "Dart Programming";
-        }
-        if (lower.equals("solidity") || lower.equals("solidity programming")) {
-            return "Solidity Programming";
-        }
-        if (lower.equals("smart contract") || lower.equals("smart contracts") || lower.equals("evm")) {
-            return "Smart Contracts & EVM";
-        }
-        if (lower.equals("opencv") || lower.equals("cv") || lower.equals("image processing")) {
-            return "OpenCV Image Processing";
-        }
-        if (lower.equals("spark") || lower.equals("apache spark") || lower.equals("pyspark")) {
-            return "Apache Spark & Distributed Computing";
-        }
-        if (lower.equals("kafka") || lower.equals("apache kafka")) {
-            return "Kafka & Event Streaming";
-        }
-        return name;
-    }
-
     private SkillCategory inferSkillCategory(String name) {
         String lower = name.toLowerCase();
-        if (lower.contains("rag") || lower.contains("llm") || lower.contains("prompt") || lower.contains("vector") ||
-            lower.contains("ai") || lower.contains("machine learning") || lower.contains("deep learning") ||
-            lower.contains("neural") || lower.contains("nlp") || lower.contains("data") || lower.contains("embedding") ||
-            lower.contains("langchain") || lower.contains("llama") || lower.contains("evaluation") || lower.contains("model") ||
-            lower.contains("vision") || lower.contains("opencv") || lower.contains("spark")) {
-            return SkillCategory.DATA_AI;
-        } else if (lower.contains("docker") || lower.contains("cloud") || lower.contains("kubernetes") ||
-                   lower.contains("k8s") || lower.contains("devops") || lower.contains("ci/cd") ||
-                   lower.contains("aws") || lower.contains("linux") || lower.contains("terraform") ||
-                   lower.contains("security") || lower.contains("cybersecurity") || lower.contains("penetration")) {
-            return SkillCategory.DEVOPS;
-        } else if (lower.contains("react") || lower.contains("spring") || lower.contains("node") ||
-                   lower.contains("express") || lower.contains("fastapi") || lower.contains("django") ||
-                   lower.contains("flask") || lower.contains("vue") || lower.contains("angular") ||
-                   lower.contains("flutter") || lower.contains("framework") || lower.contains("solidity") ||
-                   lower.contains("web3") || lower.contains("smart contract")) {
+        if (lower.contains("react") || lower.contains("vue") || lower.contains("angular") || lower.contains("html") || lower.contains("css") || lower.contains("ui") || lower.contains("widget")) {
             return SkillCategory.FRAMEWORK;
-        } else if (lower.contains("python") || lower.contains("java") || lower.contains("javascript") ||
-                   lower.contains("typescript") || lower.contains("c++") || lower.contains("go") ||
-                   lower.contains("rust") || lower.contains("dart") || lower.contains("kotlin") || lower.contains("swift")) {
-            return SkillCategory.LANGUAGE;
-        } else if (lower.contains("sql") || lower.contains("database") || lower.contains("postgres") ||
-                   lower.contains("mongo") || lower.contains("redis") || lower.contains("db") || lower.contains("kafka")) {
+        }
+        if (lower.contains("sql") || lower.contains("postgres") || lower.contains("mongo") || lower.contains("database") || lower.contains("redis") || lower.contains("db")) {
             return SkillCategory.DATABASE;
-        } else if (lower.contains("api") || lower.contains("microservice") || lower.contains("system design") ||
-                   lower.contains("architecture") || lower.contains("distributed")) {
+        }
+        if (lower.contains("docker") || lower.contains("kubernetes") || lower.contains("k8s") || lower.contains("cloud") || lower.contains("aws") || lower.contains("ci/cd") || lower.contains("terraform")) {
+            return SkillCategory.DEVOPS;
+        }
+        if (lower.contains("ai") || lower.contains("ml") || lower.contains("rag") || lower.contains("llm") || lower.contains("vector") || lower.contains("learning") || lower.contains("model") || lower.contains("data")) {
+            return SkillCategory.DATA_AI;
+        }
+        if (lower.contains("java") || lower.contains("python") || lower.contains("c++") || lower.contains("rust") || lower.contains("golang") || lower.contains("javascript") || lower.contains("typescript") || lower.contains("dart") || lower.contains("solidity")) {
+            return SkillCategory.LANGUAGE;
+        }
+        if (lower.contains("api") || lower.contains("rest") || lower.contains("microservices") || lower.contains("system design") || lower.contains("architecture")) {
             return SkillCategory.ARCHITECTURE;
         }
         return SkillCategory.CORE_CS;
     }
 
+    @Transactional
     public ExtractGoalResponse extractGoalFromPrompt(ExtractGoalRequest request) {
-        return aiServiceClient.analyzeGoal(request.getPrompt());
+        ExtractGoalResponse analysis = aiServiceClient.analyzeGoal(request.getPrompt());
+
+        // Update profile with extracted goal if requested
+        if (request.getApplyToProfile() != null && request.getApplyToProfile()) {
+            User user = authService.getCurrentAuthenticatedUser();
+            LearnerProfile profile = profileRepository.findByUser(user)
+                    .orElseGet(() -> new LearnerProfile(user, user.getUsername(), analysis.getTargetRole(), request.getPrompt()));
+
+            profile.setTargetRole(analysis.getTargetRole());
+            profile.setCareerGoal(request.getPrompt());
+            if (analysis.getExperienceLevel() != null) {
+                try {
+                    profile.setExperienceLevel(ExperienceLevel.valueOf(analysis.getExperienceLevel().toUpperCase()));
+                } catch (Exception e) {
+                    profile.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
+                }
+            }
+            profile = profileRepository.save(profile);
+
+            // Deactivate existing skills that are not part of the newly extracted goal
+            Set<String> newRequiredSkills = (analysis.getMissingSkills() != null ? analysis.getMissingSkills() : new ArrayList<String>()).stream()
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toSet());
+
+            if (analysis.getCoreSkills() != null) {
+                for (String cs : analysis.getCoreSkills()) newRequiredSkills.add(cs.toLowerCase());
+            }
+
+            List<UserSkill> existingSkills = userSkillRepository.findByProfileId(profile.getId());
+            for (UserSkill us : existingSkills) {
+                if (!newRequiredSkills.contains(us.getSkill().getName().toLowerCase())) {
+                    us.setIsActive(false);
+                    userSkillRepository.save(us);
+                }
+            }
+
+            // Populate active skills for newly extracted goal
+            if (analysis.getMissingSkills() != null) {
+                for (String skillName : analysis.getMissingSkills()) {
+                    Skill skill = resolveOrCreateSkill(skillName);
+                    UserSkill userSkill = userSkillRepository.findByProfileIdAndSkillId(profile.getId(), skill.getId()).orElse(null);
+                    if (userSkill == null) {
+                        userSkill = new UserSkill(profile, skill, 0, false, true, SkillProficiencySource.NOT_ASSESSED);
+                    } else {
+                        userSkill.setIsActive(true);
+                    }
+                    userSkillRepository.save(userSkill);
+                }
+            }
+
+            // Immediately synthesize fresh personalized roadmap for this new goal
+            roadmapService.generatePersonalizedRoadmap(user);
+        }
+
+        return analysis;
     }
 
     private LearnerProfileDto mapToDto(LearnerProfile profile) {
+        List<UserSkill> userSkills = userSkillRepository.findByProfileIdAndIsActiveTrue(profile.getId());
+        if (userSkills.isEmpty()) {
+            userSkills = userSkillRepository.findByProfileId(profile.getId());
+        }
+
+        List<UserSkillDto> skillDtos = userSkills.stream().map(us -> {
+            Skill skill = us.getSkill();
+            return new UserSkillDto(
+                    skill.getId(),
+                    skill.getName(),
+                    skill.getCategory().name(),
+                    us.getProficiencyLevel(),
+                    us.getIsVerified(),
+                    us.getIsActive() != null ? us.getIsActive() : true,
+                    us.getSource() != null ? us.getSource().name() : "USER_PROVIDED"
+            );
+        }).collect(Collectors.toList());
+
         LearnerProfileDto dto = new LearnerProfileDto();
         dto.setId(profile.getId());
-        dto.setUserId(profile.getUser().getId());
-        dto.setUsername(profile.getUser().getUsername());
+        if (profile.getUser() != null) {
+            dto.setUserId(profile.getUser().getId());
+            dto.setUsername(profile.getUser().getUsername());
+        }
         dto.setFullName(profile.getFullName());
         dto.setTargetRole(profile.getTargetRole());
         dto.setCareerGoal(profile.getCareerGoal());
@@ -280,24 +281,7 @@ public class LearnerProfileService {
         dto.setInterests(profile.getInterests());
         dto.setStreakDays(profile.getStreakDays());
         dto.setTotalHoursSpent(profile.getTotalHoursSpent());
-
-        // Return only currently active skills in profile DTO for clean downstream consumer personalization
-        List<UserSkill> userSkills = userSkillRepository.findByProfileIdAndIsActiveTrue(profile.getId());
-        if (userSkills.isEmpty()) {
-            userSkills = userSkillRepository.findByProfileId(profile.getId());
-        }
-
-        List<UserSkillDto> skillDtos = userSkills.stream().map(us -> new UserSkillDto(
-                us.getSkill().getId(),
-                us.getSkill().getName(),
-                us.getSkill().getCategory().name(),
-                us.getProficiencyLevel(),
-                us.getIsVerified(),
-                us.getIsActive() != null ? us.getIsActive() : true,
-                us.getSource() != null ? us.getSource().name() : "USER_PROVIDED"
-        )).collect(Collectors.toList());
         dto.setSkills(skillDtos);
-
         return dto;
     }
 }

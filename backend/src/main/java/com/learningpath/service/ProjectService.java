@@ -54,9 +54,14 @@ public class ProjectService {
 
         String targetRole = profile.getTargetRole() != null && !profile.getTargetRole().trim().isEmpty()
                 ? profile.getTargetRole()
-                : "Software Engineer";
+                : (profile.getCareerGoal() != null && !profile.getCareerGoal().trim().isEmpty() ? profile.getCareerGoal() : "Engineering Specialist");
 
         Map<String, Integer> targetRequirements = skillService.getRoleSkillRequirements(targetRole);
+        Set<String> allRequiredSkillNames = new HashSet<>(activeSkillNames);
+        for (String req : targetRequirements.keySet()) {
+            allRequiredSkillNames.add(req.toLowerCase());
+        }
+
         List<SkillGapDto> skillGaps = skillService.calculateSkillGaps();
         List<String> gapNames = skillGaps.stream().map(SkillGapDto::getSkillName).collect(Collectors.toList());
 
@@ -73,29 +78,43 @@ public class ProjectService {
         List<ProjectDto> matchedProjects = new ArrayList<>();
         List<Project> allDbProjects = projectRepository.findAll();
 
-        // 1. Dynamic Matching of Existing Database Projects
+        // 1. Generic Semantic Relevance Matching of Database Projects
         for (Project p : allDbProjects) {
+            String pTitle = p.getTitle().toLowerCase();
+            String pDesc = p.getDescription() != null ? p.getDescription().toLowerCase() : "";
             String pSkill = p.getPrimarySkill() != null ? p.getPrimarySkill().getName().toLowerCase() : "";
-            boolean matchesActiveSkill = activeSkillNames.contains(pSkill);
-            boolean matchesTargetReq = targetRequirements.keySet().stream().anyMatch(req -> req.equalsIgnoreCase(pSkill));
             
-            String roleLower = targetRole.toLowerCase();
-            String pTitleLower = p.getTitle().toLowerCase();
-            String pDescLower = p.getDescription() != null ? p.getDescription().toLowerCase() : "";
-
-            boolean roleMatches = false;
-            if ((roleLower.contains("java") || roleLower.contains("backend")) && (pTitleLower.contains("java") || pTitleLower.contains("spring"))) {
-                roleMatches = true;
-            } else if ((roleLower.contains("rag") || roleLower.contains("generative") || roleLower.contains("llm")) && 
-                       (pTitleLower.contains("rag") || pTitleLower.contains("vector") || pDescLower.contains("rag") || pDescLower.contains("langchain"))) {
-                roleMatches = true;
-            } else if ((roleLower.contains("fullstack") || roleLower.contains("react")) && (pTitleLower.contains("react") || pTitleLower.contains("full stack"))) {
-                roleMatches = true;
-            } else if ((roleLower.contains("devops") || roleLower.contains("cloud") || roleLower.contains("kubernetes")) && (pTitleLower.contains("docker") || pTitleLower.contains("compose"))) {
-                roleMatches = true;
+            double relevance = 0.0;
+            
+            // Check direct primary skill match
+            if (!pSkill.isEmpty() && allRequiredSkillNames.contains(pSkill)) {
+                relevance += 0.5;
             }
 
-            if (matchesActiveSkill || matchesTargetReq || roleMatches) {
+            // Check skill token and name overlaps
+            int matchedSkillsCount = 0;
+            for (String reqSkill : allRequiredSkillNames) {
+                if (pTitle.contains(reqSkill) || pDesc.contains(reqSkill)) {
+                    matchedSkillsCount++;
+                } else {
+                    String[] tokens = reqSkill.split("\\s+");
+                    int tokenMatches = 0;
+                    for (String t : tokens) {
+                        if (t.length() > 3 && (pTitle.contains(t) || pDesc.contains(t))) {
+                            tokenMatches++;
+                        }
+                    }
+                    if (tokenMatches > 0 && tokenMatches >= (tokens.length / 2)) {
+                        matchedSkillsCount++;
+                    }
+                }
+            }
+
+            if (!allRequiredSkillNames.isEmpty()) {
+                relevance += (0.5 * ((double) matchedSkillsCount / (double) allRequiredSkillNames.size()));
+            }
+
+            if (relevance >= 0.25) {
                 ProjectDto dto = new ProjectDto();
                 dto.setId(p.getId());
                 dto.setTitle(p.getTitle());
@@ -104,24 +123,24 @@ public class ProjectService {
                 dto.setEstimatedHours(p.getEstimatedHours() != null ? p.getEstimatedHours() : 15.0);
                 dto.setDeliverables(p.getDeliverables());
                 dto.setRubric(p.getRubric());
-                dto.setPrimarySkillName(p.getPrimarySkill() != null ? p.getPrimarySkill().getName() : "Software Engineering");
+                dto.setPrimarySkillName(p.getPrimarySkill() != null ? p.getPrimarySkill().getName() : targetRole);
                 dto.setSkills(p.getPrimarySkill() != null ? List.of(p.getPrimarySkill().getName()) : List.of());
                 dto.setGithubTemplateUrl(p.getGithubTemplateUrl() != null ? p.getGithubTemplateUrl() : "https://github.com");
                 dto.setIsAiGenerated(false);
                 dto.setRoadmapPhase("Core Architecture Milestone");
-                dto.setScore(94.0);
-                dto.setExplanation("Curated engineering milestone directly validating " + dto.getPrimarySkillName() + " competency.");
+                dto.setScore(Math.min(98.0, 80.0 + (relevance * 20.0)));
+                dto.setExplanation("Curated milestone directly validating " + dto.getPrimarySkillName() + " competency for " + targetRole + ".");
                 matchedProjects.add(dto);
             }
         }
 
-        // 2. If database projects are insufficient (< 2), dynamically synthesize structured projects via AI / Graph Generator
+        // 2. If database projects are insufficient (< 2), dynamically synthesize structured projects via AI / Knowledge Generator
         if (matchedProjects.size() < 2) {
             List<ProjectDto> generated = aiServiceClient.generateProjects(
                     targetRole,
                     profile.getCareerGoal(),
                     profile.getExperienceLevel() != null ? profile.getExperienceLevel().name() : "INTERMEDIATE",
-                    new ArrayList<>(activeSkillNames),
+                    new ArrayList<>(allRequiredSkillNames),
                     gapNames,
                     phaseNames,
                     null
@@ -135,7 +154,7 @@ public class ProjectService {
             }
         }
 
-        // Sort descending by score / estimated hours
+        // Sort descending by score
         matchedProjects.sort((a, b) -> Double.compare(
                 b.getScore() != null ? b.getScore() : 90.0,
                 a.getScore() != null ? a.getScore() : 90.0
@@ -155,7 +174,7 @@ public class ProjectService {
         List<String> gapNames = skillGaps.stream().map(SkillGapDto::getSkillName).collect(Collectors.toList());
 
         return aiServiceClient.generateProjects(
-                profile.getTargetRole() != null ? profile.getTargetRole() : "Software Engineer",
+                profile.getTargetRole() != null ? profile.getTargetRole() : "Engineering Specialist",
                 profile.getCareerGoal(),
                 profile.getExperienceLevel() != null ? profile.getExperienceLevel().name() : "INTERMEDIATE",
                 skillNames,
